@@ -1,11 +1,5 @@
 // app/layout.tsx
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 export default function RootLayout({
   children,
@@ -13,8 +7,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.className}`}>
-      <body className="tracking-tight antialiased"> 
+    <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-sans tracking-tight antialiased">
         {children}
       </body>
     </html>

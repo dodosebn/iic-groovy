@@ -22,7 +22,7 @@ const demoMap = [
 
 const Intro = () => {
   return (
-    <div className="text-center max-w-4xl mx-auto p-5 tracking-tight">
+    <div className="text-center max-w-4xl mx-auto p-5">
       <section className="mb-16">
         <h1 className="text-5xl font-bold mb-12">groovy</h1>
         <h3 className="text-3xl font-semibold mb-12">Select your Home Page</h3>
