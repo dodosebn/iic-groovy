@@ -2,22 +2,28 @@ import React from 'react';
 import Image from 'next/image';
 import introImg from '@/public/images/introImg.avif';
 import logo from '@/public/images/logo-groovy.png';
+import Button from '@/utils/button';
+import Link from 'next/link';
 
 const demoMap = [
   {
     id: 1, 
     img: introImg,
-    title: "Classic Style"
+    title: "Classic Style",
+    path: '/pages/classicStyle'
   },
   {
     id: 2, 
     img: introImg,
-    title: "Grid (Masonry) Style"
+    title: "Grid (Masonry) Style",
+        path: '/pages/gridStyle'
   },
   {
     id: 3, 
     img: introImg,
-    title: "Fast Demo"
+    title: "Fast Demo",
+            path: '/pages/fastDemo'
+
   }
 ];
 
@@ -50,7 +56,9 @@ const Intro = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {demoMap.map((item) => (
+
             <div key={item.id} className="flex flex-col items-center">
+                                    <Link href={item.path}>
               <h4 className="text-xl font-semibold mb-6">{item.title}</h4>
               <div className="w-full overflow-hidden h-[17rem] rounded-lg mb-6 group border-3 border-[#000]">
                 <Image 
@@ -64,19 +72,12 @@ const Intro = () => {
                   priority={item.id === 1}
                 />
               </div>
-              <button className="
-                px-6 py-2
-                bg-[#ff4c60] text-[#fffacd]
-                border border-[#000]
-                rounded-3xl
-                font-medium
-                transition-all duration-300 ease-in-out
-                hover:-translate-y-1
-                hover:shadow-[4px_4px_0px_rgba(0,0,0,0.6)]
-              ">
-                View demo
-              </button>
+                                      </Link>
+
+               <Button name='View demo' bgCol='#ff4c60'
+              txtCol="#fffacd" px={'1.2'} py={'0.5'}/>
             </div>
+
           ))}
         </div>
       </section>
