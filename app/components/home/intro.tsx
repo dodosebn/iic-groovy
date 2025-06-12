@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import introImg from '@/public/images/introImg.avif';
+import logo from '@/public/images/logo-groovy.png';
 
 const demoMap = [
   {
@@ -24,10 +25,17 @@ const Intro = () => {
   return (
     <div className="text-center max-w-4xl mx-auto p-5">
       <section className="mb-16">
-        <h1 className="text-5xl font-bold mb-12">groovy</h1>
+       <div className="flex justify-center mb-12">
+  <Image 
+    src={logo} 
+    alt="Groovy logo"
+    className="w-32 h-auto object-contain" // ~128px width, auto height
+  />
+</div>
+
         <h3 className="text-3xl font-semibold mb-12">Select your Home Page</h3>
         <div className="text-xl leading-snug">
-          <p>Groovy is a super modern blog, highly focused in Speed and Colors.</p>
+          <p><span className="font-bold">Groovy </span>  is a super modern blog, highly focused in Speed and Colors.</p>
           <p className="mt-3">
             Every Layout includes 2 schemes
             <span className="font-bold"> "Solid Border"</span> and
@@ -36,6 +44,7 @@ const Intro = () => {
         </div>
       </section>
       
+      {/* Rest of your component remains the same */}
       <section>
         <h4 className="text-xl font-bold mb-10">Check our Demos:</h4>
         
