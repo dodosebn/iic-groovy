@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import introImg from '@/public/images/introImg.avif';
-import logo from '@/public/images/logo-groovy.png';
 import Button from '@/utils/button';
 import Link from 'next/link';
+import Logo from '@/utils/logo';
 
 const demoMap = [
   {
@@ -32,11 +32,7 @@ const Intro = () => {
     <div className="text-center max-w-4xl mx-auto p-5">
       <section className="mb-16">
        <div className="flex justify-center mb-12">
-  <Image 
-    src={logo} 
-    alt="Groovy logo"
-    className="w-32 h-auto object-contain" // ~128px width, auto height
-  />
+<Logo />
 </div>
 
         <h3 className="text-3xl font-semibold mb-12">Select your Home Page</h3>
@@ -50,7 +46,6 @@ const Intro = () => {
         </div>
       </section>
       
-      {/* Rest of your component remains the same */}
       <section>
         <h4 className="text-xl font-bold mb-10">Check our Demos:</h4>
         
