@@ -1,4 +1,5 @@
 // app/layout.tsx
+import Navbar from './components/home/navbar';
 import './globals.css';
 
 export default function RootLayout({
@@ -15,7 +16,11 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans tracking-tight antialiased">
+        <div className='md:px-[4rem] md:py-[2rem]' >
+<Navbar />
+
         {children}
+        </div>
       </body>
     </html>
   );

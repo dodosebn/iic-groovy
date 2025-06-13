@@ -35,6 +35,15 @@ body {
     transform: translateY(-2px);
   }
 }
+.star-13 {
+  clip-path: polygon(
+    50% 0%, 54% 10%, 64% 6%, 60% 16%,
+    70% 20%, 60% 24%, 64% 34%, 54% 30%,
+    50% 40%, 46% 30%, 36% 34%, 40% 24%,
+    30% 20%, 40% 16%, 36% 6%, 46% 10%,
+    50% 0%, 50% 0%, 50% 0%, 50% 0%
+  );
+}
 
 .animate-bounce {
   animation: bounce 0.5s ease infinite;

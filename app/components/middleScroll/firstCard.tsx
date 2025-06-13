@@ -6,7 +6,7 @@ import HorizontalDivider from '@/utils/horizontal';
 
 const FirstCard = () => {
   return (
-    <main className='px-3 py-8 md:py-16 bg-[#f0f0fe] max-w-6xl mx-auto rounded-xl border-1 border-[#000]'>
+    <main className='px-3 py-3 md:py-4 bg-[#f0f0fe] max-w-6xl mx-auto rounded-xl border-1 border-[#000]'>
       <section className='flex flex-col md:flex-row gap-8 p-2  md:p-8'>
         {/* Image Section - Takes more space on desktop */}
       <div className='md:flex-1 h-[20vh] md:h-[25rem]'>
@@ -45,7 +45,7 @@ const FirstCard = () => {
           
           {/* Title */}
           <div className='border-2 border-[#333] bg-[#fff] p-6 rounded-lg'>
-            <h1 className='text-2xl md:text-3xl font-bold text-gray-800'>
+            <h1 className='text-2xl md:text-3xl font-bold text-gray-800 '>
               Building your audience with subscriber signups
             </h1>
           </div>

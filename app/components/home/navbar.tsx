@@ -43,91 +43,92 @@ const Navbar = () => {
       {/* Overlay for search only */}
       {searchOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-20 z-40"
+          className="fixed inset-0  bg-opacity-20 z-40"
           onClick={() => setSearchOpen(false)}
         />
       )}
 
       {!isMobile ? (
-        // Desktop Navigation - Two main divs (logo and nav items)
-        <nav className="flex items-center justify-evenly px-[3rem] py-[1.8rem] border-1
-         border-[#333] bg-white shadow-sm rounded-[5rem] w-full">
-          {/* Logo */}
-          <div>
-            <Logo/>
-          </div>
+        <div className='flex justify-center w-full px-4'>
+          <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333] 
+       bg-white shadow-sm rounded-[5rem] w-full max-w-[1500px]">
+            {/* Logo */}
+            <div>
+              <Logo/>
+            </div>
 
-          {/* All navigation items in one continuous row */}
-          <div className="flex items-center gap-8">
-            <ul className="flex items-center gap-8">
-              {["Home", "Membership", "Style Guide✨", "#Tag"].map((item, index) => (
-                <li key={index} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
-                  {item}
+            {/* All navigation items in one continuous row */}
+            <div className="flex items-center gap-8">
+              <ul className="flex items-center gap-8">
+                {["Home", "Membership", "Style Guide✨", "#Tag"].map((item, index) => (
+                  <li key={index} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
+                    {item}
+                  </li>
+                ))}
+                
+                {/* More Dropdown - No overlay */}
+                <li className="relative">
+                  <button 
+                    onClick={toggleMore}
+                    className="flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap"
+                  >
+                    More <RiArrowDropDownLine className={`text-xl transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {moreOpen && (
+                    <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
+                      {["About", "Contact", "Blog", "FAQ"].map((item, index) => (
+                        <a 
+                          key={index} 
+                          href="#" 
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
+                        >
+                          {item}
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </li>
-              ))}
-              
-              {/* More Dropdown - No overlay */}
-              <li className="relative">
-                <button 
-                  onClick={toggleMore}
-                  className="flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap"
-                >
-                  More <RiArrowDropDownLine className={`text-xl transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {moreOpen && (
-                  <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
-                    {["About", "Contact", "Blog", "FAQ"].map((item, index) => (
-                      <a 
-                        key={index} 
-                        href="#" 
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
-                      >
-                        {item}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </li>
 
-              {/* Search */}
-              <li className="relative">
-                <button 
-                  onClick={toggleSearch}
-                  className="text-gray-600 hover:text-pink-600 transition-colors"
-                >
-                  <IoSearchSharp className="text-xl" />
-                </button>
-                {searchOpen && (
-                  <div className="absolute right-0 top-full mt-2 z-50">
-                    <input
-                      type="text"
-                      placeholder="Search..."
-                      className="py-2 px-4 rounded-md border border-gray-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
-                      autoFocus
-                    />
-                  </div>
-                )}
-              </li>
+                {/* Search */}
+                <li className="relative">
+                  <button 
+                    onClick={toggleSearch}
+                    className="text-gray-600 hover:text-pink-600 transition-colors"
+                  >
+                    <IoSearchSharp className="text-xl" />
+                  </button>
+                  {searchOpen && (
+                    <div className="absolute right-0 top-full mt-2 z-50">
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        className="py-2 px-4 rounded-md border border-gray-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                        autoFocus
+                      />
+                    </div>
+                  )}
+                </li>
 
-              {/* Sign In */}
-              <li>
-                <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] hover:bg-[#444] transition-colors whitespace-nowrap">
-                  Sign In
-                </button>
-              </li>
+                {/* Sign In */}
+                <li>
+                  <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] hover:bg-[#444] transition-colors whitespace-nowrap">
+                    Sign In
+                  </button>
+                </li>
 
-              {/* Social Icons */}
-              <li className="flex items-center gap-3">
-                <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20}/>
-                <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer" size={20}/>
-                <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={20}/>
-                <MdOutlineNetworkCheck className="text-green-600 hover:text-green-700 cursor-pointer" size={20}/>
-              </li>
-            </ul>
-          </div>
-        </nav>
+                {/* Social Icons */}
+                <li className="flex items-center gap-3">
+                  <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20}/>
+                  <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer" size={20}/>
+                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={20}/>
+                  <MdOutlineNetworkCheck className="text-green-600 hover:text-green-700 cursor-pointer" size={20}/>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
       ) : (
-        // Mobile Navigation (unchanged)
+        // Mobile Navigation
         <div className="bg-white shadow-sm">
           <nav className="flex items-center justify-between px-4 py-3">
             <button 
