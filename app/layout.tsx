@@ -16,7 +16,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sansantialiased">
-        <div className='md:px-[4rem] py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto' >
+        <div className='md:px-[4rem] md:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto' >
 <Navbar />
 
         {children}
