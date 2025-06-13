@@ -83,8 +83,9 @@ const AboutTheAuthor = () => {
               <div key={item.id} className="flex flex-row items-start md:gap-4 gap-3">
                 {/* Star Badge & Image */}
                 <div className="relative">
-                  <div className="absolute w-[4.5rem] h-[4.5rem] -top-6 left-[-0.7rem]">
+                  <div className="absolute w-[4.5rem] h-[4.5rem] -top-6 left-[-0.7rem] ">
                     <FaCertificate color='white' size={32} />
+                    <span className='absolute bottom-[2.7rem] left-[0.6rem] font-bold'>{item.id}</span>
                   </div>
                   <Image
                     src={item.img}
