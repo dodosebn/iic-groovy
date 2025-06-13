@@ -1,21 +1,21 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import Logo from './logo';
 import { RiArrowDropDownLine, RiMenu2Fill, RiCloseLine } from "react-icons/ri";
 import { IoSearchSharp, IoLogoTwitter } from "react-icons/io5";
 import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 import { MdOutlineNetworkCheck } from "react-icons/md";
+import Logo from '@/utils/logo';
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
-      // Close menu/search when resizing to desktop
       if (window.innerWidth > 768) {
         setMenuOpen(false);
         setSearchOpen(false);
@@ -24,74 +24,105 @@ const Navbar = () => {
 
     handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const toggleSearch = () => {
     setSearchOpen(!searchOpen);
-    // Close menu if open when searching
     if (menuOpen) setMenuOpen(false);
+    if (moreOpen) setMoreOpen(false);
+  };
+
+  const toggleMore = () => {
+    setMoreOpen(!moreOpen);
+    if (searchOpen) setSearchOpen(false);
   };
 
   return (
-    <div className="relative md:px-[6rem] md:py-[2rem]"> 
-      {/* Overlay for when search is open */}
+    <div className="relative cursor-pointer"> 
+      {/* Overlay for search only */}
       {searchOpen && (
         <div 
-          className="fixed inset-0 bg-opacity-50 z-40"
-          onClick={toggleSearch}
+          className="fixed inset-0 bg-black bg-opacity-20 z-40"
+          onClick={() => setSearchOpen(false)}
         />
       )}
 
       {!isMobile ? (
-        // Desktop Navigation
-        <nav className="flex items-center justify-between  px-[4rem] py-[2rem] border-2 border-[#333] bg-white shadow-sm rounded-[5rem]"> {/* Reduced padding */}
-          <div className="flex items-center">
+        // Desktop Navigation - Two main divs (logo and nav items)
+        <nav className="flex items-center justify-evenly px-[3rem] py-[1.8rem] border-1
+         border-[#333] bg-white shadow-sm rounded-[5rem] w-full">
+          {/* Logo */}
+          <div>
             <Logo/>
           </div>
 
-          <div className="flex-1 relative right-4"> {/* Reduced margin */}
-            <ul className="flex items-center justify-center space-x-6"> {/* Reduced space between items */}
+          {/* All navigation items in one continuous row */}
+          <div className="flex items-center gap-8">
+            <ul className="flex items-center gap-8">
               {["Home", "Membership", "Style Guide✨", "#Tag"].map((item, index) => (
-                <li key={index} className="text-gray-700 hover:text-pink-600 font-medium">
+                <li key={index} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
                   {item}
                 </li>
               ))}
-              <li className="flex items-center text-gray-700 hover:text-pink-600 font-medium">
-                More <RiArrowDropDownLine className="text-xl" />
-              </li>
-            </ul>
-          </div>
-          <div className="flex items-center space-x-6 relative right-[3.5rem]"> 
-                <div className="relative">
-              <button 
-                onClick={toggleSearch}
-                className="text-gray-600 hover:text-pink-600 transition-colors"
-              >
-                <IoSearchSharp className="text-xl" />
-              </button>
               
-              {searchOpen && (
-                <div className="absolute right-0 top-full mt-2 z-50">
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    className="py-2 px-4 rounded-md border border-gray-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
-                    autoFocus
-                  />
-                </div>
-              )}
-            </div>
-            
-            <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] transition-colors">
-              Sign In
-            </button>
-            <ul className="flex items-center space-x-3"> {/* Reduced space between items */}
-              <li><FaFacebookF className="text-blue-600 cursor-pointer" size={24}/></li>
-              <li><IoLogoTwitter className="text-blue-500 cursor-pointer" size={24}/></li>
-              <li><FaInstagram className="text-pink-600 cursor-pointer" size={24}/></li>
-              <li><MdOutlineNetworkCheck className="text-green-600 cursor-pointer" size={24}/></li>
+              {/* More Dropdown - No overlay */}
+              <li className="relative">
+                <button 
+                  onClick={toggleMore}
+                  className="flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap"
+                >
+                  More <RiArrowDropDownLine className={`text-xl transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {moreOpen && (
+                  <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
+                    {["About", "Contact", "Blog", "FAQ"].map((item, index) => (
+                      <a 
+                        key={index} 
+                        href="#" 
+                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
+                      >
+                        {item}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+
+              {/* Search */}
+              <li className="relative">
+                <button 
+                  onClick={toggleSearch}
+                  className="text-gray-600 hover:text-pink-600 transition-colors"
+                >
+                  <IoSearchSharp className="text-xl" />
+                </button>
+                {searchOpen && (
+                  <div className="absolute right-0 top-full mt-2 z-50">
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="py-2 px-4 rounded-md border border-gray-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                      autoFocus
+                    />
+                  </div>
+                )}
+              </li>
+
+              {/* Sign In */}
+              <li>
+                <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] hover:bg-[#444] transition-colors whitespace-nowrap">
+                  Sign In
+                </button>
+              </li>
+
+              {/* Social Icons */}
+              <li className="flex items-center gap-3">
+                <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20}/>
+                <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer" size={20}/>
+                <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={20}/>
+                <MdOutlineNetworkCheck className="text-green-600 hover:text-green-700 cursor-pointer" size={20}/>
+              </li>
             </ul>
           </div>
         </nav>
