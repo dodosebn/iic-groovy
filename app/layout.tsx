@@ -15,8 +15,8 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-sans tracking-tight antialiased">
-        <div className='md:px-[4rem] md:py-[2rem]' >
+      <body className="font-sansantialiased">
+        <div className='md:px-[4rem] py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto' >
 <Navbar />
 
         {children}

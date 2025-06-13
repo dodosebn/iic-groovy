@@ -1,19 +1,23 @@
 import React from 'react'
-import imgSrc from '@/public/images/introImg.avif';
 import Image from 'next/image';
 import Button from '@/utils/button';
 import HorizontalDivider from '@/utils/horizontal';
-
+import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
+import hadShowingBulb from '@/public/images/hand-invention.jpg';
+import cubofTea from '@/public/images/cub-of-tea.jpg';
+import boySmiling from '@/public/images/smiling Gee.jpg';
+import fan from '@/public/images/fan.jpg';
 const FirstCard = () => {
   return (
-    <main className='px-3 py-3 md:py-4 bg-[#f0f0fe] max-w-6xl mx-auto rounded-xl border-1 border-[#000]'>
+    <main className='px-3 py-3 md:py-4 bg-[#f0f0fe]  mx-auto rounded-xl border-1 border-[#000]'>
       <section className='flex flex-col md:flex-row gap-8 p-2  md:p-8'>
         {/* Image Section - Takes more space on desktop */}
       <div className='md:flex-1 h-[20vh] md:h-[25rem]'>
   <Image 
-    src={imgSrc} 
+    src={tallHand} 
     alt='Article visual'
-    className='w-full h-full object-cover rounded-xl border-1 border-[#333]'
+    className='w-full h-full object-cover rounded-xl border-1 border-[#333]  transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5'
   
     priority
   />
@@ -24,16 +28,7 @@ const FirstCard = () => {
           {/* Category and Date */}
           <div className='flex flex-col space-y-3'>
             <div>
-             {/* <button 
-  className='bg-[#fff] border-1 border-[#333] text-[rgb(0,0,0)] px-[1rem] py-[0.3rem] rounded-2xl flex items-center gap-2'
->
-<span 
-  className='w-4 h-4 bg-[] '
-  style={{
-    clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
-  }}
-></span>  Travel
-</button> */}
+         
 <Button name='Travel' spanBg='#c5c5fe'/>
             </div>
             <div className='flex items-center space-x-3 text-gray-600'>
@@ -54,11 +49,12 @@ const FirstCard = () => {
           <div className='flex flex-col sm:flex-row sm:items-center md:justify-between gap-4'>
             <div className='items-center space-x-3 md:flex hidden'>
               <Image 
-                src={imgSrc} 
+                src={boySmiling} 
                 alt='Author avatar' 
                 width={40}
                 height={40}
-                className='rounded-full w-10 h-10 object-cover'
+                className='rounded-full w-10 h-10 object-cover  transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5'
               />
               <p className='font-medium '>John Doe</p>
             </div>
@@ -70,7 +66,7 @@ const FirstCard = () => {
       </section>
 
       {/* Second Section */}
-      <section className='max-w-3xl mx-auto px-3 md:px-[3rem] py-8 md:py-12 space-y-8'>
+      <section className=' mx-auto px-3 md:px-[3rem] py-8 md:py-12 space-y-8'>
         <div className='space-y-6 text-lg leading-relaxed text-gray-800'>
           <p>
             What sets Ghost apart from other products is that you can publish content
@@ -92,10 +88,11 @@ const FirstCard = () => {
         <div className='flex flex-col space-y-2'>
           <div className='flex justify-center h-auto  overflow-hidden'>
           <Image 
-  src={imgSrc}
+  src={hadShowingBulb}
   alt="Content illustration"
   className="w-[25rem] h-auto border-1 border-[#333] object-cover rounded-md 
-  shadow-[0_4px_20px_-2px_rgba(0,0,0,0.15)]"
+    transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5"
 />
           </div>
           <p className='text-center text-gray-500 text-lg'>Image caption</p>
@@ -124,30 +121,33 @@ const FirstCard = () => {
           <div className='flex flex-row gap-4'>
             <div className='flex-[1.5] overflow-hidden'>
               <Image 
-                src={imgSrc} 
+                src={cubofTea} 
                 alt='Gallery image 1'
-                className='w-full h-full object-coverborder-1 border-[#333] object-cover rounded-md 
-  shadow-[0_4px_20px_-2px_rgba(0,0,0,0.15)]'
+                className='w-full h-full  border-1 border-[#333] object-cover rounded-md 
+    transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5'
                 width={400}
                 height={300}
               />
             </div>
             <div className='flex-1 overflow-hidden'>
               <Image 
-                src={imgSrc} 
+                src={fan} 
                 alt='Gallery image 2'
                 className='w-full h-full border-1 border-[#333] object-cover rounded-md 
-  shadow-[0_4px_20px_-2px_rgba(0,0,0,0.15)]'
+    transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5'
                 width={400}
                 height={300}
               />
             </div>
             <div className='flex-1  overflow-hidden'>
               <Image 
-                src={imgSrc} 
+                src={hadShowingBulb} 
                 alt='Gallery image 3'
                 className='w-full h-full border-1 border-[#333] object-cover rounded-md 
-  shadow-[0_4px_20px_-2px_rgba(0,0,0,0.15)]'
+  shadow-[0_4px_20px_-2px_rgba(0,0,0,0.15)]  transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5'
                 width={400}
                 height={300}
               />

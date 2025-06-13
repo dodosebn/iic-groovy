@@ -3,8 +3,8 @@ import React from 'react'
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { TiWorld } from 'react-icons/ti';
 import Image from 'next/image';
-import imgSrc from '@/public/images/introImg.avif';
-
+// import imgSrc from '@/public/images/introImg.avif';
+import boySmiling from '@/public/images/smiling Gee.jpg';
 const FirstIt = () => {
   return (
          <section>
@@ -12,11 +12,11 @@ const FirstIt = () => {
           <div className="flex gap-4 items-start mb-4">
             <div className="flex-shrink-0">
               <Image
-                src={imgSrc}
+                src={boySmiling}
                 alt="Profile picture"
                 width={80}
                 height={80}
-                className="rounded-full w-16 h-16 md:w-20 md:h-20 object-cover border-2 border-[#333]
+                className="rounded-full w-16 h-16 md:w-20 md:h-20 object-cover 
                 transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5"
               />
             </div>
