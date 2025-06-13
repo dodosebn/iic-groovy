@@ -12,17 +12,21 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-  
+  const [mounted, setMounted] = useState(false); // ✅ added
+
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth > 768) {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (!mobile) {
         setMenuOpen(false);
         setSearchOpen(false);
       }
     };
 
-    handleResize();
+    setMounted(true); // ✅ trigger client-rendered state
+    handleResize(); // ✅ run once on mount
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -38,26 +42,23 @@ const Navbar = () => {
     if (searchOpen) setSearchOpen(false);
   };
 
+  // Prevent rendering until client-side (fixes flashing)
+  if (!mounted) return null;
+
   return (
     <div className="relative cursor-pointer"> 
-      {/* Overlay for search only */}
       {searchOpen && (
         <div 
-          className="fixed inset-0  bg-opacity-20 z-40"
+          className="fixed inset-0 bg-black bg-opacity-20 z-40"
           onClick={() => setSearchOpen(false)}
         />
       )}
 
-      {!isMobile ? (
+      {/* Desktop Navigation */}
+      {!isMobile && (
         <div className='flex justify-center w-full px-4'>
-          <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333] 
-       bg-white shadow-sm rounded-[5rem] w-full max-w-[1500px]">
-            {/* Logo */}
-            <div>
-              <Logo/>
-            </div>
-
-            {/* All navigation items in one continuous row */}
+          <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333] bg-white shadow-sm rounded-[5rem] w-full max-w-[1500px]">
+            <div><Logo /></div>
             <div className="flex items-center gap-8">
               <ul className="flex items-center gap-8">
                 {["Home", "Membership", "Style Guide✨", "#Tag"].map((item, index) => (
@@ -65,8 +66,6 @@ const Navbar = () => {
                     {item}
                   </li>
                 ))}
-                
-                {/* More Dropdown - No overlay */}
                 <li className="relative">
                   <button 
                     onClick={toggleMore}
@@ -88,8 +87,6 @@ const Navbar = () => {
                     </div>
                   )}
                 </li>
-
-                {/* Search */}
                 <li className="relative">
                   <button 
                     onClick={toggleSearch}
@@ -108,49 +105,36 @@ const Navbar = () => {
                     </div>
                   )}
                 </li>
-
-                {/* Sign In */}
                 <li>
                   <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] hover:bg-[#444] transition-colors whitespace-nowrap">
                     Sign In
                   </button>
                 </li>
-
-                {/* Social Icons */}
                 <li className="flex items-center gap-3">
-                  <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20}/>
-                  <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer" size={20}/>
-                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={20}/>
-                  <MdOutlineNetworkCheck className="text-green-600 hover:text-green-700 cursor-pointer" size={20}/>
+                  <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20} />
+                  <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer" size={20} />
+                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={20} />
+                  <MdOutlineNetworkCheck className="text-green-600 hover:text-green-700 cursor-pointer" size={20} />
                 </li>
               </ul>
             </div>
           </nav>
         </div>
-      ) : (
-        // Mobile Navigation
+      )}
+
+      {/* Mobile Navigation */}
+      {isMobile && (
         <div className="bg-white shadow-sm">
           <nav className="flex items-center justify-between px-4 py-3">
-            <button 
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-gray-700 p-2"
-            >
+            <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-700 p-2">
               {menuOpen ? <RiCloseLine className="text-2xl" /> : <RiMenu2Fill className="text-2xl" />}
             </button>
-            
-            <div className="flex-1 flex justify-center">
-              <Logo />
-            </div>
-            
-            <button 
-              onClick={toggleSearch}
-              className="text-gray-700 p-2"
-            >
+            <div className="flex-1 flex justify-center"><Logo /></div>
+            <button onClick={toggleSearch} className="text-gray-700 p-2">
               <IoSearchSharp className="text-xl" />
             </button>
           </nav>
 
-          {/* Mobile Menu */}
           {menuOpen && (
             <div className="absolute top-full left-0 right-0 h-screen bg-white shadow-lg z-50 p-4 w-[14rem]">
               <ul className="space-y-4">
@@ -163,12 +147,11 @@ const Navbar = () => {
                   More <RiArrowDropDownLine className="text-xl" />
                 </li>
               </ul>
-              
+
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <button className="w-[70%] bg-[#333333] text-white px-6 py-2 rounded-[5rem] transition-colors">
                   Sign In
                 </button>
-                
                 <div className="flex justify-center space-x-6 mt-4">
                   <FaFacebookF className="text-blue-600 cursor-pointer text-xl" />
                   <IoLogoTwitter className="text-blue-500 cursor-pointer text-xl" />
@@ -179,7 +162,6 @@ const Navbar = () => {
             </div>
           )}
 
-          {/* Mobile Search */}
           {searchOpen && (
             <div className="absolute top-full left-0 right-0 bg-white shadow-lg z-50 p-4">
               <div className="relative">
@@ -189,7 +171,7 @@ const Navbar = () => {
                   className="w-full py-3 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   autoFocus
                 />
-                <button 
+                <button
                   onClick={toggleSearch}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
