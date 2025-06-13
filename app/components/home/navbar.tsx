@@ -49,7 +49,7 @@ const Navbar = () => {
     <div className="relative cursor-pointer"> 
       {searchOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-20 z-40"
+          className="fixed inset-0  bg-opacity-20 z-40"
           onClick={() => setSearchOpen(false)}
         />
       )}
