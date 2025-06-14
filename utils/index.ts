@@ -1,2 +1,3 @@
 import Button from "./button";
-export default {Button};
+import TransitionLink from "./transitionLink";
+export default {Button, TransitionLink };

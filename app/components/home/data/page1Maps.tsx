@@ -99,7 +99,7 @@ p: `It's possible to extend your Ghost site and connect it with hundreds of the 
 
 img: boySmiling ,
   imgName: "Jonathan Doe ",
-  btnCol: "#ffffff",
+  btnCol: "#1dd7c2",
   btnTxt:  "Getting Started"
     },
   ]

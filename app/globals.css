@@ -20,7 +20,18 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Jost", sans-serif
+  font-family: "Jost", sans-serif;
+  transition-property: opacity, background, transform, filter;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+}
+
+.page-transition {
+  opacity: 0;
+  background: black;
+  transform: translateY(40px);
+  filter: blur(12px);
+  pointer-events: none;
 }
 @layer utilities {
   .helvetica-fallback {
