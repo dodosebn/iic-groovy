@@ -1,4 +1,6 @@
 // app/layout.tsx
+import FooterLevel from './components/desktop/footerLevel';
+import Footer from './components/home/footer';
 import Navbar from './components/home/navbar';
 import './globals.css';
 
@@ -21,6 +23,7 @@ export default function RootLayout({
 
         {children}
         </div>
+        <Footer />
       </body>
     </html>
   );

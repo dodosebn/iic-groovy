@@ -1,2 +1,3 @@
 import SideBar from "./sideBar";
-export default {SideBar};
+import FooterLevel from "./footerLevel";
+export default {SideBar, FooterLevel};
