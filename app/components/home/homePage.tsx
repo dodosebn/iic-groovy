@@ -2,7 +2,6 @@ import React from 'react'
 import Navbar from './navbar';
 import FirstCard from '../middleScroll/firstCard';
 import SideBar from '../desktop/sideBar';
-import AboutMeContainer from '@/utils/aboutMeContainer';
 import AboutTheAuthor from '../middleScroll/aboutTheAuthor';
 import Comments from '../middleScroll/comments';
 import Previous from '../middleScroll/previous';
@@ -39,7 +38,7 @@ const HomePage = () => {
           <Previous />
         </div>
         <div className='md:block hidden'> 
-          <div className=' w-[550px]'></div> 
+          <div className=' w-[500px]'></div> 
         </div>
       </div>
     </div>

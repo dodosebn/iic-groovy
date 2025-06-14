@@ -3,20 +3,20 @@ import React from 'react'
 import Image from 'next/image';
 import imgSrc from '@/public/images/introImg.avif';
 import Button from '@/utils/button';
-
+import oneImg from '@/public/images/oneee.jpg';
+import Imager from '@/utils/imager';
 const Previous = () => {
   return (
     <section>
       <AboutMeContainer name='Previous Article'>
         <div className='flex gap-4 md:gap-6 p-3 rounded-lg transition-colors duration-200'>
           <div className='flex-shrink-0 md:flex hidden'>
-            <Image
-              src={imgSrc}
+            <Imager
+              src={oneImg}
               alt="Article thumbnail"
               width={100}
               height={100}
-              className="rounded-sm w-[12rem] h-[15rem] object-cover 
-              transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5"
+              className="rounded-sm w-[12rem] h-[15rem] object-cover"
             />
           </div>
           
@@ -25,7 +25,7 @@ const Previous = () => {
               <Button name={'Getting Started'} spanBg={'#1dd7c2'} />
             </div>
             
-            <h1 className='text-2xl md:text-3xl  font-bold text-gray-900 hover:text-[#ff4c60]
+            <h1 className='text-2xl md:text-3xl  font-bold text-gray-900
              transition-colors cursor-pointer'>
               Far far away, behind the word mountains
             </h1>

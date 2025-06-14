@@ -6,24 +6,28 @@ import imgSrc from '@/public/images/introImg.avif';
 import Image from 'next/image';
 import { FaCertificate } from "react-icons/fa6";
 import Button from '@/utils/button';
-
+import shortHB from '@/public/images/short-hand-holding-bulb.jpg';
+import snailLike from '@/public/images/snail-like.jpg';
+import shoeLike from '@/public/images/shoe.jpg';
+import starLike from '@/public/images/star.svg';
+import smilingImg from '@/public/images/smiling Gee.jpg';
 const AboutTheAuthor = () => {
   const secondBar = [
     {
       id: 1,
-      img: imgSrc,
+      img: shortHB,
       h1: 'Building your audience with subscriber signups',
       p: 'Sep 25, 2022',
     },
     {
       id: 2,
-      img: imgSrc,
+      img: snailLike,
       h1: 'Selling memberships with recurring revenue',
       p: 'mar 16, 2021 ',
     },
     {
       id: 3,
-      img: imgSrc,
+      img:shoeLike,
       h1: 'The subline before us was indeed sublime',
       p: 'Apr 26, 2019 ',
     },
@@ -38,7 +42,7 @@ const AboutTheAuthor = () => {
             <div className="flex flex-row items-center gap-6 mb-4"> {/* Centered flex container */}
               <div className="flex-shrink-0">
                 <Image
-                  src={imgSrc}
+                  src={smilingImg}
                   alt="Profile picture"
                   width={80}
                   height={80}
@@ -78,13 +82,13 @@ const AboutTheAuthor = () => {
           </div>
           
           <div className="grid gap-6 items-left md:items-center">
-            <h2 className='mx-auto'>Check out the latest article from <span className='font-bold'>this author</span></h2>
+            <h2 className='mx-auto'>Check the latest article from <span className='font-bold'>this author</span></h2>
             {secondBar.map((item) => (
               <div key={item.id} className="flex flex-row items-start md:gap-4 gap-3">
                 {/* Star Badge & Image */}
                 <div className="relative">
-                  <div className="absolute w-[4.5rem] h-[4.5rem] -top-6 left-[-0.7rem] ">
-                    <FaCertificate color='white' size={32} />
+                    <div className="absolute w-[4.5rem] h-[4.5rem] -top-4 -left-4">
+                    <Image src={starLike} alt='starLikee'/>
                     <span className='absolute bottom-[2.7rem] left-[0.6rem] font-bold'>{item.id}</span>
                   </div>
                   <Image
@@ -92,13 +96,13 @@ const AboutTheAuthor = () => {
                     alt="Article thumbnail"
                     width={160}
                     height={160}
-                    className="rounded-sm w-20 h-20 object-cover transition-all duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]"
+                    className="rounded-sm w-[5rem] h-[4rem] object-cover transition-all duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]"
                   />
                 </div>
 
                 {/* Article Text - Centered for mobile, left for desktop */}
                 <div className="text-left max-w-xs">
-                  <h1 className="text-lg md:text-xl text font-bold text-[#333] hover:text-black 
+                  <h1 className="text-sm text font-bold text-[#333] hover:text-black 
                   hover:underline cursor-pointer">
                     {item.h1}
                   </h1>
