@@ -27,7 +27,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
         {/* Image Section */}
         {pics && (
           <div className="md:flex-1 h-[38vh] md:h-[24rem] relative">
-            <TransitionLink href='/building-your-audience'>
+            <TransitionLink href='chamber/building-your-audience'>
             <Imager
               src={pics}
               alt="Article visual"
@@ -90,7 +90,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
           {(h1 || p) && (
             <div>
               {h1 && (
-                            <TransitionLink href='/building-your-audience'>
+                            <TransitionLink href='chamber/building-your-audience'>
                 <h1 className="text-2xl md:text-4xl md:w-[20rem] font-bold leading-snug text-gray-800 hover:underline transition-all">
                   {h1}
                 </h1>
@@ -107,7 +107,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
           {/* Continue Button and Author Info */}
           <div className="md:flex flex-col sm:flex-row sm:items-center md:justify-between gap-4">
             <div>
-                                          <TransitionLink href='/building-your-audience'>
+                                          <TransitionLink href='chamber/building-your-audience'>
 
               <button
                 className="bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[2rem] py-[0.2rem] 

@@ -1,7 +1,9 @@
+
+
 import SideBar from './components/desktop/sideBar';
 import Footer from './components/home/customs/footer';
+import MeetAuthor from './components/home/customs/meetAuthor';
 import Navbar from './components/home/customs/navbar';
-
 import './globals.css';
 
 export default function RootLayout({
@@ -28,7 +30,11 @@ export default function RootLayout({
               <SideBar />
             </div>
           </div>
+                          <MeetAuthor />
+
         </div>
+      
+        
         <div className='pt-6'>
         <Footer />
         </div>

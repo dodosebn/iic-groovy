@@ -1,8 +1,9 @@
+import AboutTheAuthor from '@/app/components/middleScroll/aboutTheAuthor';
+import Comments from '@/app/components/middleScroll/comments';
+import FirstCard from '@/app/components/middleScroll/firstCard';
+import Previous from '@/app/components/middleScroll/previous';
 import React from 'react'
-import FirstCard from '../components/middleScroll/firstCard';
-import AboutTheAuthor from '../components/middleScroll/aboutTheAuthor';
-import Comments from '../components/middleScroll/comments';
-import Previous from '../components/middleScroll/previous';
+
 
 
 const HomePage = () => {
