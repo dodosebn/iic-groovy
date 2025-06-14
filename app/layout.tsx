@@ -1,5 +1,4 @@
-// app/layout.tsx
-import FooterLevel from './components/desktop/footerLevel';
+import SideBar from './components/desktop/sideBar';
 import Footer from './components/home/footer';
 import Navbar from './components/home/navbar';
 import './globals.css';
@@ -17,13 +16,21 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="font-sansantialiased">
-        <div className='md:px-[4rem] md:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto' >
-<Navbar />
-
-        {children}
+      <body className="font-sans antialiased">
+        <div className="md:px-[4rem] md:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto">
+          <Navbar />
+          <div className="flex px-2 gap-10 md:flex-row flex-col md:mt-[5rem] mt-[3rem] relative">
+            <div className="flex-2">
+              {children}
+            </div>
+            <div className="md:block hidden">
+              <SideBar />
+            </div>
+          </div>
         </div>
+        <div className='pt-6'>
         <Footer />
+        </div>
       </body>
     </html>
   );

@@ -17,7 +17,8 @@ const FirstIt = () => {
                 width={80}
                 height={80}
                 className="rounded-full w-16 h-16 md:w-20 md:h-20 object-cover 
-                transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5"
+                transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
+                 hover:-translate-y-0.5"
               />
             </div>
 

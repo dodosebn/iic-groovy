@@ -57,7 +57,8 @@ const Navbar = () => {
       {/* Desktop Navigation */}
       {!isMobile && (
         <div className='flex justify-center w-full px-4'>
-          <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333] bg-white shadow-sm rounded-[5rem] w-full max-w-[1500px]">
+          <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333]
+           bg-white shadow-sm rounded-[5rem] w-full max-w-[1500px]">
             <div><Logo /></div>
             <div className="flex items-center gap-8">
               <ul className="flex items-center gap-8">

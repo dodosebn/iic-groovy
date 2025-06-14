@@ -7,7 +7,7 @@ import Image from 'next/image';
 const Footer = () => {
   return(
 <footer>
-     <div className='  bg-[#fffacd] min-h-screen '>
+     <div className='  bg-[#fffacd] md:min-h-screen min-h-[22rem] overflow-y-hidden md:overflow-y-visible'>
        <section className='md:flex px-2 gap-10 md:flex-row flex-col hidden'>
         <div className='flex-2 mt-9'> 
         <FooterLevel />
@@ -17,11 +17,11 @@ const Footer = () => {
         </div>
       </section>
     <HorizontalDivider />
-       <section>
+       <section >
         <div className='text-center space-y-6 py-8'>
           <h2 className='text-xl font-semibold text-gray-700'>Like what you read?</h2>
           <div className='flex justify-center'>
-            <div><Image src={flyer} alt='somthgin' className='w-[6rem] h-[6rem]'/></div>
+            <div className='hidden md:flex'><Image src={flyer} alt='somthgin' className='w-[6rem] h-[6rem]'/></div>
           <div>
           <h1 className='text-2xl md:text-3xl font-bold text-gray-900 mb-4'>Subscribe to our Newsletter</h1>
   <div className="relative max-w-md mx-auto ">
@@ -41,7 +41,7 @@ const Footer = () => {
 </div>
 </div>
 </div>
-          <p className='text-gray-600 max-w-2xl pl-[6rem] mx-auto'>
+          <p className='text-gray-600 max-w-2xl md:pl-[6rem] px-[3rem] md:px-0 mx-auto'>
             Subscribe to our email newsletter and unlock access to <br className='hidden md:flex' /> <span className='font-bold'> 
             members-only</span> content and <span className='font-bold'>exclusive updates.</span>
           </p>
