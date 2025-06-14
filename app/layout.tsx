@@ -1,6 +1,7 @@
 import SideBar from './components/desktop/sideBar';
-import Footer from './components/home/footer';
-import Navbar from './components/home/navbar';
+import Footer from './components/home/customs/footer';
+import Navbar from './components/home/customs/navbar';
+
 import './globals.css';
 
 export default function RootLayout({

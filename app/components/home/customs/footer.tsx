@@ -1,10 +1,10 @@
 import React from 'react'
-import FooterLevel from '../desktop/footerLevel';
 import HorizontalDivider from '@/utils/horizontal';
 import flyer from '@/public/images/subscribe-airplane.png';
-import Imager from '@/utils/imager';
 import Image from 'next/image';
+import FooterLevel from '../../desktop/footerLevel';
 const Footer = () => {
+ 
   return(
 <footer>
      <div className='  bg-[#fffacd] md:min-h-screen min-h-[22rem] overflow-y-hidden md:overflow-y-visible'>

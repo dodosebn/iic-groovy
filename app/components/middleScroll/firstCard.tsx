@@ -10,9 +10,9 @@ import fan from '@/public/images/fan.jpg';
 const FirstCard = () => {
   return (
     <main className='px-3 py-3 md:py-4 bg-[#f0f0fe]  mx-auto rounded-xl border-1 border-[#000]'>
-      <section className='flex flex-col md:flex-row gap-8 p-2  md:p-8'>
+      <section className='flex flex-col md:flex-row gap-8 p-5  md:p-8'>
         {/* Image Section - Takes more space on desktop */}
-      <div className='md:flex-1 h-[20vh] md:h-[25rem]'>
+      <div className='md:flex-1 h-[38vh] md:h-[25rem]'>
   <Image 
     src={tallHand} 
     alt='Article visual'
