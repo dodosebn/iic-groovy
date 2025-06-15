@@ -6,13 +6,14 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 import { MdOutlineNetworkCheck } from "react-icons/md";
 import Logo from '@/utils/logo';
+import TransitionLink from '@/utils/transitionLink';
 
 const Navbar = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
-  const [mounted, setMounted] = useState(false); // ✅ added
+  const [mounted, setMounted] = useState(false); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,8 +25,8 @@ const Navbar = () => {
       }
     };
 
-    setMounted(true); // ✅ trigger client-rendered state
-    handleResize(); // ✅ run once on mount
+    setMounted(true); 
+    handleResize(); 
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -42,9 +43,30 @@ const Navbar = () => {
     if (searchOpen) setSearchOpen(false);
   };
 
-  // Prevent rendering until client-side (fixes flashing)
   if (!mounted) return null;
+const navItems = [
 
+  {
+    id: 1, 
+    path: '/',
+    name: 'Home'
+  },
+    {
+    id: 2, 
+    path: 'membership',
+    name: 'Membership'
+  },
+    {
+    id: 3, 
+    path: '/',
+    name: 'Style Guide✨'
+  },
+   {
+    id: 4, 
+    path: '/',
+    name: '#Tag'
+  }
+]
   return (
     <div className="relative cursor-pointer"> 
       {searchOpen && (
@@ -54,7 +76,6 @@ const Navbar = () => {
         />
       )}
 
-      {/* Desktop Navigation */}
       {!isMobile && (
         <div className='flex justify-center w-full px-4'>
           <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333]
@@ -62,9 +83,13 @@ const Navbar = () => {
             <div><Logo /></div>
             <div className="flex items-center gap-8">
               <ul className="flex items-center gap-8">
-                {["Home", "Membership", "Style Guide✨", "#Tag"].map((item, index) => (
-                  <li key={index} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
-                    {item}
+                {navItems.map((item) => (
+                  <li key={item.id} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
+                                     <TransitionLink href={item.path}>
+
+                    {item.name}
+                                      </TransitionLink>
+
                   </li>
                 ))}
                 <li className="relative">
@@ -76,13 +101,13 @@ const Navbar = () => {
                   </button>
                   {moreOpen && (
                     <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
-                      {["About", "Contact", "Blog", "FAQ"].map((item, index) => (
+                      {navItems.map((item) => (
                         <a 
-                          key={index} 
+                          key={item.name} 
                           href="#" 
                           className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
                         >
-                          {item}
+                       <TransitionLink href={item.path}>  {item.name}</TransitionLink> 
                         </a>
                       ))}
                     </div>
