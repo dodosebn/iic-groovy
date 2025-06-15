@@ -21,7 +21,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   return (
     <main>
   <div
-  className="mx-auto md:h-[35rem] flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
+  className="mx-auto  flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
   style={bg ? { backgroundColor: bg } : {}}
 >
 

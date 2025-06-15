@@ -6,7 +6,13 @@ import cupOfTea from '@/public/images/cub-of-tea.jpg';
 import gadget from '@/public/images/gadgets.jpg';
 import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
 import boySmiling from '@/public/images/smiling Gee.jpg';
+import fan from '@/public/images/fan.jpg';
+import kitchen from '@/public/images/kitchen.jpg';
+import dreadedG from '@/public/authors/auth-dread.jpg';
+import shoeLike from '@/public/images/shoe.jpg';
 import { BiSolidMessageRounded } from "react-icons/bi";
+import music from '@/public/images/music.jpg';
+import umbrella from '@/public/images/umbrella.jpg';
 const Page1Maps = [
     {
 id: 1,
@@ -99,6 +105,101 @@ p: `It's possible to extend your Ghost site and connect it with hundreds of the 
 
 img: boySmiling ,
   imgName: "Jonathan Doe ",
+  btnCol: "#1dd7c2",
+  btnTxt:  "Getting Started"
+    },
+             {
+id: 7,
+bg: '#c5f4ef',
+pics: fan,
+picsIcon1: BiSolidMessageRounded,
+picsIcon2: BiSolidMessageRounded,
+date: 'March 16, 2021',
+duration: '2 min read',
+h1: 'How to grow your business around an audience',
+p: `As you grow, Ghost has a number of different user roles for your team...`,
+
+img:  dreadedG,
+  imgName: " James Brawson",
+  btnCol: "#1dd7c2",
+  btnTxt:  "Getting Started"
+    },
+                {
+id: 8,
+bg: '#dff9d9',
+pics: kitchen,
+picsIcon1: BiSolidMessageRounded,
+picsIcon2: BiSolidMessageRounded,
+date: 'March 16, 2021',
+duration: '2 min read',
+h1: 'Writing and managing content in Ghost',
+p: `Ghost comes with a best-in-class editor which does its very best to get out of the way, and let you focus on your content. Don't...`,
+
+img: boySmiling ,
+  imgName: " Jonathan Doe",
+  btnCol: "#83ea6c",
+  btnTxt:  "Health"
+    },
+                 {
+id: 9,
+bg: '#ffeae9',
+pics: shoeLike,
+picsIcon1: BiSolidMessageRounded,
+picsIcon2: BiSolidMessageRounded,
+date: 'April 26, 2019',
+duration: '2 min read',
+h1: 'The spectacle before us was indeed sublime',
+p: `Welcome, it's great to have you here. We know that first impressions are important, so we've populated your new site with some initial getting started...`,
+
+img: smilingGirle ,
+  imgName: "Mary Buzard",
+  btnCol: "#ffaeab",
+  btnTxt:  "Lifestyle"
+    },
+      {
+id: 11,
+bg: '#fff2be',
+pics: music,
+picsIcon1: BiSolidMessageRounded,
+date: 'March 16, 2021',
+duration: '3 min read',
+h1: 'Musical improvisation is the spontaneous music',
+p: `Ghost comes with a beautiful default theme called Casper, which is designed to be a clean, readable publication layout and can be adapted for most...`,
+
+img: boySmiling,
+  imgName: "Jonathan Doe",
+  btnCol: "#ffcf00",
+  btnTxt:  "music"
+    },
+           {
+id: 10,
+bg: '#c5f4ef',
+// pics: shoeLike,
+// picsIcon1: BiSolidMessageRounded,
+// picsIcon2: BiSolidMessageRounded,
+date: 'April 26, 2019',
+duration: '2 min read',
+h1: 'Apps and scripts for your Ghost website',
+p: `There are three primary ways to work with third-party services in Ghost: using Zapier, editing your theme, or using the Ghost API. Zapier You can connect your Ghost site to over 1,000 external services using the official integration with Zapier. Zapier sets up automations with Triggers and Actions, which allows you to create and...` ,
+
+img: smilingGirle ,
+  imgName: "Brenda Hitchell ",
+  btnCol: "#1dd7c2",
+  btnTxt:  "Getting Started"
+    },
+         {
+id: 12,
+bg: '#c5f4ef',
+pics: umbrella,
+picsIcon1: BiSolidMessageRounded,
+picsIcon2: BiSolidMessageRounded,
+date: 'April 26, 2019',
+duration: '2 min read',
+h1: 'Managing admin settings',
+p: `There are a couple of things to do next while you're getting set up: Make your site private If you've got a publication that you....` ,
+
+img: smilingGirle ,
+  imgName: "Brenda  ",
   btnCol: "#1dd7c2",
   btnTxt:  "Getting Started"
     },

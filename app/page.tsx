@@ -9,8 +9,8 @@ export default function Home() {
   const [subscribed, setSubscribed] = useState(false);
 
   return (
-    <div className="flex justify-center flex-col px-[1rem]">
-      <HomePage num={subscribed ? 6 : 3} />
+    <div className="flex justify-center flex-col px-[1rem] md:px-0">
+      <HomePage num2={subscribed ? 6 : 3} num1={0} />
 
       {!subscribed && (
         <p className="text-lg mt-2">

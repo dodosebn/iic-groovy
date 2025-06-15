@@ -5,7 +5,7 @@ import TransitionLink from '@/utils/transitionLink'
 const page = () => {
   return (
     <div className="flex justify-center flex-col px-[1rem]">
-          <HomePage num={3}/>
+          <HomePage num1={6} num2={12}/>
      <div className="flex gap-3 w-full mt-6 justify-center">
          <div>
             <TransitionLink href='/'>
