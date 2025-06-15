@@ -1,12 +1,13 @@
 import TransitionLink from "@/utils/transitionLink";
 import HomePage from "./components/home/homePage";
+import MeetAuthor from "./components/home/customs/meetAuthor";
 
 
 
 
 export default function Home() {
   return (
-    <div className="flex justify-center flex-col">
+    <div className="flex justify-center flex-col px-[1rem]">
      <HomePage/>
      <div className="flex gap-3 w-full mt-6 justify-center">
       <div>
@@ -24,6 +25,8 @@ Next
       </TransitionLink>
       </div>
      </div>
+                           <MeetAuthor />
+
     </div>
   );
 }
