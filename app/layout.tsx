@@ -22,19 +22,13 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <div className="md:px-[4rem] md:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto">
           <Navbar />
-          <div className="flex px-2 gap-10 md:flex-row flex-col md:mt-[5rem] mt-[3rem] relative">
-            <div className="flex-2">
+          <div className="md:mt-[5rem] mt-[3rem] relative">
               {children}
-            </div>
-            <div className="md:block hidden">
-              <SideBar />
-            </div>
           </div>
-                          <MeetAuthor />
+                      <MeetAuthor />
 
         </div>
       
-        
         <div className='pt-6'>
         <Footer />
         </div>

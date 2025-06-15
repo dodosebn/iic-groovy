@@ -19,15 +19,17 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   btnTxt,
 }) => {
   return (
-    <div
-      className="mx-auto rounded-xl border border-[#000]"
-      style={bg ? { backgroundColor: bg } : {}}
-    >
-      <section className="flex flex-col md:flex-row gap-8 p-5 md:p-6">
+    <main>
+  <div
+  className="mx-auto md:h-[35rem] flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
+  style={bg ? { backgroundColor: bg } : {}}
+>
+
+      <section className="flex flex-col gap-8 p-5 md:p-6">
         {/* Image Section */}
         {pics && (
-          <div className="md:flex-1 h-[38vh] md:h-[24rem] relative">
-            <TransitionLink href='chamber/building-your-audience'>
+          <div className=" h-[38vh]  relative">
+            <TransitionLink href='building-your-audience'>
             <Imager
               src={pics}
               alt="Article visual"
@@ -39,7 +41,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
               <div className="absolute w-full bottom-[7.3rem] p-4">
                 <div className="flex justify-between items-center w-full">
                   {btnTxt && btnCol && (
-                    <div className="md:hidden flex">
+                    <div className=" flex">
                       <Button name={btnTxt} spanBg={btnCol} />
                     </div>
                   )}
@@ -64,13 +66,11 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
           </div>
         )}
 
-        {/* Content Section */}
-        <div className="md:flex-[1.5] flex flex-col justify-center px-2 md:px-0 md:py-4 space-y-6">
-          {/* Date and Category */}
+        <div className=" flex flex-col justify-center px-2  space-y-6">
           {(btnTxt || date || duration) && (
             <div className="flex flex-row space-x-3">
               {btnTxt && btnCol && (
-                <div className="md:flex hidden">
+                <div className=" hidden">
                   <Button name={btnTxt} spanBg={btnCol} />
                 </div>
               )}
@@ -86,28 +86,26 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             </div>
           )}
 
-          {/* Title and Paragraph */}
           {(h1 || p) && (
             <div>
               {h1 && (
-                            <TransitionLink href='chamber/building-your-audience'>
-                <h1 className="text-2xl md:text-4xl md:w-[20rem] font-bold leading-snug text-gray-800 hover:underline transition-all">
+                            <TransitionLink href='building-your-audience'>
+                <h1 className="text-2xl  font-bold leading-snug text-gray-800 hover:underline transition-all">
                   {h1}
                 </h1>
                 </TransitionLink>
               )}
               {p && (
-                <p className="pt-3 md:text-lg text-sm">
+                <p className="pt-3  text-sm">
                   {p}
                 </p>
               )}
             </div>
           )}
 
-          {/* Continue Button and Author Info */}
           <div className="md:flex flex-col sm:flex-row sm:items-center md:justify-between gap-4">
             <div>
-                                          <TransitionLink href='chamber/building-your-audience'>
+                                          <TransitionLink href='building-your-audience'>
 
               <button
                 className="bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[2rem] py-[0.2rem] 
@@ -138,6 +136,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
         </div>
       </section>
     </div>
+    </main>
   );
 };
 

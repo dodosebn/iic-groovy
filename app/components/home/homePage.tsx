@@ -7,23 +7,11 @@ const HomePage = () => {
   
   return (
     <div className="home-container">
-      {Page1Maps.map((card, index) => (
-<div className={index > 0 ? 'mt-6' : ''} key={card.id}> 
-         <HomeWrapper
-          bg={card.bg}
-          pics={card.pics}
-          picsIcon1={card.picsIcon1}
-          date={card.date}
-          duration={card.duration}
-          h1={card.h1}
-          p={card.p}
-          img={card.img}
-          imgName={card.imgName}
-          btnCol={card.btnCol}
-          btnTxt={card.btnTxt}
-        />
-        </div>
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {Page1Maps.slice(0, 6).map((item) => (
+          <HomeWrapper key={item.id} {...item} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -1,11 +1,17 @@
 import React from 'react'
 import HomePage from '../components/home/homePage'
 import TransitionLink from '@/utils/transitionLink'
+import Page1Maps from '../components/home/data/page1Maps'
+import HomeWrapper from '../components/home/customs/homeWrapper'
 
 const page = () => {
   return (
-    <div className="flex justify-center flex-col">
-     <HomePage/>
+    <div className="flex justify-center flex-col px-[1rem]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {Page1Maps.slice(0, 6).map((item) => (
+          <HomeWrapper key={item.id} {...item} />
+        ))}
+      </div>
      <div className="flex gap-3 w-full mt-6 justify-center">
          <div>
             <TransitionLink href='/'>
