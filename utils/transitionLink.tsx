@@ -6,9 +6,9 @@ interface TransitionLinkProps extends LinkProps{
     children: ReactNode;
     href: string;
 }
-function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
+// function sleep(ms: number): Promise<void> {
+//     return new Promise((resolve) => setTimeout(resolve, ms));
+// }
 
 const TransitionLink  = ({children, href, ...props}: TransitionLinkProps) => {
     const router = useRouter();
@@ -16,9 +16,9 @@ const TransitionLink  = ({children, href, ...props}: TransitionLinkProps) => {
 e.preventDefault();
 const body = document.querySelector('body');
 body?.classList.add('page-transition');
-await sleep(200);
+// await sleep(100);
 router.push(href);
-await sleep(200);
+// await sleep(100);
 
 body?.classList.remove('page-transition');
     }

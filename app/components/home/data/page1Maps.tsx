@@ -27,7 +27,8 @@ so you know what's working and what isn't....`,
 img: boySmiling,
   imgName: "John Doe",
   btnCol: "#c5c5fe",
-  btnTxt:  "Travel"
+  btnTxt:  "Travel",
+  path: '/pages/building-your-audience'
     },
       {
 id: 2,
@@ -42,7 +43,8 @@ p: `Hey there, welcome to your new home on the web! Unlike social networks, this
 img: boySmiling,
   imgName: "Jonathan Doe",
   btnCol: "#03d4bb",
-  btnTxt:  "Getting Started"
+  btnTxt:  "Getting Started",
+    path: '/pages/far-far-away'
     },
        {
 id: 3,
@@ -58,7 +60,8 @@ p: `For creators and aspiring entrepreneurs looking to generate a sustainable re
 img: boySmiling,
   imgName: "Jonathan Doe",
   btnCol: "#83ea6c",
-  btnTxt:  "Health"
+  btnTxt:  "Health",
+  path: '/pages/Selling-memberships'
     },
           {
 id: 4,
@@ -74,7 +77,9 @@ p: `As discussed in the introduction post, one of the best things about Ghost is
 img: smilingGirle,
   imgName: "Mary Buzard ",
   btnCol: "#85b2f4",
-  btnTxt:  "Technology"
+  btnTxt:  "Technology",
+    path: '/pages/Customizing'
+
     },
          {
 id: 5,
@@ -90,7 +95,9 @@ p: `The Ghost editor has everything you need to fully optimise your content. Thi
 img: smilingGirle,
   imgName: "Mary Buzard ",
   btnCol: "#ffcf00",
-  btnTxt:  "Music"
+  btnTxt:  "Music",
+      path: '/pages/what-you-need'
+
     },
          {
 id: 6,
@@ -106,7 +113,9 @@ p: `It's possible to extend your Ghost site and connect it with hundreds of the 
 img: boySmiling ,
   imgName: "Jonathan Doe ",
   btnCol: "#1dd7c2",
-  btnTxt:  "Getting Started"
+  btnTxt:  "Getting Started",
+      path: '/pages/how-to-grow'
+
     },
              {
 id: 7,
@@ -122,7 +131,9 @@ p: `As you grow, Ghost has a number of different user roles for your team...`,
 img:  dreadedG,
   imgName: " James Brawson",
   btnCol: "#1dd7c2",
-  btnTxt:  "Getting Started"
+  btnTxt:  "Getting Started",
+        path: '/pages/Setting'
+
     },
                 {
 id: 8,
@@ -138,7 +149,9 @@ p: `Ghost comes with a best-in-class editor which does its very best to get out 
 img: boySmiling ,
   imgName: " Jonathan Doe",
   btnCol: "#83ea6c",
-  btnTxt:  "Health"
+  btnTxt:  "Health",
+          path: '/pages/Writing-and-managing'
+
     },
                  {
 id: 9,
@@ -154,7 +167,9 @@ p: `Welcome, it's great to have you here. We know that first impressions are imp
 img: smilingGirle ,
   imgName: "Mary Buzard",
   btnCol: "#ffaeab",
-  btnTxt:  "Lifestyle"
+  btnTxt:  "Lifestyle",
+            path: '/pages/the-spectacle'
+
     },
       {
 id: 11,
@@ -169,7 +184,9 @@ p: `Ghost comes with a beautiful default theme called Casper, which is designed 
 img: boySmiling,
   imgName: "Jonathan Doe",
   btnCol: "#ffcf00",
-  btnTxt:  "music"
+  btnTxt:  "music",
+              path: '/pages/musical'
+
     },
            {
 id: 10,
@@ -181,6 +198,7 @@ date: 'April 26, 2019',
 duration: '2 min read',
 h1: 'Apps and scripts for your Ghost website',
 p: `There are three primary ways to work with third-party services in Ghost: using Zapier, editing your theme, or using the Ghost API. Zapier You can connect your Ghost site to over 1,000 external services using the official integration with Zapier. Zapier sets up automations with Triggers and Actions, which allows you to create and...` ,
+              path: '/pages/musical',
 
 img: smilingGirle ,
   imgName: "Brenda Hitchell ",
@@ -201,7 +219,9 @@ p: `There are a couple of things to do next while you're getting set up: Make yo
 img: smilingGirle ,
   imgName: "Brenda  ",
   btnCol: "#1dd7c2",
-  btnTxt:  "Getting Started"
+  btnTxt:  "Getting Started",
+                path: '/pages/managing',
+
     },
   ]
   export default Page1Maps;

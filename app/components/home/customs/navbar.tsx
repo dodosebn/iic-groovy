@@ -53,7 +53,7 @@ const navItems = [
   },
     {
     id: 2, 
-    path: 'membership',
+    path: 'membership/signUp',
     name: 'Membership'
   },
     {
@@ -102,13 +102,12 @@ const navItems = [
                   {moreOpen && (
                     <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
                       {navItems.map((item) => (
-                        <a 
+                        <span 
                           key={item.name} 
-                          href="#" 
                           className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
                         >
                        <TransitionLink href={item.path}>  {item.name}</TransitionLink> 
-                        </a>
+                        </span>
                       ))}
                     </div>
                   )}
@@ -132,9 +131,11 @@ const navItems = [
                   )}
                 </li>
                 <li>
+                  <TransitionLink href='/signIn'>
                   <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] hover:bg-[#444] transition-colors whitespace-nowrap">
                     Sign In
                   </button>
+                  </TransitionLink>
                 </li>
                 <li className="flex items-center gap-3">
                   <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20} />
@@ -175,9 +176,11 @@ const navItems = [
               </ul>
 
               <div className="mt-4 pt-4 border-t border-gray-200">
+                <TransitionLink href='signIn'>
                 <button className="w-[70%] bg-[#333333] text-white px-6 py-2 rounded-[5rem] transition-colors">
                   Sign In
                 </button>
+                </TransitionLink>
                 <div className="flex justify-center space-x-6 mt-4">
                   <FaFacebookF className="text-blue-600 cursor-pointer text-xl" />
                   <IoLogoTwitter className="text-blue-500 cursor-pointer text-xl" />

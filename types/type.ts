@@ -15,4 +15,5 @@ export type HomeWrapperProps = {
   btnCol?: string;
   btnTxt?: string;
   category?: string;
+path: string;
 };

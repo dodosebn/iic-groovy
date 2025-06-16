@@ -1,20 +1,25 @@
 import React from 'react'
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import Button from '@/utils/button';
 import HorizontalDivider from '@/utils/horizontal';
-import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
 import hadShowingBulb from '@/public/images/hand-invention.jpg';
 import cubofTea from '@/public/images/cub-of-tea.jpg';
 import boySmiling from '@/public/images/smiling Gee.jpg';
 import fan from '@/public/images/fan.jpg';
-const FirstCard = () => {
+interface cardProps {
+  imgGen: string | StaticImageData;
+ title: string;
+ date: string;
+ duration: string;
+}
+const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
   return (
     <main className='px-3 py-3 md:py-4 bg-[#f0f0fe]  mx-auto rounded-xl border-1 border-[#000]'>
       <section className='flex flex-col md:flex-row gap-8 p-5  md:p-8'>
         {/* Image Section - Takes more space on desktop */}
       <div className='md:flex-1 h-[38vh] md:h-[25rem]'>
   <Image 
-    src={tallHand} 
+    src={imgGen} 
     alt='Article visual'
     className='w-full h-full object-cover rounded-xl border-1 border-[#333]  transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
                  hover:-translate-y-0.5'
@@ -32,16 +37,16 @@ const FirstCard = () => {
 <Button name='Travel' spanBg='#c5c5fe'/>
             </div>
             <div className='flex items-center space-x-3 text-gray-600'>
-              <p>September 25, 2022</p>
+              <p>{date}</p>
               <span className='w-1 h-1 bg-pink-600 rounded-full'></span>
-              <p>3 min read</p>
+              <p>{duration}</p>
             </div>
           </div>
           
           {/* Title */}
           <div className='border-2 border-[#333] bg-[#fff] p-6 rounded-lg'>
             <h1 className='text-2xl md:text-3xl font-bold text-gray-800 '>
-              Building your audience with subscriber signups
+              {title}
             </h1>
           </div>
 

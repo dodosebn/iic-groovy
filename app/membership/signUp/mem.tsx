@@ -1,3 +1,4 @@
+import TransitionLink from '@/utils/transitionLink';
 import React from 'react'
 
 const Mem = () => {
@@ -31,7 +32,9 @@ const Mem = () => {
         
         <div>
         <p className='text-center text-sm text-[#333]'>
-Already have an account? <span className='font-bold cursor-pointer'>Sign In</span>
+Already have an account? <span className='font-bold cursor-pointer'><TransitionLink
+ href='/signIn'>
+  Sign In</TransitionLink></span>
 
         </p>
         </div>
