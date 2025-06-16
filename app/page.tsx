@@ -4,12 +4,14 @@ import TransitionLink from "@/utils/transitionLink";
 import HomePage from "./components/home/homePage";
 import MeetAuthor from "./components/home/customs/meetAuthor";
 import { useState } from "react";
+import FourIt from "./components/desktop/fourIt";
 
 export default function Home() {
   const [subscribed, setSubscribed] = useState(false);
 
   return (
     <div className="flex justify-center flex-col px-[1rem] md:px-0">
+      {/* <FourIt /> */}
       <HomePage num2={subscribed ? 6 : 3} num1={0} />
 
       {!subscribed && (

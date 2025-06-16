@@ -3,6 +3,7 @@ import FourthStuff from '@/utils/fourthStuff';
 import Logo from '@/utils/logo';
 import ThreeStuff from '@/utils/threeStuff';
 import React from 'react';
+import FourIt from './fourIt';
 
 const FooterLevel = () => {
   return (
@@ -24,7 +25,7 @@ const FooterLevel = () => {
         <div className=''>
           <ThreeStuff />
         </div>
-
+{/* 
         <div>
           <div className="flex justify-start mb-4">
             <Button name="Getting Started" spanBg="#1dd7c2" />
@@ -49,8 +50,8 @@ const FooterLevel = () => {
             <div>{''}</div>
           </div>
         
-        </div>
-
+        </div> */}
+<FourIt />
         <div>
           <FourthStuff />
         </div>

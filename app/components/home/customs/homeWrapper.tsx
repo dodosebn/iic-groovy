@@ -16,7 +16,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   img,
   imgName,
   btnCol,
-  btnTxt,
+  tag,
   path,
 }) => {
   return (
@@ -39,12 +39,12 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 />
               </TransitionLink>
 
-              {(btnTxt || PicsIcon1 || PicsIcon2) && (
+              {(tag || PicsIcon1 || PicsIcon2) && (
                 <div className="absolute w-full bottom-[7.3rem] p-4">
                   <div className="flex justify-between items-center w-full">
-                    {btnTxt && btnCol && (
+                    {tag && btnCol && (
                       <div className="flex">
-                        <Button name={btnTxt} spanBg={btnCol} />
+                        <Button name={tag} spanBg={btnCol} />
                       </div>
                     )}
 
@@ -69,11 +69,11 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
           )}
 
           <div className="flex flex-col justify-center px-2 space-y-6">
-            {(btnTxt || date || duration) && (
+            {(tag || date || duration) && (
               <div className="flex flex-row space-x-3">
-                {btnTxt && btnCol && (
+                {tag && btnCol && (
                   <div className="hidden">
-                    <Button name={btnTxt} spanBg={btnCol} />
+                    <Button name={tag} spanBg={btnCol} />
                   </div>
                 )}
                 {(date || duration) && (

@@ -13,7 +13,7 @@ export type HomeWrapperProps = {
   img?: string | StaticImageData;
   imgName?: string;
   btnCol?: string;
-  btnTxt?: string;
+  tag?: string;
   category?: string;
 path: string;
 };
