@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { RiArrowDropDownLine, RiMenu2Fill, RiCloseLine } from "react-icons/ri";
 import { IoSearchSharp, IoLogoTwitter } from "react-icons/io5";
-import { FaFacebookF } from "react-icons/fa";
+import { FaFacebookF, FaTiktok } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa6";
 import { MdOutlineNetworkCheck } from "react-icons/md";
 import Logo from '@/utils/logo';
@@ -138,10 +138,16 @@ const navItems = [
                   </TransitionLink>
                 </li>
                 <li className="flex items-center gap-3">
-                  <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20} />
-                  <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer" size={20} />
-                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={20} />
-                  <MdOutlineNetworkCheck className="text-green-600 hover:text-green-700 cursor-pointer" size={20} />
+                  {/* <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20} /> */}
+                 <TransitionLink href=' https://x.com/ideaischange'> <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer"
+                  size={20} /></TransitionLink>
+                  <TransitionLink href='https://www.instagram.com/ideaischange/'>
+                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer"
+                   size={20} /></TransitionLink>
+                                     <TransitionLink href='https://www.tiktok.com/@ideaischange'>
+
+                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={20} />
+               </TransitionLink>
                 </li>
               </ul>
             </div>
@@ -182,10 +188,15 @@ const navItems = [
                 </button>
                 </TransitionLink>
                 <div className="flex justify-center space-x-6 mt-4">
-                  <FaFacebookF className="text-blue-600 cursor-pointer text-xl" />
-                  <IoLogoTwitter className="text-blue-500 cursor-pointer text-xl" />
-                  <FaInstagram className="text-pink-600 cursor-pointer text-xl" />
-                  <MdOutlineNetworkCheck className="text-green-600 cursor-pointer text-xl" />
+               <TransitionLink href=' https://x.com/ideaischange'> <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer"
+                  size={20} /></TransitionLink>
+                  <TransitionLink href='https://www.instagram.com/ideaischange/'>
+                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer"
+                   size={20} /></TransitionLink>
+                                     <TransitionLink href='https://www.tiktok.com/@ideaischange'>
+
+                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={20} />
+               </TransitionLink>
                 </div>
               </div>
             </div>
