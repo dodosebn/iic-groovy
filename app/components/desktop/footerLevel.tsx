@@ -7,7 +7,7 @@ import React from 'react';
 const FooterLevel = () => {
   return (
     <main className='bg-[#fffacd] relative p-6'>
-        <div className='relative -top-11'>
+        <div className='relative -top-[4.9rem]'>
       <div className='flex flex-row  justify-around gap-6 '>
         <div className='font-bold text-xl bg-white px-5 py-1 
       border border-[#333] rounded-3xl'>Latest Article</div> 
