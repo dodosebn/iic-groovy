@@ -7,56 +7,44 @@ import FourIt from './fourIt';
 
 const FooterLevel = () => {
   return (
-    <main className='bg-[#fffacd] relative p-6'>
-        <div className='relative -top-[4.9rem]'>
-      <div className='flex flex-row  justify-around gap-6 '>
-        <div className='font-bold text-xl bg-white px-5 py-1 
-      border border-[#333] rounded-3xl'>Latest Article</div> 
-        <div className='font-bold text-xl bg-white px-5 py-1 
-       border border-[#333] rounded-3xl'>Tag Cloud</div> 
-        <div className='font-bold text-xl bg-white px-5 py-1 
-       border border-[#333] rounded-3xl'>Follow Me!</div> 
+   <main className='bg-[#fffacd] flex justify-between w-full '>
+  {/* Left column */}
+  <div className='flex flex-col pt-[4rem] pl-[3rem] w-[16rem] shrink-0'>
+    <div><Logo /></div>
+    <div>
+      <p className='text-sm py-5'>
+        A super modern theme following the latest trends with premium Membership and fully compatible with 
+        <span className='font-bold'> Ghost.</span>
+      </p>
+      <p className='text-sm'>Check more themes like this on estudiopatagon.com</p>
+    </div>
+  </div>
+
+  {/* Main section that should take up remaining space */}
+  <section className='flex-1'>
+    <div className='relative -top-[3.5rem] left-[11rem]'>
+  <div className='flex flex-row justify-between gap-6'>
+    {['Latest  Articles', 'Tag Cloud', 'Follow Me!'].map((itm, ndx) => (
+      <div
+        key={ndx}
+        className={`font-bold text-xl bg-white px-6 py-1 border border-[#333] rounded-3xl
+        ${ndx === 2 ? 'relative right-[-4rem]' : ''}`} 
+      >
+        {itm}
       </div>
+    ))}
 </div>
-      {/* Main content container */}
-      <section className='pt-5 flex flex-row justify-around relative'>
-       
 
-        <div className=''>
-          <ThreeStuff />
-        </div>
-{/* 
-        <div>
-          <div className="flex justify-start mb-4">
-            <Button name="Getting Started" spanBg="#1dd7c2" />
-          </div>
+    </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            <Button name="Health" spanBg="#83ea6c" />
-            <Button name="Lifestyle" spanBg="#ffaeab" />
-          </div>
+    <section className='pt-5 flex flex-row justify-between'>
+      <div className='relative left-[7rem]'><ThreeStuff /></div>
+      <div className='relative left-[11rem]' id='tag'><FourIt /></div>
+      <div className='relative left-[15rem]'><FourthStuff /></div>
+    </section>
+  </section>
+</main>
 
-<div className="grid grid-cols-2 gap-3 mb-4">
-            <Button name="Music" spanBg="#ffcf00" />
-            <div>{''}</div>
-          </div>
-<div className="flex  gap-3 mb-4">
-            <Button name="Technology" spanBg="#85b2f4" />
-            <div>{''}</div>
-          </div>
-
-           <div className="grid grid-cols-2 gap-3 mb-4">
-            <Button name="Travel" spanBg="#c5c5fe" />
-            <div>{''}</div>
-          </div>
-        
-        </div> */}
-<FourIt />
-        <div>
-          <FourthStuff />
-        </div>
-      </section>
-    </main>
   );
 };
 

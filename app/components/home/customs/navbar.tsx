@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { RiArrowDropDownLine, RiMenu2Fill, RiCloseLine } from "react-icons/ri";
 import { IoSearchSharp, IoLogoTwitter } from "react-icons/io5";
 import { FaFacebookF, FaTiktok } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa6";
+import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { MdOutlineNetworkCheck } from "react-icons/md";
 import Logo from '@/utils/logo';
 import TransitionLink from '@/utils/transitionLink';
@@ -63,7 +63,7 @@ const navItems = [
   },
    {
     id: 4, 
-    path: '/',
+    path: '#tag',
     name: '#Tag'
   }
 ]
@@ -139,14 +139,15 @@ const navItems = [
                 </li>
                 <li className="flex items-center gap-3">
                   {/* <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20} /> */}
-                 <TransitionLink href=' https://x.com/ideaischange'> <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer"
-                  size={20} /></TransitionLink>
+                 <TransitionLink href=' https://x.com/ideaischange'>
+                 <FaXTwitter className="text-black hover:text-gray-800 cursor-pointer" size={24} />
+</TransitionLink>
                   <TransitionLink href='https://www.instagram.com/ideaischange/'>
                   <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer"
-                   size={20} /></TransitionLink>
+                   size={24} /></TransitionLink>
                                      <TransitionLink href='https://www.tiktok.com/@ideaischange'>
 
-                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={20} />
+                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={24} />
                </TransitionLink>
                 </li>
               </ul>
@@ -188,14 +189,15 @@ const navItems = [
                 </button>
                 </TransitionLink>
                 <div className="flex justify-center space-x-6 mt-4">
-               <TransitionLink href=' https://x.com/ideaischange'> <IoLogoTwitter className="text-blue-500 hover:text-blue-600 cursor-pointer"
-                  size={20} /></TransitionLink>
+               <TransitionLink href=' https://x.com/ideaischange'>
+                   <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={24} />
+</TransitionLink>
                   <TransitionLink href='https://www.instagram.com/ideaischange/'>
                   <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer"
-                   size={20} /></TransitionLink>
+                   size={24} /></TransitionLink>
                                      <TransitionLink href='https://www.tiktok.com/@ideaischange'>
 
-                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={20} />
+                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={24} />
                </TransitionLink>
                 </div>
               </div>

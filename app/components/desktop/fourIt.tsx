@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import TagBtn from '@/utils/tagBtn';
 import { useTagStore } from '@/app/store/useTagStore';
 
 const FourIt = () => {
   const { selectedTag = '', setTag } = useTagStore();
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const tags = [
     { name: "Getting Started", color: "#1dd7c2", singleRow: true },
@@ -18,19 +19,23 @@ const FourIt = () => {
 
   const handleTagClick = (name: string) => {
     setTag(selectedTag === name ? '' : name);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
   };
 
   const singleRowTags = tags.filter(tag => tag.singleRow);
   const gridTags = tags.filter(tag => !tag.singleRow);
 
   return (
-    <section>
+    <section ref={contentRef}>
       {/* "All" Button */}
       <div className="mb-4">
         <TagBtn
           name="All"
           spanBg="#333"
-          onClick={() => setTag('')}
+          onClick={() => {
+            setTag('');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           isActive={selectedTag === ''}
         />
       </div>

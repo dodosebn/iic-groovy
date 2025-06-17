@@ -4,11 +4,13 @@ import { FaXTwitter } from 'react-icons/fa6';
 import TransitionLink from '@/utils/transitionLink'; // adjust as needed
 
 const FourthStuff = () => {
+                  //  <FaXTwitter className="text-black hover:text-gray-800 cursor-pointer" size={24} />
+  
   const mapElements = [
     {
-      name: 'X',
+      name: 'Twitter',
       icon: FaXTwitter,
-      color: '#1DA1F2',
+      color: '#001',
       path: 'https://x.com/ideaischange',
     },
     {
