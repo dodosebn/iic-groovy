@@ -19,7 +19,7 @@ const Imager: React.FC<ImagerProps> = ({
   height,
   ...props
 }) => {
-  const baseHoverStyles = 'transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5';
+  const baseHoverStyles = 'transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9';
   
   const combinedClasses = `${className} ${baseHoverStyles}`.trim();
 

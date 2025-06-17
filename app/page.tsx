@@ -35,8 +35,9 @@ export default function Home() {
           {/* {subscribed ? ( */}
             <TransitionLink href="/page2">
               <button 
-                className='bg-[#ff4c60] border border-[#333] text-[rgb(0,0,0)] px-[1rem] py-[0.2rem] 
-                           rounded-2xl flex items-center gap-2 
+                className='bg-[#ff4c60] border border-[#333] 
+                text-white px-[1.5rem] py-[0.3rem] font-semibold
+                           rounded-3xl flex items-center gap-2 
                            transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5'
               >
                 Next

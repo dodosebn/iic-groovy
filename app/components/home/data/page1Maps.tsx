@@ -39,7 +39,8 @@ const Page1Maps = [
     date: 'March 16, 2021',
     duration: '3 min read',
     h1: 'Far far away, behind the word mountains',
-    p: `Hey there, welcome to your new home on the web! Unlike social networks, this one is all yours. Publish your work on a custom domain,...`,
+    p: `Hey there, welcome to your new home on the web! Unlike social networks, 
+    this one is all yours. Publ...`,
     img: boySmiling,
     imgName: "Jonathan Doe",
     btnCol: "#03d4bb",
@@ -55,7 +56,9 @@ const Page1Maps = [
     date: 'March 16, 2021',
     duration: '1 min read',
     h1: 'Selling memberships with recurring revenue',
-    p: `For creators and aspiring entrepreneurs looking to generate a sustainable recurring revenue stream from their creative work, Ghost has built-in payments allowing you to create...`,
+    p: `For creators and aspiring entrepreneurs looking to generate a
+     sustainable recurring revenue stream from their creative work, Ghost has built-in payments 
+     allowing you to create...`,
     img: boySmiling,
     imgName: "Jonathan Doe",
     btnCol: "#83ea6c",
@@ -71,7 +74,8 @@ const Page1Maps = [
     date: 'March 16, 2021',
     duration: '1 min read',
     h1: 'Customizing your brand and design settings',
-    p: `As discussed in the introduction post, one of the best things about Ghost is just how much you can customize to turn your site into something unique....`,
+    p: `As discussed in the introduction post, one of the best things about Ghost 
+    is just how much you can customize to turn your site into something unique....`,
     img: smilingGirle,
     imgName: "Mary Buzard ",
     btnCol: "#85b2f4",
@@ -87,7 +91,8 @@ const Page1Maps = [
     date: 'March 16, 2021',
     duration: '2 min read',
     h1: 'What you need to know about Ghost Editor',
-    p: `The Ghost editor has everything you need to fully optimise your content. This is where you can add tags and authors, feature a post, or...`,
+    p: `The Ghost editor has everything you need to fully optimise your content. 
+    This is where you can add...`,
     img: smilingGirle,
     imgName: "Mary Buzard ",
     btnCol: "#ffcf00",

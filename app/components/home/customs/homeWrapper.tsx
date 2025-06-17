@@ -28,7 +28,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
         <section className="flex flex-col gap-8 p-5 md:p-6">
           {/* Image Section */}
           {pics && (
-            <div className="h-[38vh] relative">
+            <div className="md:h-[60vh] h-[42vh] relative">
               
               <TransitionLink href={path}>
                 <Imager
@@ -40,7 +40,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
               </TransitionLink>
 
               {(tag || PicsIcon1 || PicsIcon2) && (
-                <div className="absolute w-full bottom-[7.3rem] p-4">
+                <div className="absolute w-full md:bottom-[17rem] bottom-[19.5rem] px-4">
                   <div className="flex justify-between items-center w-full">
                     {tag && btnCol && (
                       <div className="flex">
@@ -65,10 +65,24 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                   </div>
                 </div>
               )}
-            </div>
+           
+ {h1 && (
+  <div className='absolute bottom-1 p-4'>
+    <div className='px-4 py-2 mx-auto text-center bg-[#fff] rounded-lg border-1
+     border-[#333] transition-transform duration-300 ease-in-out 
+  hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9'>
+                  <TransitionLink href={path}>
+                    <h1 className="text-[1.3rem] font-bold leading-snug text-gray-900
+                      transition-all ">
+                      {h1}
+                    </h1>
+                  </TransitionLink>
+                  </div>
+                  </div>
+                )}
+                 </div>
           )}
-
-          <div className="flex flex-col justify-center px-2 space-y-6">
+<div className="flex flex-col items-center justify-center px-2 space-y-6">
             {(tag || date || duration) && (
               <div className="flex flex-row space-x-3">
                 {tag && btnCol && (
@@ -77,7 +91,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                   </div>
                 )}
                 {(date || duration) && (
-                  <div className="flex items-center space-x-3 text-gray-600">
+                  <div className="flex items-center space-x-3 text-gray-600 font-semibold text-sm">
                     {date && <p>{date}</p>}
                     {date && duration && (
                       <span className="w-1 h-1 bg-pink-600 rounded-full md:flex hidden" />
@@ -87,22 +101,17 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 )}
               </div>
             )}
+             
 
-            {(h1 || p) && (
-              <div>
-                {h1 && (
-                  <TransitionLink href={path}>
-                    <h1 className="text-2xl font-bold leading-snug text-gray-800 hover:underline transition-all">
-                      {h1}
-                    </h1>
-                  </TransitionLink>
-                )}
-                {p && <p className="pt-3 text-md">{p} </p>}
-              </div>
-            )}
+          {p && (
+  <div className="flex flex-col items-center justify-center px-4 space-y-6 text-center">
+    <p className="pt-3 text-lg leading-loose">{p}</p>
+  </div>
+)}
 
-            <div className="md:flex flex-col sm:flex-row sm:items-center md:justify-between gap-4">
-              <div>
+
+            <div className="md:flex flex-col  sm:items-center  gap-4">
+              <div className='order-2'>
                 <TransitionLink href={path}>
                   <button
                     className="bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[2rem] py-[0.2rem] 
@@ -116,7 +125,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
               </div>
 
               {img && imgName && (
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-500 order-1">
                   <div className="items-center space-x-3 md:flex hidden">
                     <Imager
                       src={img}
