@@ -1,20 +1,20 @@
-'use client';
+// 'use client';
 
 import TransitionLink from "@/utils/transitionLink";
 import HomePage from "./components/home/homePage";
 import MeetAuthor from "./components/home/customs/meetAuthor";
-import { useState } from "react";
-import FourIt from "./components/desktop/fourIt";
+// import { useState } from "react";
+// import FourIt from "./components/desktop/fourIt";
 
 export default function Home() {
-  const [subscribed, setSubscribed] = useState(false);
+  // const [subscribed, setSubscribed] = useState(false);
 
   return (
     <div className="flex justify-center flex-col px-[1rem] md:px-0">
       {/* <FourIt /> */}
-      <HomePage num2={subscribed ? 6 : 3} num1={0} />
+      <HomePage num2={6 } num1={0} />
 
-      {!subscribed && (
+      {/* {!subscribed && (
         <p className="text-lg mt-2">
           <span 
             className="font-bold text-[#ff4c60] cursor-pointer hover:underline"
@@ -24,7 +24,7 @@ export default function Home() {
           </span>{" "}
           to view more articles
         </p>
-      )}
+      )} */}
 
       {/* Navigation */}
       <div className="flex gap-3 w-full mt-6 justify-center">
@@ -32,7 +32,7 @@ export default function Home() {
           <p>Page 1 of 2</p>
         </div>
         <div>
-          {subscribed ? (
+          {/* {subscribed ? ( */}
             <TransitionLink href="/page2">
               <button 
                 className='bg-[#ff4c60] border border-[#333] text-[rgb(0,0,0)] px-[1rem] py-[0.2rem] 
@@ -42,9 +42,9 @@ export default function Home() {
                 Next
               </button>
             </TransitionLink>
-          ) : (
+            </div>
+          {/* ) : (
             <div className="relative group">
-              {/* Disabled Button */}
               <button 
                 disabled
                 className='bg-gray-300 border border-[#333] text-gray-500 px-[1rem] py-[0.2rem] 
@@ -54,16 +54,16 @@ export default function Home() {
               </button>
 
               {/* Tooltip on hover */}
-              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 
+              {/* <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 
                               bg-black text-white text-sm px-2 py-1 rounded opacity-0 
                               group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
                 Subscribe to view more
               </div>
             </div>
           )}
-        </div>
-      </div>
-
+        </div>  */}
+      {/* </div> */}
+</div>
       <MeetAuthor />
     </div>
   );
