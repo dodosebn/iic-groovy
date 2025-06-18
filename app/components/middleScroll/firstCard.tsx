@@ -3,7 +3,7 @@ import Image, { StaticImageData } from 'next/image';
 import Button from '@/utils/button';
 import HorizontalDivider from '@/utils/horizontal';
 import hadShowingBulb from '@/public/images/hand-invention.jpg';
-import cubofTea from '@/public/images/cub-of-te.jpg';
+import cubofTea from '@/public/images/cuppy.jpg'
 import boySmiling from '@/public/images/smiling Gee.jpg';
 import fan from '@/public/images/fan.jpg';
 interface cardProps {
