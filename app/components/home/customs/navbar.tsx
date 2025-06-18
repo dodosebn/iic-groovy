@@ -7,8 +7,19 @@ import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { MdOutlineNetworkCheck } from "react-icons/md";
 import Logo from '@/utils/logo';
 import TransitionLink from '@/utils/transitionLink';
-
+import { useScrollStore } from '@/app/store/useScroll';
 const Navbar = () => {
+  const { hasScrolled, setHasScrolled } = useScrollStore();
+useEffect(() => {
+  const handleScroll = () => {
+    const scrollThreshold = 100; 
+    setHasScrolled(window.scrollY > scrollThreshold);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+  
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -71,15 +82,20 @@ const navItems = [
     <div className="relative cursor-pointer"> 
       {searchOpen && (
         <div 
-          className="fixed inset-0  bg-opacity-20 z-40"
+          className=" inset-0  bg-opacity-20 z-40"
           onClick={() => setSearchOpen(false)}
         />
       )}
 
       {!isMobile && (
         <div className='flex justify-center w-full px-4'>
-          <nav className="flex items-center justify-between px-8 py-[1.8rem] border-1 border-[#333]
-           bg-white shadow-sm rounded-[5rem] w-full max-w-[1500px]">
+          <nav
+  className={`${
+    hasScrolled
+      ? "fixed top-0 left-0 w-full transition-all duration-500 ease-in-out z-50 px-[4.5rem] py-[1rem] border-[0.5] shadow-md bg-white rounded-none"
+      : "px-8 py-[1.8rem] shadow-sm rounded-[5rem] w-full max-w-[1500px]"
+  } transition-all duration-300 ease-in-out flex items-center justify-between border border-[#333] bg-white`}
+>
             <div><Logo /></div>
             <div className="flex items-center gap-8">
               <ul className="flex items-center gap-8">
@@ -120,11 +136,14 @@ const navItems = [
                     <IoSearchSharp className="text-xl" />
                   </button>
                   {searchOpen && (
-                    <div className="absolute right-0 top-full mt-2 z-50">
+                    <div className="absolute right-0 top-full bottom-[7rem] z-50">
                       <input
                         type="text"
-                        placeholder="Search..."
-                        className="py-2 px-4 rounded-md border border-gray-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                        placeholder="Search posts, authors and tags"
+                        className="py-3 px-4 rounded-md 
+                        bg-[#fff]
+                          focus:outline-none focus:ring-2
+                           w-96"
                         autoFocus
                       />
                     </div>
@@ -132,24 +151,28 @@ const navItems = [
                 </li>
                 <li>
                   <TransitionLink href='/signIn'>
-                  <button className="bg-[#333333] text-white px-6 py-2 rounded-[5rem] hover:bg-[#444] transition-colors whitespace-nowrap">
+                  <button className="bg-[#333333] text-white px-6 py-1 font-bold rounded-[5.5rem]
+                   hover:bg-[#fff] hover:text-[#333] border hover:border-[#333] 
+                    whitespace-nowrap transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000]
+   hover:-translate-y-0.9">
                     Sign In
                   </button>
                   </TransitionLink>
                 </li>
-                <li className="flex items-center gap-3">
-                  {/* <FaFacebookF className="text-blue-600 hover:text-blue-700 cursor-pointer" size={20} /> */}
-                 <TransitionLink href=' https://x.com/ideaischange'>
-                 <FaXTwitter className="text-black hover:text-gray-800 cursor-pointer" size={24} />
-</TransitionLink>
-                  <TransitionLink href='https://www.instagram.com/ideaischange/'>
-                  <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer"
-                   size={24} /></TransitionLink>
-                                     <TransitionLink href='https://www.tiktok.com/@ideaischange'>
+        {!hasScrolled && (
+  <li className="flex items-center gap-3">
+    <TransitionLink href='https://x.com/ideaischange'>
+      <FaXTwitter className="text-black hover:text-gray-800 cursor-pointer" size={24} />
+    </TransitionLink>
+    <TransitionLink href='https://www.instagram.com/ideaischange/'>
+      <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={24} />
+    </TransitionLink>
+    <TransitionLink href='https://www.tiktok.com/@ideaischange'>
+      <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={24} />
+    </TransitionLink>
+  </li>
+)}
 
-                  <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={24} />
-               </TransitionLink>
-                </li>
               </ul>
             </div>
           </nav>
