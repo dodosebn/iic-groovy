@@ -1,14 +1,11 @@
 import React from 'react'
-
-
-import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
 import AboutTheAuthor from '@/app/components/middleScroll/aboutTheAuthor';
 import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
-import cupOfTea from '@/public/images/cub-of-tea.jpg';
+import cupOfTea from '@/public/images/cub-of-te.jpg';
 
-const Selling = () => {
+const What = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={cupOfTea} title={'What you need to know about Ghost Editor'} 
@@ -25,4 +22,4 @@ const Selling = () => {
   )
 }
 
-export default Selling;
+export default What;

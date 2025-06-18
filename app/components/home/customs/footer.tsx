@@ -7,7 +7,8 @@ const Footer = () => {
  
   return(
 <footer>
-     <div className='  bg-[#fffacd] md:min-h-screen min-h-[22rem] overflow-y-hidden md:overflow-y-visible'>
+     <div className='bg-[#fffacd] md:min-h-screen min-h-[22rem] overflow-y-hidden md:overflow-y-visible '>
+<main className='md:px-[4rem] lg:w-full max-w-[1500px]'>
        <section className='md:flex px-2 gap-10 md:flex-row flex-col hidden'>
         <div className='flex-2 mt-9'> 
         <FooterLevel />
@@ -47,7 +48,7 @@ const Footer = () => {
           </p>
         </div>
        </section>
-
+</main>
       </div>
 </footer>
   

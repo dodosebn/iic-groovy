@@ -27,7 +27,7 @@ export default function RootLayout({
 
        
 <Sroll />
-        <div className="pt-6">
+        <div className="pt-6 ">
           <Footer />
         </div>
       </body>

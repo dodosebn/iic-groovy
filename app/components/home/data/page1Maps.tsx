@@ -2,7 +2,8 @@ import one from '@/public/images/oneee.jpg';
 import snailLike from '@/public/images/snail-like.jpg';
 import stripeShii from '@/public/images/stripesShii.jpg';
 import smilingGirle from '@/public/images/smilingGirlie.jpg';
-import cupOfTea from '@/public/images/cub-of-tea.jpg';
+// import cupOfTea from '@/public/images/cub-of-tea.jpg';
+import cupOfTea from '@/public/images/cup-of-te.jpg'
 import gadget from '@/public/images/gadgets.jpg';
 import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
 import boySmiling from '@/public/images/smiling Gee.jpg';

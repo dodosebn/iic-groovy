@@ -1,8 +1,10 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
 import Imager from '@/utils/imager';
 import Button from '@/utils/button';
 import { HomeWrapperProps } from '@/types/type';
 import TransitionLink from '@/utils/transitionLink';
+import Image from 'next/image';
 
 const HomeWrapper: React.FC<HomeWrapperProps> = ({
   bg,
@@ -19,35 +21,57 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   tag,
   path,
 }) => {
+  const flexRef = useRef<HTMLDivElement>(null);
+  const [isWrapped, setIsWrapped] = useState(false);
+
+  useEffect(() => {
+    const checkWrap = () => {
+      const container = flexRef.current;
+      if (!container) return;
+
+      const children = Array.from(container.children) as HTMLElement[];
+      const totalChildrenWidth = children.reduce((acc, child) => acc + child.offsetWidth, 0);
+      const containerWidth = container.offsetWidth;
+
+      setIsWrapped(totalChildrenWidth > containerWidth);
+    };
+
+    const observer = new ResizeObserver(checkWrap);
+    if (flexRef.current) observer.observe(flexRef.current);
+
+    checkWrap();
+
+    return () => {
+      if (flexRef.current) observer.unobserve(flexRef.current);
+    };
+  }, []);
+
   return (
     <main>
       <div
         className="mx-auto flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
-        <section className="flex flex-col gap-8 p-5 md:p-6">
-          {/* Image Section */}
+        <section className="flex flex-col gap-10 p-5 md:p-6">
           {pics && (
-            <div className="md:h-[60vh] h-[42vh] relative">
-              
+            <div className="relative">
               <TransitionLink href={path}>
-                <Imager
+                <Image
                   src={pics}
                   alt="Article visual"
-                  className="w-full h-full object-cover rounded-xl border-1 border-[#333]"
+                  className="w-full h-[25.5rem] object-cover rounded-xl border-1 border-[#333]"
                   priority
                 />
               </TransitionLink>
 
               {(tag || PicsIcon1 || PicsIcon2) && (
-                <div className="absolute w-full md:bottom-[17rem] bottom-[19.5rem] px-4">
+                <div className="w-full absolute bottom-[22rem]  px-4">
                   <div className="flex justify-between items-center w-full">
                     {tag && btnCol && (
                       <div className="flex">
                         <Button name={tag} spanBg={btnCol} />
                       </div>
                     )}
-
                     {(PicsIcon1 || PicsIcon2) && (
                       <div className="flex space-x-1.5">
                         {PicsIcon1 && (
@@ -65,24 +89,22 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                   </div>
                 </div>
               )}
-           
- {h1 && (
-  <div className='absolute bottom-1 p-4'>
-    <div className='px-4 py-2 mx-auto text-center bg-[#fff] rounded-lg border-1
-     border-[#333] transition-transform duration-300 ease-in-out 
-  hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9'>
-                  <TransitionLink href={path}>
-                    <h1 className="text-[1.3rem] font-bold leading-snug text-gray-900
-                      transition-all ">
-                      {h1}
-                    </h1>
-                  </TransitionLink>
+
+              {h1 && (
+                <div className="absolute bottom-1 p-4">
+                  <div className="px-4 py-2 mx-auto text-center bg-[#fff] rounded-lg border-1 border-[#333] transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9">
+                    <TransitionLink href={path}>
+                      <h1 className="text-[1.3rem] font-bold leading-snug text-gray-900 transition-all">
+                        {h1}
+                      </h1>
+                    </TransitionLink>
                   </div>
-                  </div>
-                )}
-                 </div>
+                </div>
+              )}
+            </div>
           )}
-<div className="flex flex-col items-center justify-center px-2 space-y-6">
+
+          <div className="flex flex-col items-center justify-center px-2 space-y-4">
             {(tag || date || duration) && (
               <div className="flex flex-row space-x-3">
                 {tag && btnCol && (
@@ -101,25 +123,28 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 )}
               </div>
             )}
-             
 
-          {p && (
-  <div className="flex flex-col items-center justify-center px-4 space-y-6 text-center">
-    <p className="pt-3 text-lg leading-loose">{p}</p>
-  </div>
-)}
+            {p && (
+              <div className="flex flex-col items-center justify-center px-4 text-center">
+                <p className="text-lg leading-loose">{p}</p>
+              </div>
+            )}
 
-
-            <div className="md:flex flex-col  sm:items-center  gap-4">
-              <div className='order-2'>
+            <div
+              ref={flexRef}
+              className={`md:flex flex-col sm:flex-row flex-wrap gap-3 ${
+                isWrapped ? 'items-start' : 'items-center'
+              }`}
+            >
+              <div className="order-2">
                 <TransitionLink href={path}>
                   <button
                     className="bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[2rem] py-[0.2rem] 
-                      rounded-2xl transition-transform duration-300 ease-in-out 
-                      hover:shadow-[0px_0px_0px_0px_#000] shadow-[2px_2px_0px_0px_#000] 
-                      hover:-translate-y-0 -translate-y-0.5 font-bold"
+                    rounded-2xl transition-transform duration-300 ease-in-out 
+                    hover:shadow-[0px_0px_0px_0px_#000] shadow-[2px_2px_0px_0px_#000] 
+                    hover:-translate-y-0 -translate-y-0.5 font-bold"
                   >
-                    Continue
+                    Continue Reading
                   </button>
                 </TransitionLink>
               </div>
