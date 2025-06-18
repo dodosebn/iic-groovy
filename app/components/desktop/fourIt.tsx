@@ -8,26 +8,14 @@ const FourIt = () => {
   const { selectedTag = '', setTag } = useTagStore();
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const tags = [
-    { name: "Getting Started", color: "#1dd7c2", singleRow: true },
-    { name: "Health", color: "#83ea6c" },
-    { name: "Lifestyle", color: "#ffaeab", singleRow: true },
-    { name: "Music", color: "#ffcf00", singleRow: true },
-    { name: "Technology", color: "#85b2f4" },
-    { name: "Travel", color: "#c5c5fe", singleRow: true },
-  ];
-
   const handleTagClick = (name: string) => {
     setTag(selectedTag === name ? '' : name);
-    window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const singleRowTags = tags.filter(tag => tag.singleRow);
-  const gridTags = tags.filter(tag => !tag.singleRow);
 
   return (
     <section ref={contentRef}>
-      {/* "All" Button */}
+      {/* All Tag */}
       <div className="mb-4">
         <TagBtn
           name="All"
@@ -40,30 +28,61 @@ const FourIt = () => {
         />
       </div>
 
-      {/* Grid Tags */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        {gridTags.map(tag => (
-          <TagBtn
-            key={tag.name}
-            name={tag.name}
-            spanBg={tag.color}
-            onClick={() => handleTagClick(tag.name)}
-            isActive={selectedTag === tag.name}
-          />
-        ))}
+      {/* Getting Started (solo row) */}
+      <div className="mb-4">
+        <TagBtn
+          name="Getting Started"
+          spanBg="#1dd7c2"
+          onClick={() => handleTagClick('Getting Started')}
+          isActive={selectedTag === 'Getting Started'}
+        />
       </div>
 
-      {/* Single Row Tags */}
-      {singleRowTags.map(tag => (
-        <div key={tag.name} className="flex justify-start mb-4">
-          <TagBtn
-            name={tag.name}
-            spanBg={tag.color}
-            onClick={() => handleTagClick(tag.name)}
-            isActive={selectedTag === tag.name}
-          />
-        </div>
-      ))}
+      {/* Health + Lifestyle (same row) */}
+      <div className="flex flex-wrap gap-3 mb-4">
+        <TagBtn
+          name="Health"
+          spanBg="#83ea6c"
+          onClick={() => handleTagClick('Health')}
+          isActive={selectedTag === 'Health'}
+        />
+        <TagBtn
+          name="Lifestyle"
+          spanBg="#ffaeab"
+          onClick={() => handleTagClick('Lifestyle')}
+          isActive={selectedTag === 'Lifestyle'}
+        />
+      </div>
+
+      {/* Music (solo row) */}
+      <div className="mb-4">
+        <TagBtn
+          name="Music"
+          spanBg="#ffcf00"
+          onClick={() => handleTagClick('Music')}
+          isActive={selectedTag === 'Music'}
+        />
+      </div>
+
+      {/* Technology (solo row) */}
+      <div className="mb-4">
+        <TagBtn
+          name="Technology"
+          spanBg="#85b2f4"
+          onClick={() => handleTagClick('Technology')}
+          isActive={selectedTag === 'Technology'}
+        />
+      </div>
+
+      {/* Travel (solo row) */}
+      <div className="mb-4">
+        <TagBtn
+          name="Travel"
+          spanBg="#c5c5fe"
+          onClick={() => handleTagClick('Travel')}
+          isActive={selectedTag === 'Travel'}
+        />
+      </div>
     </section>
   );
 };

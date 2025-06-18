@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import smiling from '@/public/authors/auth-smilingGee.jpg';
 import Imager from '@/utils/imager';
@@ -51,14 +52,15 @@ const MeetCont = () => {
       {meetAuthorMap.map((item) => (
         <div key={item.id} className="md:w-[24%] w-full flex flex-col justify-between p-2">
           {/* Image + Buttons */}
-          <div className="relative">
+          <div className="relative overflow-hidden rounded-md ">
             <Imager
               src={item.imgSrc}
               alt="author"
-              className="md:w-[15rem] w-full h-[16.5rem] object-cover rounded-md border border-[#333]"
+              className="w-full h-[90%] border border-[#333] object-cover rounded-md
+               transition-all duration-300 ease-in-out"
             />
 
-            <div className="absolute top-[1rem] left-[9rem] md:block hidden">
+<div className="absolute top-4 left-[80%] -translate-x-1/2 md:block hidden">
               <div className="flex space-x-3">
                 <div className="w-9 h-9 bg-white border border-[#1da1f2] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
                   <FaTwitter color="#1da1f2" />
@@ -69,17 +71,16 @@ const MeetCont = () => {
               </div>
             </div>
 
-           <div className="absolute top-[13rem] left-1/2 transform -translate-x-1/2">
-  <button className="px-3 py-1 bg-white text-[#333] border border-[#333] rounded-3xl font-bold text-[10px] md:text-sm">
-    {item.name}
-  </button>
-</div>
-
+            <div className="absolute top-[75%] left-1/2 transform -translate-x-1/2">
+              <button className="px-3 py-1 bg-white text-[#333] border border-[#333] rounded-3xl font-bold text-[10px] md:text-sm">
+                {item.name}
+              </button>
+            </div>
           </div>
 
-          <div className="mt-4 text-sm text-gray-700 w-full text-center min-h-[100px]
-           flex items-start justify-center">
-            <p className="px-2">{item.info}</p>
+          {/* Text Info (Constrained to same width as image) */}
+          <div className="mb-[10rem] text-sm text-gray-700 text-center flex items-start justify-center min-h-[100px]">
+            <p className="px-1 max-w-[23rem]">{item.info}</p>
           </div>
         </div>
       ))}

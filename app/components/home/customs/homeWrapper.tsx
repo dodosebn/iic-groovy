@@ -133,7 +133,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             <div
               ref={flexRef}
               className={`md:flex flex-col sm:flex-row flex-wrap gap-3 ${
-                isWrapped ? 'items-start' : 'items-center'
+                isWrapped ? 'items-center' : 'items-center'
               }`}
             >
               <div className="order-2">
