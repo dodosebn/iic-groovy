@@ -95,13 +95,14 @@ const Footer = () => {
     <HorizontalDivider />
        <section >
         <div className='text-center space-y-6 py-8 relative max-w-3xl px-[2rem] lg:px-0 mx-auto'>
-          <div className="absolute -left-5 top-1/3 -translate-y-1/2">
+          <div className="absolute lg:-left-5 left-6 top-1/3 -translate-y-1/3 lg:-translate-y-1/2">
   <div className="flex">
-    <Image src={flyer} alt="something" className="w-[7rem] h-[7rem]" />
+    <Image src={flyer} alt="something" className="w-[6.5rem] h-[6.5rem]" />
   </div>
 </div>
           
-          <h1 className='text-3xl md:text-5xl font-bold leading-relaxed text-gray-900 mb-10'>Subscribe to our Newsletter</h1>
+          <h1 className='text-2xl md:text-5xl font-bold text-gray-900 mb-10'>
+            Subscribe to our Newsletter</h1>
   <div className="relative max-w-2xl mx-auto ">
   <input
     type="email"

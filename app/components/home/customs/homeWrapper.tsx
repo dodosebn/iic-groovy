@@ -52,20 +52,21 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
         className="mx-auto flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
-        <section className="flex flex-col gap-10 p-5 lg:p-6">
+        <section className="flex flex-col gap-5 p-5">
           {pics && (
             <div className="relative">
               <TransitionLink href={path}>
                 <Image
                   src={pics}
                   alt="Article visual"
-                  className="w-full h-[25.5rem] object-cover rounded-xl border-1 border-[#333]"
+                  className="w-full h-[20rem] lg:h-[25rem] [object-position:center_30%] 
+                  lg:!object-position-cente  object-cover rounded-2xl border-1 border-[#333]"
                   priority
                 />
               </TransitionLink>
 
               {(tag || PicsIcon1 || PicsIcon2) && (
-                <div className="w-full absolute bottom-[22rem]  px-4">
+                <div className="w-full absolute bottom-[16.5rem]   lg:bottom-[21.5rem]  px-4">
                   <div className="flex justify-between items-center w-full">
                     {tag && btnCol && (
                       <div className="flex">
@@ -94,7 +95,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 <div className="absolute bottom-1 p-4">
                   <div className="px-4 py-2 mx-auto text-center bg-[#fff] rounded-lg border-1 border-[#333] transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9">
                     <TransitionLink href={path}>
-                      <h1 className="text-[1.3rem] font-bold leading-snug text-gray-900 transition-all">
+                      <h1 className="lg:text-[1.3rem] text-md font-bold leading-snug text-gray-900 transition-all">
                         {h1}
                       </h1>
                     </TransitionLink>
@@ -104,7 +105,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             </div>
           )}
 
-          <div className="flex flex-col items-center justify-center px-2 space-y-4">
+          <div className="flex flex-col items-center justify-center px-2 space-y-3">
             {(tag || date || duration) && (
               <div className="flex flex-row space-x-3">
                 {tag && btnCol && (
@@ -125,14 +126,14 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             )}
 
             {p && (
-              <div className="flex flex-col items-center justify-center px-4 text-center">
-                <p className="text-lg leading-loose">{p}</p>
+              <div className="flex flex-col items-center justify-center lg:px-6 text-center">
+                <p className="text-md leading-loose">{p}</p>
               </div>
             )}
 
             <div
               ref={flexRef}
-              className={`lg:flex flex-col sm:flex-row flex-wrap gap-3 ${
+              className={`lg:flex mt-5 lg:mt-0 flex-col sm:flex-row flex-wrap gap-3 ${
                 isWrapped ? 'items-center' : 'items-center'
               }`}
             >

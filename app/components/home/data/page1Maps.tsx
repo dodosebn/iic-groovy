@@ -93,7 +93,7 @@ const Page1Maps = [
     duration: '2 min read',
     h1: 'What you need to know about Ghost Editor',
     p: `The Ghost editor has everything you need to fully optimise your content. 
-    This is where you can add...`,
+    This is where you can add t...`,
     img: smilingGirle,
     imgName: "Mary Buzard ",
     btnCol: "#ffcf00",
@@ -109,7 +109,8 @@ const Page1Maps = [
     date: 'March 16, 2021',
     duration: '2 min read',
     h1: 'Setting up apps and custom integrations',
-    p: `It's possible to extend your Ghost site and connect it with hundreds of the most popular apps and tools using integrations. Whether you need to...`,
+    p: `It's possible to extend your Ghost site and connect it with hundreds of the most popular apps and
+     to...`,
     img: boySmiling,
     imgName: "Jonathan Doe ",
     btnCol: "#1dd7c2",

@@ -56,23 +56,23 @@ const MeetCont = () => {
         >
           {/* Image + Buttons */}
           <div className="relative overflow-hidden rounded-md">
-            <Imager
-              src={item.imgSrc}
-              alt="author"
-              className="w-full h-[90%] border border-[#333] object-cover rounded-md
-               transition-all duration-300 ease-in-out"
-            />
+          <Imager
+  src={item.imgSrc}
+  alt="author"
+  className="w-full h-[250px] lg:h-[90%] border border-[#333] object-cover rounded-md transition-all duration-300 ease-in-out"
+/>
 
-            <div className="absolute top-4 left-[80%] -translate-x-1/2 lg:block hidden">
-              <div className="flex space-x-3">
-                <div className="w-9 h-9 bg-white border border-[#1da1f2] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
-                  <FaTwitter color="#1da1f2" />
-                </div>
-                <div className="w-9 h-9 bg-white border border-[#175beb] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
-                  <FaFacebookF color="#175beb" />
-                </div>
-              </div>
-            </div>
+          <div className="absolute top-[5%] lg:top-4 left-[80%] -translate-x-1/2 block">
+  <div className="flex space-x-3">
+    <div className="w-9 h-9 bg-white border border-[#1da1f2] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
+      <FaTwitter color="#1da1f2" />
+    </div>
+    <div className="w-9 h-9 bg-white border border-[#175beb] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
+      <FaFacebookF color="#175beb" />
+    </div>
+  </div>
+</div>
+
 
             <div className="absolute top-[75%] left-1/2 transform -translate-x-1/2">
               <button className="px-3 py-1 bg-white text-[#333] border border-[#333] rounded-3xl font-bold text-[10px] lg:text-sm">
