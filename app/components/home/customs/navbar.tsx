@@ -7,7 +7,6 @@ import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import Logo from '@/utils/logo';
 import TransitionLink from '@/utils/transitionLink';
 import { useScrollStore } from '@/app/store/useScroll';
-import Link from 'next/link';
 
 const Navbar = () => {
   const { hasScrolled, setHasScrolled } = useScrollStore();
@@ -62,19 +61,73 @@ const Navbar = () => {
   return (
     <div className="relative cursor-pointer">
       {/* Desktop Navbar - UNCHANGED */}
-      {!isMobile && (
+    {!isMobile && (
         <div className={`w-full ${hasScrolled ? "fixed top-0 left-0 z-50 bg-white" : ""}`}>
           <div className="w-full max-w-[1500px] mx-auto p-1.5">
-            <nav className={`transition-all duration-300 ease-in-out flex items-center justify-between bg-white ${
-              hasScrolled
-                ? "px-[4rem] py-[1rem] rounded-none"
-                : "px-[3rem] py-[1.8rem] shadow-sm rounded-[5rem] border border-[#333]"
-            }`}>
-              {/* ... (rest of desktop navbar remains exactly the same) ... */}
+            <nav
+              className={`${
+                hasScrolled
+                  ? "px-[4rem] py-[1rem] rounded-none"
+                  : "px-[3rem] py-[1.8rem] shadow-sm rounded-[5rem] border   border-[#333]"
+              } transition-all duration-300 ease-in-out flex items-center justify-between  bg-white`}
+            >
+              <div><Logo /></div>
+              <div className="flex items-center gap-8">
+                <ul className="flex items-center gap-8">
+                  {navItems.map((item) => (
+                    <li key={item.id} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
+                      <TransitionLink href={item.path}>{item.name}</TransitionLink>
+                    </li>
+                  ))}
+                  <li className="relative">
+                    <button
+                      onClick={toggleMore}
+                      className="flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap"
+                    >
+                      More <RiArrowDropDownLine className={`text-xl transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {moreOpen && (
+                      <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
+                        {navItems.map((item) => (
+                          <span
+                            key={item.name}
+                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
+                          >
+                            <TransitionLink href={item.path}>{item.name}</TransitionLink>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                 
+                  <li>
+                    <TransitionLink href='/signIn'>
+                      <button className="bg-[#333333] text-white px-6 py-1 font-bold rounded-[5.5rem] hover:bg-[#fff] hover:text-[#333] border hover:border-[#333] whitespace-nowrap transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9">
+                        Sign In
+                      </button>
+                    </TransitionLink>
+                  </li>
+                  {!hasScrolled && (
+                    <li className="flex items-center gap-3">
+                      <TransitionLink href='https://x.com/ideaischange'>
+                        <FaXTwitter className="text-black hover:text-gray-800 cursor-pointer" size={24} />
+                      </TransitionLink>
+                      <TransitionLink href='https://www.instagram.com/ideaischange/'>
+                        <FaInstagram className="text-pink-600 hover:text-pink-700 cursor-pointer" size={24} />
+                      </TransitionLink>
+                      <TransitionLink href='https://www.tiktok.com/@ideaischange'>
+                        <FaTiktok className="text-gray-900 hover:text-gray-700 cursor-pointer" size={24} />
+                      </TransitionLink>
+                    </li>
+                  )}
+                </ul>
+              </div>
             </nav>
           </div>
         </div>
       )}
+
+
 
       {/* Mobile Navbar */}
       {isMobile && (
@@ -96,12 +149,12 @@ const Navbar = () => {
             <ul className="mt-16 px-10 space-y-7">
               {navItems.map(item => (
                 <li key={item.id} className="text-[#333] hover:text-pink-600 font-medium">
-                  <Link
+                  <TransitionLink 
                     href={item.path}
-                    onClick={handleMobileClick} 
+                    onClick={handleMobileClick} // ONLY ADDED THIS
                   >
                     {item.name}
-                  </Link>
+                  </TransitionLink>
                 </li>
               ))}
 
@@ -118,15 +171,15 @@ const Navbar = () => {
                 {moreOpen && (
                   <div className="mt-2 bg-white py-2 w-full">
                     {navItems.map(sub => (
-                      <Link 
+                      <TransitionLink 
                         key={sub.name} 
                         href={sub.path}
-                        onClick={handleMobileClick} 
+                        onClick={handleMobileClick} // ONLY ADDED THIS
                       >
                         <span className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600">
                           {sub.name}
                         </span>
-                      </Link>
+                      </TransitionLink>
                     ))}
                   </div>
                 )}
@@ -134,14 +187,14 @@ const Navbar = () => {
             </ul>
 
             <div className="mt-6 flex justify-center items-center">
-              <Link
+              <TransitionLink 
                 href='/signIn'
-                onClick={handleMobileClick} 
+                onClick={handleMobileClick} // ONLY ADDED THIS
               >
                 <button className="bg-[#333333] text-white px-8 py-2 font-bold rounded-[5.5rem] hover:bg-white hover:text-[#333] border hover:border-[#333] whitespace-nowrap transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.5">
                   Sign In
                 </button>
-              </Link>
+              </TransitionLink>
             </div>
           </div>
         </div>
