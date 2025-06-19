@@ -29,7 +29,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth <= 768;
+      const mobile = window.innerWidth <= 999;
       setIsMobile(mobile);
       if (!mobile) {
         setMenuOpen(false);
@@ -44,7 +44,8 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleSearch = () => {
+  const toggleSearch = (e: { stopPropagation: () => void; }) => {
+    e.stopPropagation();
     setSearchOpen(!searchOpen);
     if (menuOpen) setMenuOpen(false);
     if (moreOpen) setMoreOpen(false);
@@ -54,6 +55,17 @@ const Navbar = () => {
     setMoreOpen(!moreOpen);
     if (searchOpen) setSearchOpen(false);
   };
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (searchOpen) {
+        setSearchOpen(false);
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [searchOpen]);
 
   if (!mounted) return null;
 
@@ -66,10 +78,6 @@ const Navbar = () => {
 
   return (
     <div className="relative cursor-pointer">
-      {searchOpen && (
-        <div className="inset-0 bg-opacity-20 z-40" onClick={() => setSearchOpen(false)} />
-      )}
-
       {!isMobile && (
         <div className={`w-full ${hasScrolled ? "fixed top-0 left-0 z-50 bg-white" : ""}`}>
           <div className="w-full max-w-[1500px] mx-auto p-1.5">
@@ -77,56 +85,66 @@ const Navbar = () => {
               className={`${
                 hasScrolled
                   ? "px-[4rem] py-[1rem] rounded-none"
-                  : "px-[3rem] py-[1.8rem] shadow-sm rounded-[5rem] border   border-[#333]"
-              } transition-all duration-300 ease-in-out flex items-center justify-between  bg-white`}
+                  : "px-[3rem] py-[1.8rem] shadow-sm rounded-[5rem] border border-[#333]"
+              } transition-all duration-300 ease-in-out flex items-center justify-between bg-white`}
             >
-              <div><Logo /></div>
+              <div className={`transition-opacity ${searchOpen ? 'opacity-50' : 'opacity-100'}`}><Logo /></div>
               <div className="flex items-center gap-8">
                 <ul className="flex items-center gap-8">
                   {navItems.map((item) => (
-                    <li key={item.id} className="text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap">
+                    <li 
+                      key={item.id} 
+                      className={`text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap transition-opacity ${searchOpen ? 'opacity-50' : 'opacity-100'}`}
+                    >
                       <TransitionLink href={item.path}>{item.name}</TransitionLink>
                     </li>
                   ))}
                   <li className="relative">
                     <button
                       onClick={toggleMore}
-                      className="flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap"
+                      className={`flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap transition-opacity ${searchOpen ? 'opacity-50' : 'opacity-100'}`}
                     >
                       More <RiArrowDropDownLine className={`text-xl transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {moreOpen && (
                       <div className="absolute left-0 top-full mt-2 z-50 bg-white shadow-lg rounded-md py-2 w-48">
                         {navItems.map((item) => (
-                          <span
-                            key={item.name}
-                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
-                          >
-                            <TransitionLink href={item.path}>{item.name}</TransitionLink>
-                          </span>
+                          <div key={item.name}>
+                            <TransitionLink href={item.path}>
+                              <span className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600">
+                                {item.name}
+                              </span>
+                            </TransitionLink>
+                          </div>
                         ))}
                       </div>
                     )}
                   </li>
-                  <li className="relative">
-                    <button
-                      onClick={toggleSearch}
-                      className="text-gray-600 hover:text-pink-600 transition-colors"
-                    >
-                      <IoSearchSharp className="text-xl" />
-                    </button>
-                    {searchOpen && (
-                      <div className="absolute right-0 top-full bottom-[7rem] z-50">
-                        <input
-                          type="text"
-                          placeholder="Search posts, authors and tags"
-                          className="py-3 px-4 rounded-md bg-[#fff] focus:outline-none focus:ring-2 w-96"
-                          autoFocus
-                        />
-                      </div>
-                    )}
-                  </li>
-                  <li>
+                 <li className="relative">
+  {searchOpen ? (
+    <div className="absolute left-1/2 transform -translate-x-1/1 -top-0 z-50 flex items-center">
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search posts, authors and tags"
+          className="py-4 px-10 rounded-md bg-[#fff] shadow-xl outline-none  w-96"
+          autoFocus
+          onClick={(e) => e.stopPropagation()}
+        />
+        <IoSearchSharp className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+      </div>
+    </div>
+  ) : (
+    <button
+      onClick={toggleSearch}
+      className={`text-gray-600 hover:text-pink-600 transition-colors ${searchOpen ? 'opacity-50' : 'opacity-100'}`}
+    >
+      <IoSearchSharp className="text-xl" />
+    </button>
+  )}
+</li>
+
+                  <li className={`transition-opacity ${searchOpen ? 'opacity-50' : 'opacity-100'}`}>
                     <TransitionLink href='/signIn'>
                       <button className="bg-[#333333] text-white px-6 py-1 font-bold rounded-[5.5rem] hover:bg-[#fff] hover:text-[#333] border hover:border-[#333] whitespace-nowrap transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9">
                         Sign In
@@ -134,7 +152,7 @@ const Navbar = () => {
                     </TransitionLink>
                   </li>
                   {!hasScrolled && (
-                    <li className="flex items-center gap-3">
+                    <li className={`flex items-center gap-3 transition-opacity ${searchOpen ? 'opacity-50' : 'opacity-100'}`}>
                       <TransitionLink href='https://x.com/ideaischange'>
                         <FaXTwitter className="text-black hover:text-gray-800 cursor-pointer" size={24} />
                       </TransitionLink>
@@ -171,12 +189,32 @@ const Navbar = () => {
               <ul className="space-y-4">
                 {navItems.map((item) => (
                   <li key={item.id} className="text-gray-700 hover:text-pink-600 font-medium py-2 border-b border-gray-100">
-                    {item.name}
+                   <TransitionLink href={item.path}> {item.name}</TransitionLink>
                   </li>
                 ))}
-                <li className="flex items-center justify-between text-gray-700 hover:text-pink-600 font-medium py-2 border-b border-gray-100">
-                  More <RiArrowDropDownLine className="text-xl" />
-                </li>
+               <li className="relative">
+                    <button
+                      onClick={toggleMore}
+                      className="flex items-center text-gray-700 hover:text-pink-600 font-medium whitespace-nowrap"
+                    >
+                      More <RiArrowDropDownLine className={`text-xl transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {moreOpen && (
+                      <div className="absolute left-0 top-full mt-2 z-50 bg-white py-2 w-48">
+                        {navItems.map((item) => (
+                          <div key={item.name}>
+                          <TransitionLink href={item.path}>
+                          <span
+                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600"
+                          >
+                            {item.name}
+                          </span>
+                          </TransitionLink>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </li>
               </ul>
 
               <div className="mt-4 pt-4 border-t border-gray-200">
@@ -206,14 +244,16 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full py-3 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full py-3 px-4 rounded-md border
+                   border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
                   autoFocus
                 />
                 <button
                   onClick={toggleSearch}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
                 >
-                  <RiCloseLine className="text-xl" />
+                  {/* <RiCloseLine className="text-xl" /> */}
+                  cancel
                 </button>
               </div>
             </div>

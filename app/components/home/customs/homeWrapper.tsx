@@ -52,7 +52,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
         className="mx-auto flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
-        <section className="flex flex-col gap-10 p-5 md:p-6">
+        <section className="flex flex-col gap-10 p-5 lg:p-6">
           {pics && (
             <div className="relative">
               <TransitionLink href={path}>
@@ -116,7 +116,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                   <div className="flex items-center space-x-3 text-gray-600 font-semibold text-sm">
                     {date && <p>{date}</p>}
                     {date && duration && (
-                      <span className="w-1 h-1 bg-pink-600 rounded-full md:flex hidden" />
+                      <span className="w-1 h-1 bg-pink-600 rounded-full lg:flex hidden" />
                     )}
                     {duration && <p>{duration}</p>}
                   </div>
@@ -132,7 +132,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
 
             <div
               ref={flexRef}
-              className={`md:flex flex-col sm:flex-row flex-wrap gap-3 ${
+              className={`lg:flex flex-col sm:flex-row flex-wrap gap-3 ${
                 isWrapped ? 'items-center' : 'items-center'
               }`}
             >
@@ -151,7 +151,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
 
               {img && imgName && (
                 <div className="text-sm text-gray-500 order-1">
-                  <div className="items-center space-x-3 md:flex hidden">
+                  <div className="items-center space-x-3 lg:flex hidden">
                     <Imager
                       src={img}
                       alt="Author avatar"

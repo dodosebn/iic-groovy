@@ -48,11 +48,14 @@ const MeetCont = () => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row flex-wrap justify-center items-stretch gap-3 py-7">
+    <div className="flex flex-col lg:flex-row flex-wrap justify-center items-stretch gap-2 lg:gap-3 py-5">
       {meetAuthorMap.map((item) => (
-        <div key={item.id} className="md:w-[24%] w-full flex flex-col justify-between p-2">
+        <div
+          key={item.id}
+          className="lg:w-[24%] w-full lg:flex flex-col lg:justify-between p-2"
+        >
           {/* Image + Buttons */}
-          <div className="relative overflow-hidden rounded-md ">
+          <div className="relative overflow-hidden rounded-md">
             <Imager
               src={item.imgSrc}
               alt="author"
@@ -60,7 +63,7 @@ const MeetCont = () => {
                transition-all duration-300 ease-in-out"
             />
 
-<div className="absolute top-4 left-[80%] -translate-x-1/2 md:block hidden">
+            <div className="absolute top-4 left-[80%] -translate-x-1/2 lg:block hidden">
               <div className="flex space-x-3">
                 <div className="w-9 h-9 bg-white border border-[#1da1f2] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
                   <FaTwitter color="#1da1f2" />
@@ -72,14 +75,14 @@ const MeetCont = () => {
             </div>
 
             <div className="absolute top-[75%] left-1/2 transform -translate-x-1/2">
-              <button className="px-3 py-1 bg-white text-[#333] border border-[#333] rounded-3xl font-bold text-[10px] md:text-sm">
+              <button className="px-3 py-1 bg-white text-[#333] border border-[#333] rounded-3xl font-bold text-[10px] lg:text-sm">
                 {item.name}
               </button>
             </div>
           </div>
 
-          {/* Text Info (Constrained to same width as image) */}
-          <div className="mb-[10rem] text-sm text-gray-700 text-center flex items-start justify-center min-h-[100px]">
+          {/* Text Info */}
+          <div className="mb-6 lg:mb-[10rem] text-sm text-gray-700 text-center flex items-start justify-center min-h-[100px]">
             <p className="px-1 max-w-[23rem]">{item.info}</p>
           </div>
         </div>

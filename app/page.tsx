@@ -12,8 +12,9 @@ export default function Home() {
   return (
     <div className="flex justify-center flex-col px-[1rem] md:px-0">
       {/* <FourIt /> */}
+      <div className="px-[0.5rem]">
       <HomePage num2={6 } num1={0} />
-
+</div>
       {/* {!subscribed && (
         <p className="text-lg mt-2">
           <span 

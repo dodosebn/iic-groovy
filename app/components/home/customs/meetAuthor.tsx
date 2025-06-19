@@ -9,7 +9,7 @@ const MeetAuthor = () => {
   
 
   return (
-    <div className='md:py-[4.5rem] p-[1.2rem] md:p-0'>
+    <div className='p-[1.2rem] lg:p-0'>
         
           <button className='px-5 py-1 bg-[#fff] text-[rgb(51,51,51)] border border-[#333] rounded-3xl font-bold text-lg'>
             Meet The Author

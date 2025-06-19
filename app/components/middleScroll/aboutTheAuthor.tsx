@@ -36,17 +36,16 @@ const AboutTheAuthor = () => {
   return (
     <section>
       <AboutMeContainer name="About the Author">
-        <div className='flex flex-col md:flex-row items-center gap-[3em]  justify-center'> {/* Changed to flex-col and items-center */}
-          {/* Author Info Section - Centered */}
-          <div className='flex flex-col items-center mb-8'> {/* Centered container */}
-            <div className="flex flex-row items-center gap-6 mb-4"> {/* Centered flex container */}
+        <div className='flex flex-col lg:flex-row items-center gap-[3em]  justify-center'> 
+          <div className='flex flex-col items-center mb-8'> 
+            <div className="flex flex-row items-center gap-6 mb-4">
               <div className="flex-shrink-0">
                 <Image
                   src={smilingImg}
                   alt="Profile picture"
                   width={80}
                   height={80}
-                  className="rounded-full w-16 h-16 md:w-20 md:h-20 object-cover border-2 border-[#333]
+                  className="rounded-full w-16 h-16 lg:w-20 lg:h-20 object-cover border-2 border-[#333]
                   transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5"
                 />
               </div>
@@ -62,11 +61,11 @@ const AboutTheAuthor = () => {
               </div>
             </div>
 
-            <div className="text-[#333] leading-relaxed border-t border-gray-200 pt-3 text-center md:w-[24rem]">
+            <div className="text-[#333] leading-relaxed border-t border-gray-200 pt-3 text-center lg:w-[24rem]">
               <p>
                 Hello! My name is Jonathan Doe working from Chile.
-                 I <span className='px-1'>create some Ghost and Wordpress themes for </span><br className='hidden md:flex' />differents markets, 
-                 also, i offer live support via our<br className='hidden md:flex'/> ticket system.
+                 I <span className='px-1'>create some Ghost and Wordpress themes for </span><br className='hidden lg:flex' />differents markets, 
+                 also, i offer live support via our<br className='hidden lg:flex'/> ticket system.
 
 
               </p>
@@ -81,10 +80,10 @@ const AboutTheAuthor = () => {
             </div>
           </div>
           
-          <div className="grid gap-6 items-left md:items-center">
+          <div className="grid gap-6 items-left lg:items-center">
             <h2 className='mx-auto'>Check the latest article from <span className='font-bold'>this author</span></h2>
             {secondBar.map((item) => (
-              <div key={item.id} className="flex flex-row items-start md:gap-4 gap-3">
+              <div key={item.id} className="flex flex-row items-start lg:gap-4 gap-3">
                 {/* Star Badge & Image */}
                 <div className="relative">
                     <div className="absolute w-[4.5rem] h-[4.5rem] -top-4 -left-4">

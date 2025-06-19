@@ -1,3 +1,4 @@
+import BackgroundDecor from '@/utils/bgDecor';
 import Sroll from './components/desktop/sroll';
 import Footer from './components/home/customs/footer';
 import Navbar from './components/home/customs/navbar';
@@ -17,17 +18,18 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        <div className="md:px-[4rem] md:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto">
+        <div className='relative'>
+        <BackgroundDecor />
+</div>
+        <div className="relative lg:px-[4rem] lg:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto">
           <Navbar />
-          <div className="md:mt-[5rem] mt-[3rem] relative">
-            <div className="absolute"></div>
+          <div className="lg:mt-[5rem] mt-[3rem]">
             {children}
           </div>
         </div>
 
-       
-<Sroll />
-        <div className="pt-6 ">
+        <Sroll />
+        <div className="pt-6">
           <Footer />
         </div>
       </body>

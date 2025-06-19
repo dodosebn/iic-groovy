@@ -14,11 +14,11 @@ const Managing = () => {
           date={'April 26, 2019'} duration={'3 min read'}  />
           <AboutTheAuthor />
           <Comments />
-     <div className='md:flex'>
-      <div className='md:flex-2'>
+     <div className='lg:flex'>
+      <div className='lg:flex-2'>
           <Previous />
           </div>
-          <div className='md:flex-[0.5]'></div>
+          <div className='lg:flex-[0.5]'></div>
   </div>
     </div>
   )

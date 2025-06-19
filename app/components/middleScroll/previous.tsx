@@ -9,8 +9,8 @@ const Previous = () => {
   return (
     <section>
       <AboutMeContainer name='Previous Article'>
-        <div className='flex gap-4 md:gap-6 p-3 rounded-lg transition-colors duration-200'>
-          <div className='flex-shrink-0 md:flex hidden'>
+        <div className='flex gap-4 lg:gap-6 p-3 rounded-lg transition-colors duration-200'>
+          <div className='flex-shrink-0 lg:flex hidden'>
             <Imager
               src={oneImg}
               alt="Article thumbnail"
@@ -21,11 +21,11 @@ const Previous = () => {
           </div>
           
           <div className='flex flex-col justify-center space-y-2'>
-            <div className='md:flex hidden'>
+            <div className='lg:flex hidden'>
               <Button name={'Getting Started'} spanBg={'#1dd7c2'} />
             </div>
             
-            <h1 className='text-2xl md:text-3xl  font-bold text-gray-900
+            <h1 className='text-2xl lg:text-3xl  font-bold text-gray-900
              transition-colors cursor-pointer'>
               Far far away, behind the word mountains
             </h1>

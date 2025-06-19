@@ -14,10 +14,10 @@ interface cardProps {
 }
 const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
   return (
-    <main className='px-3 py-3 md:py-4 bg-[#f0f0fe]  mx-auto rounded-xl border-1 border-[#000]'>
-      <section className='flex flex-col md:flex-row gap-8 p-5  md:p-8'>
+    <main className='px-3 py-3 lg:py-4 bg-[#f0f0fe]  mx-auto rounded-xl border-1 border-[#000]'>
+      <section className='flex flex-col lg:flex-row gap-8 p-5  lg:p-8'>
         {/* Image Section - Takes more space on desktop */}
-      <div className='md:flex-1 h-[38vh] md:h-[25rem]'>
+      <div className='lg:flex-1 h-[38vh] lg:h-[25rem]'>
   <Image 
     src={imgGen} 
     alt='Article visual'
@@ -29,7 +29,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
 </div>
         
         {/* Content Section */}
-        <div className='md:flex-[1.5] flex flex-col justify-center md:py-4 space-y-6'>
+        <div className='lg:flex-[1.5] flex flex-col justify-center lg:py-4 space-y-6'>
           {/* Category and Date */}
           <div className='flex flex-col space-y-3'>
             <div>
@@ -45,14 +45,14 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
           
           {/* Title */}
           <div className='border-2 border-[#333] bg-[#fff] p-6 rounded-lg'>
-            <h1 className='text-2xl md:text-3xl font-bold text-gray-800 '>
+            <h1 className='text-2xl lg:text-3xl font-bold text-gray-800 '>
               {title}
             </h1>
           </div>
 
           {/* Author and Update */}
-          <div className='flex flex-col sm:flex-row sm:items-center md:justify-between gap-4'>
-            <div className='items-center space-x-3 md:flex hidden'>
+          <div className='flex flex-col sm:flex-row sm:items-center lg:justify-between gap-4'>
+            <div className='items-center space-x-3 lg:flex hidden'>
               <Image 
                 src={boySmiling} 
                 alt='Author avatar' 
@@ -71,7 +71,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
       </section>
 
       {/* Second Section */}
-      <section className=' mx-auto px-3 md:px-[3rem] py-8 md:py-12 space-y-8'>
+      <section className=' mx-auto px-3 lg:px-[3rem] py-8 lg:py-12 space-y-8'>
         <div className='space-y-6 text-lg leading-relaxed text-gray-800'>
           <p>
             What sets Ghost apart from other products is that you can publish content
@@ -193,7 +193,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
           </p>
         </div>
 
-        <div className='flex flex-wrap md:items-center md:justify-center md:gap-3 gap-2 py-6'>
+        <div className='flex flex-wrap lg:items-center lg:justify-center lg:gap-3 gap-2 py-6'>
           <span className='text-gray-700 font-bold'>Tagged in:</span>
           <Button name={'Travel'} spanBg={'#c5c5fe'} />
              <Button name={'Business'} spanBg={'#83ea6c'} />
@@ -205,7 +205,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
 
         <div className='text-center space-y-6 py-8'>
           <h2 className='text-xl font-semibold text-gray-700'>Like what you read?</h2>
-          <h1 className='text-2xl md:text-3xl font-bold text-gray-900'>Subscribe to our Newsletter</h1>
+          <h1 className='text-2xl lg:text-3xl font-bold text-gray-900'>Subscribe to our Newsletter</h1>
   <div className="relative max-w-md mx-auto">
   <input
     type="email"
@@ -221,7 +221,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
   </button>
 </div>
           <p className='text-gray-600 max-w-2xl  mx-auto'>
-            Subscribe to our email newsletter and unlock access to <br className='hidden md:flex' /> <span className='font-bold'> 
+            Subscribe to our email newsletter and unlock access to <br className='hidden lg:flex' /> <span className='font-bold'> 
             members-only</span> content and <span className='font-bold'>exclusive updates.</span>
           </p>
         </div>

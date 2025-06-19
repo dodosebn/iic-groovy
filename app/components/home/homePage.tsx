@@ -32,7 +32,7 @@ const HomePage = ({ num1, num2 }: { num1: number; num2: number }) => {
         🏷️ Filter: <strong>{selectedTag ?? 'None (showing all)'}</strong>{' '}
         – showing {visible.length} of {filtered.length}
       </p> */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {visible.map((item) => (
           <HomeWrapper key={item.id} {...item} />
         ))}
