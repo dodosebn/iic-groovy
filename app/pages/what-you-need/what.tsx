@@ -9,7 +9,8 @@ const What = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={cubofTea} title={'What you need to know about Ghost Editor'} 
-          date={'March 16, 2021'} duration={'2 min read'}  />
+          date={'March 16, 2021'} duration={'2 min read'}     bg='#fff2be'
+ />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

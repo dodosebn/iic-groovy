@@ -11,7 +11,8 @@ const Managing = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={umbrella} title={'Managing admin settings'} 
-          date={'April 26, 2019'} duration={'3 min read'}  />
+          date={'April 26, 2019'} duration={'3 min read'}     bg='#c5f4ef'
+ />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

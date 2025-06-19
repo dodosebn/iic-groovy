@@ -11,7 +11,8 @@ import shoeLike from '@/public/images/shoe.jpg';
 const Spectacle = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={shoeLike} title={'The spectacle before us was indeed sublime'} 
+          <FirstCard imgGen={shoeLike} title={'The spectacle before us was indeed sublime'}     bg='#ffeae9'
+
           date={'April 26, 2019'} duration={'2 min read'}  />
           <AboutTheAuthor />
           <Comments />

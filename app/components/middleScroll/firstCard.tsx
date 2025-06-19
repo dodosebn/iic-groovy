@@ -11,12 +11,13 @@ interface cardProps {
  title: string;
  date: string;
  duration: string;
+ bg: string;
 }
-const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration}) => {
+const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg}) => {
   return (
-    <main className='px-3 py-3 lg:py-4 bg-[#f0f0fe]  mx-auto rounded-xl border-1 border-[#000]'>
+    <main className='px-3 py-3 lg:py-4  mx-auto rounded-xl border-1 border-[#000]' 
+      style={{ backgroundColor: bg }}>
       <section className='flex flex-col lg:flex-row gap-8 p-5  lg:p-8'>
-        {/* Image Section - Takes more space on desktop */}
       <div className='lg:flex-1 h-[38vh] lg:h-[25rem]'>
   <Image 
     src={imgGen} 

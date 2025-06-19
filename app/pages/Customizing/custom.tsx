@@ -9,7 +9,8 @@ const Custom = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={stripeShii} title={'Customizing your brand and design settings'} 
-          date={'March 16, 2021'} duration={'1 min read'}  />
+          date={'March 16, 2021'} duration={'1 min read'}     bg='#e0ebfc'
+ />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

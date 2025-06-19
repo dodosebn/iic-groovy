@@ -11,7 +11,8 @@ const Far = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={one} title={'Far far away, behind the word mountains'} 
-          date={'March 16, 2021'} duration={'3 min read'}  />
+          date={'March 16, 2021'} duration={'3 min read'}      bg='#c5f4ef'
+/>
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

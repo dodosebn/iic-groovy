@@ -12,7 +12,8 @@ const Selling = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={gadget} title={'Setting up apps and custom integrations'} 
-          date={'March 16, 2021'} duration={'2 min read'}  />
+          date={'March 16, 2021'} duration={'2 min read'}      bg='#c5f4ef'
+/>
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

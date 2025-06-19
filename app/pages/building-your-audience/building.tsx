@@ -11,7 +11,7 @@ const Building = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={tallHand} title={'Building your audience with subscriber signups'} 
-          date={'September 25, 2022'} duration={'3 min read'}  />
+          date={'September 25, 2022'} duration={'3 min read'}  bg='#f0f0fe' />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

@@ -11,7 +11,8 @@ import fan from '@/public/images/fan.jpg';
 const HowToGrow = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={fan} title={'How to grow your business around an audience'} 
+          <FirstCard imgGen={fan} title={'How to grow your business around an audience'}     bg='#c5f4ef'
+
           date={'March 16, 2021'} duration={'2 min read'}  />
           <AboutTheAuthor />
           <Comments />
