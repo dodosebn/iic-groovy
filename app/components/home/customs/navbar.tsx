@@ -60,7 +60,6 @@ const Navbar = () => {
 
   return (
     <div className="relative cursor-pointer">
-      {/* Desktop Navbar - UNCHANGED */}
     {!isMobile && (
         <div className={`w-full ${hasScrolled ? "fixed top-0 left-0 z-50 bg-white" : ""}`}>
           <div className="w-full max-w-[1500px] mx-auto p-1.5">
@@ -129,16 +128,15 @@ const Navbar = () => {
 
 
 
-      {/* Mobile Navbar */}
       {isMobile && (
         <div className="bg-[#F9F9F9] border-b border-[#333] shadow-lg">
-          <nav className="flex items-center justify-between px-4 py-5">
+          <nav className="flex items-center justify-between px-4 py-2">
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-700 p-2">
-              {menuOpen ? <RiCloseLine size={45} /> : <RiMenu2Fill size={45} />}
+              {menuOpen ? <RiCloseLine size={37} /> : <RiMenu2Fill size={37} />}
             </button>
             {menuOpen ? (
               <button onClick={() => setMenuOpen(false)}>
-                <RiCloseLine size={45} className=" text-[#333]" />
+                <RiCloseLine size={37} className=" text-[#333]" />
               </button>
             ) : (
               <Logo />
