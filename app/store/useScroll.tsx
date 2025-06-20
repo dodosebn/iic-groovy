@@ -1,4 +1,3 @@
-// store/useScroll.ts
 import { create } from 'zustand';
 
 interface ScrollStore {
