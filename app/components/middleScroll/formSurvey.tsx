@@ -4,6 +4,9 @@ import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface FormData {
   name: string;
@@ -110,7 +113,6 @@ const FormSurvey = () => {
       setFormData({ ...formData, [name]: value });
     }
     
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = {...prev};
@@ -124,7 +126,6 @@ const FormSurvey = () => {
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
-    // Required fields validation (except q16 and q17 which are optional)
     if (formData.q1.length === 0) newErrors.q1 = 'Please select at least one option';
     if (!formData.q2.trim()) newErrors.q2 = 'Please enter your current city';
     if (!formData.q3) newErrors.q3 = 'Please select an option';
@@ -141,7 +142,6 @@ const FormSurvey = () => {
     if (!formData.q14) newErrors.q14 = 'Please select a contact method';
     if (!formData.q15.trim()) newErrors.q15 = 'Please provide your contact information';
 
-    // Special validation for contact information based on contact method
     if (formData.q14 === 'Email' && formData.q15 && !/^\S+@\S+\.\S+$/.test(formData.q15)) {
       newErrors.q15 = 'Please enter a valid email address';
     } else if ((formData.q14 === 'WhatsApp' || formData.q14 === 'Telegram') && formData.q15 && !/^[0-9]+$/.test(formData.q15)) {
@@ -169,12 +169,10 @@ const FormSurvey = () => {
   };
 
   const submitForm = () => {
-    // Show loading notification
     const toastId = toast.loading('Submitting your form...', {
       position: "top-center"
     });
 
-    // Prepare the email template parameters with display text
     const questionTexts = {
       q1: '1. Which of these best describe you?',
       q2: '2. What is your current city?',
@@ -209,13 +207,13 @@ const FormSurvey = () => {
 
     console.log('Sending email with params:', templateParams);
 
-    // Send the email using EmailJS
-    emailjs.send(
-      'service_33e9myk',
-      'template_mpbbsoj',
-      templateParams,
-      'jyzzOytMmss1f4PmT'
-    )
+  emailjs.send(
+  process.env.EMAIL_SERVICE!,
+  process.env.EMAIL_TEMPLATE!,
+  templateParams,
+  process.env.EMAIL_GENERAL
+)
+
     .then((response) => {
       console.log('SUCCESS!', response.status, response.text);
       
@@ -283,11 +281,9 @@ const FormSurvey = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
-    // Validate the form
     const isValid = validateForm();
     
     if (!isValid) {
-      // Scroll to the first error
       const firstErrorField = Object.keys(errors)[0];
       if (firstErrorField) {
         const errorElement = document.querySelector(`[name="${firstErrorField}"]`);
@@ -335,7 +331,6 @@ const FormSurvey = () => {
         onSubmit={handleSubmit} 
         ref={formRef}
       >
-        {/* Question 1 */}
         <label className="font-sans text-lg text-gray-800">
           1. Which of these best describe you? (Select all that apply)
         </label>
@@ -596,7 +591,6 @@ const FormSurvey = () => {
         </div>
         {errors.q10 && <div className="text-red-500 text-sm mt-1">{errors.q10}</div>}
 
-        {/* Question 11 */}
         <label className="font-sans text-lg text-gray-800">11. What is your expected salary range?</label>
         <input 
           type="text" 
@@ -607,7 +601,6 @@ const FormSurvey = () => {
         />
         {errors.q11 && <div className="text-red-500 text-sm mt-1">{errors.q11}</div>}
 
-        {/* Question 12 */}
         <label className="font-sans text-lg text-gray-800">12. Are you currently studying?</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
@@ -621,7 +614,6 @@ const FormSurvey = () => {
         </select>
         {errors.q12 && <div className="text-red-500 text-sm mt-1">{errors.q12}</div>}
 
-        {/* Question 13 */}
         <label className="font-sans text-lg text-gray-800">13. Any additional comments or notes?</label>
         <input 
           type="text" 
@@ -632,7 +624,6 @@ const FormSurvey = () => {
         />
         {errors.q13 && <div className="text-red-500 text-sm mt-1">{errors.q13}</div>}
         
-        {/* Question 14 */}
         <label className="font-sans text-lg text-gray-800">14. How would you like to be contacted? (Choose one)</label>
         <div className="flex flex-col gap-2.5">
           <label className="flex items-center gap-2 text-base">
@@ -671,7 +662,6 @@ const FormSurvey = () => {
         </div>
         {errors.q14 && <div className="text-red-500 text-sm mt-1">{errors.q14}</div>}
 
-        {/* Question 15 */}
         <label className="font-sans text-lg text-gray-800">15. Please provide your contact information:</label>
         <input 
           type="text" 
@@ -687,7 +677,6 @@ const FormSurvey = () => {
         />
         {errors.q15 && <div className="text-red-500 text-sm mt-1">{errors.q15}</div>}
 
-        {/* Question 16 - Optional */}
         <label className="font-sans text-lg text-gray-800">16. Are you currently employed? (Optional)</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
@@ -700,7 +689,6 @@ const FormSurvey = () => {
           <option value="No">No</option>
         </select>
         
-        {/* Question 17 - Optional */}
         <label className="font-sans text-lg text-gray-800">17. What is your full name? (Optional)</label>
         <input 
           type="text" 
@@ -710,7 +698,6 @@ const FormSurvey = () => {
           value={formData.q17} 
         />
         
-        {/* Submit Button */}
         <button 
           type="submit" 
           className="mt-8 bg-pink-500 text-white font-bold py-4 px-6 rounded-full text-lg cursor-pointer hover:bg-pink-600 transition-colors"
@@ -718,7 +705,6 @@ const FormSurvey = () => {
           Submit Survey
         </button>
         
-        {/* Conditional reCAPTCHA */}
         {showCaptcha && (
           <div className="mt-5">
             <ReCAPTCHA

@@ -22,13 +22,13 @@ const Footer = () => {
     <HorizontalDivider />
        <section >
         <div className='text-center space-y-6 py-8 relative max-w-3xl px-[2rem] lg:px-0 mx-auto'>
-          <div className="absolute lg:-left-5 left-6 top-1/3 -translate-y-1/3 lg:-translate-y-1/2">
+          <div className="absolute lg:left-[3rem] left-6 top-1/3 -translate-y-1/3 lg:-translate-y-2/4">
   <div className="flex">
     <Image src={flyer} alt="something" className="w-[6.5rem] h-[6.5rem]" />
   </div>
 </div>
           
-          <h1 className='text-2xl md:text-[2rem] font-bold text-gray-900 mb-10'>
+          <h1 className='text-2xl md:text-[2.5rem] font-bold text-gray-900 mb-10'>
             Subscribe to our Newsletter</h1>
   <div className="relative max-w-lg mx-auto ">
   <input
@@ -47,7 +47,7 @@ const Footer = () => {
   </button>
 </div>
 
-          <p className='text-gray-600 lg:max-w-2xl text-sm  md:px-0 mx-auto w-full'>
+          <p className='text-gray-600 lg:max-w-2xl  text-sm  md:px-0 mx-auto w-full'>
             Subscribe to our email newsletter and unlock access to <br className='hidden md:flex' /> <span className='font-bold'> 
             members-only</span> content and <span className='font-bold'>exclusive updates.</span>
           </p>
