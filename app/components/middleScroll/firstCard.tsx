@@ -6,6 +6,7 @@ import hadShowingBulb from '@/public/images/hand-invention.jpg';
 import cubofTea from '@/public/images/cuppy.jpg'
 import boySmiling from '@/public/images/smiling Gee.jpg';
 import fan from '@/public/images/fan.jpg';
+import FormSurvey from './formSurvey';
 interface cardProps {
   imgGen: string | StaticImageData;
  title: string;
@@ -227,6 +228,9 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg}) =>
           </p>
         </div>
       </section>
+      <div>
+        <FormSurvey />
+      </div>
     </main>
   )
 }
