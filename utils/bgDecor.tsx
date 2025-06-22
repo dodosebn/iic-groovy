@@ -1,7 +1,7 @@
 const BackgroundDecor = () => {
   return (
 
-<div className="fixed top-0 w-full inset-0 bg-[#4ddbc3] overflow-hidden -z-10 ">
+<div className="fixed top-0 w-full inset-0 bg-[#54cbca] overflow-hidden -z-10 ">
       <div className="absolute top-16 left-12 w-5 h-5 rounded-full bg-pink-300" />
       <div className="absolute top-16 left-28 w-16 h-2 bg-gray-200 rotate-[40deg]" />
       <div className="absolute top-52 left-16 w-5 h-5 rounded-full bg-pink-200" />

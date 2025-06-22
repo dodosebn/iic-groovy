@@ -2,19 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
  
-  /* fffacd */
-  --background:  #54cbca;
+  --background:  #15817f;
   --foreground: #333;
 }
 
 
 body {
-  background: var(--background);
+  background: #15817f;
   color: var(--foreground);
   font-family: "Jost", sans-serif;
-  transition-property: opacity, background, transform, filter;
-  transition-timing-function: ease-in-out;
-  transition-duration: 500ms;
+  /* transition-property: opacity, background, transform; */
+  /* transition-timing-function: ease-in-out; */
+  /* transition-duration: 500ms; */
 }
 
 .page-transition {

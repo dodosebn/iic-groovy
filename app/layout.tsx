@@ -21,7 +21,8 @@ export default function RootLayout({
         <div className='relative'>
         <BackgroundDecor />
 </div>
-        <div className="relative lg:px-[4rem] lg:py-[2rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto">
+        <div className="relative lg:px-[4rem] lg:py-[2rem] lg:w-full max-w-[1500px]
+         flex flex-col justify-center mx-auto">
           <Navbar />
           <div className="lg:mt-[5rem] mt-[3rem]">
             {children}

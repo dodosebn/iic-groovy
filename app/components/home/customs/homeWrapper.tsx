@@ -9,8 +9,8 @@ import Image from 'next/image';
 const HomeWrapper: React.FC<HomeWrapperProps> = ({
   bg,
   pics,
-  picsIcon1: PicsIcon1,
-  picsIcon2: PicsIcon2,
+  // picsIcon1: PicsIcon1,
+  // picsIcon2: PicsIcon2,
   date,
   duration,
   h1,
@@ -47,46 +47,34 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   }, []);
 
   return (
+
     <main>
       <div
-        className="mx-auto flex flex-col justify-between rounded-xl border border-[rgb(0,0,0)]"
+        className="mx-auto flex flex-col justify-between lg:min-h-[43rem] lg:max-h-[47rem]  rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
-        <section className="flex flex-col gap-5 p-5">
+        <section className="flex flex-col gap-5 p-5 ">
           {pics && (
             <div className="relative">
               <TransitionLink href={path}>
                 <Image
                   src={pics}
                   alt="Article visual"
-                  className="w-full h-[20rem] lg:h-[25rem] [object-position:center_30%] 
-                  lg:!object-position-cente  object-cover rounded-2xl border-1 border-[#333]"
+                  className="w-full h-[20rem] lg:h-[24rem] [object-position:center_30%] 
+                    object-cover rounded-2xl border-1 border-[#333]"
                   priority
                 />
               </TransitionLink>
 
-              {(tag || PicsIcon1 || PicsIcon2) && (
-                <div className="w-full absolute bottom-[16.5rem]   lg:bottom-[21.5rem]  px-4">
+              {(tag) && (
+                <div className="w-full absolute bottom-[16.5rem]   lg:bottom-[21rem]  px-4">
                   <div className="flex justify-between items-center w-full">
                     {tag && btnCol && (
                       <div className="flex">
                         <Button name={tag} spanBg={btnCol} />
                       </div>
                     )}
-                    {(PicsIcon1 || PicsIcon2) && (
-                      <div className="flex space-x-1.5">
-                        {PicsIcon1 && (
-                          <div className="bg-[#333] rounded-full p-3">
-                            <PicsIcon1 className="text-white w-5 h-5" />
-                          </div>
-                        )}
-                        {PicsIcon2 && (
-                          <div className="bg-[#333] rounded-full p-3">
-                            <PicsIcon2 className="text-white w-5 h-5" />
-                          </div>
-                        )}
-                      </div>
-                    )}
+                 
                   </div>
                 </div>
               )}
@@ -126,8 +114,8 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             )}
 
             {p && (
-              <div className="flex flex-col items-center justify-center lg:px-6 text-center">
-                <p className="text-md leading-loose">{p}</p>
+              <div className="flex flex-col items-center justify-center  text-center">
+                <p className="text-md leading-loose text-center lg:px-10">{p}</p>
               </div>
             )}
 

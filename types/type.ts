@@ -1,11 +1,10 @@
 import { StaticImageData } from 'next/image';
-import { IconType } from 'react-icons';
 
 export type HomeWrapperProps = {
   bg?: string;
   pics?: string | StaticImageData; 
-  picsIcon1?: IconType;
-  picsIcon2?: IconType;
+  // picsIcon1?: IconType;
+  // picsIcon2?: IconType;
   date?: string;
   duration?: string;
   h1?: string | React.ReactNode;
