@@ -27,7 +27,7 @@ const Page1Maps = [
     p: `How Ghost allows you to turn anonymous readers into an audience of active subscribers,
     so you know what's working and what isn't....`,
     img: boySmiling,
-    imgName: "John Doe",
+    imgName: "Jonathan Doe",
     btnCol: "#c5c5fe",
     tag: "Travel",
     path: '/pages/building-your-audience'
@@ -204,7 +204,7 @@ const Page1Maps = [
     h1: 'Managing admin settings',
     p: `There are a couple of things to do next while you're getting set up: Make your site private If you've got a publication that you....`,
     img: smilingGirle,
-    imgName: "Brenda  ",
+    imgName: "Brenda Hitchell ",
     btnCol: "#1dd7c2",
     tag: "Getting Started",
     path: '/pages/managing'

@@ -50,7 +50,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
 
     <main>
       <div
-        className="mx-auto flex flex-col justify-between lg:min-h-[43rem] lg:max-h-[47rem]  rounded-xl border border-[rgb(0,0,0)]"
+        className="mx-auto flex flex-col justify-between lg:min-h-[44rem] lg:max-h-[50rem]  rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
         <section className="flex flex-col gap-5 p-5 ">
@@ -120,10 +120,9 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             )}
 
             <div
-              ref={flexRef}
-              className={`lg:flex mt-5 lg:mt-0 flex-col sm:flex-row flex-wrap gap-3 ${
-                isWrapped ? 'items-center' : 'items-center'
-              }`}
+              className={`lg:flex mt-5 lg:mt-0 flex-col sm:flex-row flex-wrap gap-3 
+                 'items-center' : 'items-center'
+              `}
             >
               <div className="order-2">
                 <TransitionLink href={path}>
