@@ -96,6 +96,8 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
           {/* Continue Button and Author Info */}
           <div className="md:flex flex-col sm:flex-row sm:items-center md:justify-between gap-4">
             <div>
+                                    <TransitionLink href={path}>
+
               <button
                 className="bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[2rem] py-[0.2rem] 
                   rounded-2xl transition-transform duration-300 ease-in-out 
@@ -104,6 +106,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
               >
                 Continue
               </button>
+              </TransitionLink>
             </div>
 
             {img && imgName && (
