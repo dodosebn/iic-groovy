@@ -75,7 +75,7 @@ const MeetCont = () => {
 </TransitionLink>
      
 
-            <div className="absolute top-[65%] left-1/2 transform -translate-x-1/2">
+            <div className="absolute lg:top-[65%] top-[83%]  left-1/2 transform -translate-x-1/2">
             <TransitionLink href={item.path}>
               <button className="px-3 py-1 bg-white text-[#333] border border-[#333] rounded-3xl font-bold text-[10px] lg:text-sm">
                 {item.name}
@@ -85,7 +85,7 @@ const MeetCont = () => {
           </div>
 
           {/* Text Info */}
-<div className="text-sm lg:-mt-11 text-gray-700 text-center flex items-start justify-center min-h-[100px]">
+<div className="text-sm mt-4 lg:-mt-11 text-gray-700 text-center flex items-start justify-center min-h-[100px]">
             <p className="px-1 max-w-[23rem]">{item.info}</p>
           </div>
         </div>
