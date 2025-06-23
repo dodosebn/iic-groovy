@@ -5,15 +5,15 @@
   --background:  #15817f;
   --foreground: #333;
 }
-
+s
 
 body {
-  background: #15817f;
+  background: var(--background);
   color: var(--foreground);
   font-family: "Jost", sans-serif;
-  /* transition-property: opacity, background, transform; */
-  /* transition-timing-function: ease-in-out; */
-  /* transition-duration: 500ms; */
+  transition-property: opacity, background, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
 }
 
 .page-transition {
@@ -24,6 +24,7 @@ body {
   pointer-events: none;
 }
 @layer utilities {
+  
   .helvetica-fallback {
     font-synthesis: none;
     font-optical-sizing: none;

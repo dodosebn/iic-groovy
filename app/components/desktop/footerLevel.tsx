@@ -1,6 +1,6 @@
 import Button from '@/utils/button';
 import FourthStuff from '@/utils/fourthStuff';
-import Logo from '@/utils/logo';
+import {Logo} from '@/utils/logo';
 import ThreeStuff from '@/utils/threeStuff';
 import React from 'react';
 import FourIt from './fourIt';

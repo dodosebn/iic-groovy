@@ -1,7 +1,7 @@
 import React from 'react'
 import loogo from '@/public/images/logo-groovy.png';
 import Image from 'next/image';
-const Logo = () => {
+export const MLogo = () => {
   return (
     <>
 <Image 
@@ -12,5 +12,15 @@ const Logo = () => {
   </>  
   )
 }
+export const Logo = () => {
+  return (
+    <>
+<Image 
+    src={loogo} 
+    alt="Groovy logo"
+    className="w-52 h-auto object-contain" 
+  />  
+  </>  
+  )
+}
 
-export default Logo;
