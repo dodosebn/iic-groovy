@@ -85,7 +85,7 @@ const MeetCont = () => {
           </div>
 
           {/* Text Info */}
-<div className="text-sm lg:-mt-14 text-gray-700 text-center flex items-start justify-center min-h-[100px]">
+<div className="text-sm lg:-mt-11 text-gray-700 text-center flex items-start justify-center min-h-[100px]">
             <p className="px-1 max-w-[23rem]">{item.info}</p>
           </div>
         </div>
