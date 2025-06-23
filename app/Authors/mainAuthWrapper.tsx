@@ -4,7 +4,6 @@ import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { TiWorld } from 'react-icons/ti';
 import Image, { StaticImageData } from 'next/image';
 
-import smilingImg from '@/public/images/smiling Gee.jpg';
 interface mainAuthProps {
 name: string;
 describ: string;
@@ -32,8 +31,8 @@ const MainAuthWrapper: React.FC<mainAuthProps> = ({name, describ,   paragraph, d
               </div>
 
               <div className="flex flex-col items-center gap-1 text-center"> 
-                <h1 className="text-3xl font-bold text-[#333]">{name}</h1>
-                <p className="text-xl text-gray-600">{describ}</p>
+                <h1 className="text-xl lg:text-3xl font-bold text-[#333]">{name}</h1>
+                <p className="text-lg lg:text-xl text-gray-600">{describ}</p>
                
               </div>
             </div>

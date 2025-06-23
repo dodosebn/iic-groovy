@@ -53,7 +53,7 @@ const Navbar = () => {
 
   const navItems = [
     { id: 1, path: '/', name: 'Home' },
-    { id: 2, path: 'membership/signUp', name: 'Membership' },
+    { id: 2, path: '/membership/signUp', name: 'Membership' },
     { id: 3, path: '/', name: 'Style Guide✨' },
     { id: 4, path: '#tag', name: '#Tag' }
   ];
@@ -149,7 +149,7 @@ const Navbar = () => {
                 <li key={item.id} className="text-[#333] hover:text-pink-600 font-medium">
                   <TransitionLink 
                     href={item.path}
-                    onClick={handleMobileClick} // ONLY ADDED THIS
+                    onClick={handleMobileClick} 
                   >
                     {item.name}
                   </TransitionLink>
@@ -172,7 +172,7 @@ const Navbar = () => {
                       <TransitionLink 
                         key={sub.name} 
                         href={sub.path}
-                        onClick={handleMobileClick} // ONLY ADDED THIS
+                        onClick={handleMobileClick} 
                       >
                         <span className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600">
                           {sub.name}
