@@ -60,14 +60,14 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 <Image
                   src={pics}
                   alt="Article visual"
-                  className="w-full h-[20rem] lg:h-[24rem] [object-position:center_30%] 
+                  className="w-full h-full [object-position:center_30%] 
                     object-cover rounded-2xl border-1 border-[#333]"
                   priority
                 />
               </TransitionLink>
 
               {(tag) && (
-                <div className="w-full absolute bottom-[16.5rem]   lg:bottom-[21rem]  px-4">
+                <div className="w-full absolute bottom-[85%]   px-4">
                   <div className="flex justify-between items-center w-full">
                     {tag && btnCol && (
                       <div className="flex">
@@ -124,7 +124,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                  'items-center' : 'items-center'
               `}
             >
-              <div className="order-2">
+              <div className="order-2 lg:mt-1">
                 <TransitionLink href={path}>
                   <button
                     className="bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[2rem] py-[0.2rem] 

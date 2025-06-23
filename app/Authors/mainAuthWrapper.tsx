@@ -2,15 +2,16 @@ import AboutMeContainer from '@/utils/aboutMeContainer';
 import React from 'react'
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { TiWorld } from 'react-icons/ti';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import smilingImg from '@/public/images/smiling Gee.jpg';
 interface mainAuthProps {
 name: string;
 describ: string;
   paragraph: string;
+  displayImg: StaticImageData;
 }
-const MainAuthWrapper: React.FC<mainAuthProps> = ({name, describ,   paragraph}) => {
+const MainAuthWrapper: React.FC<mainAuthProps> = ({name, describ,   paragraph, displayImg}) => {
   
   return (
     <section>
@@ -20,7 +21,7 @@ const MainAuthWrapper: React.FC<mainAuthProps> = ({name, describ,   paragraph}) 
             <div className="flex flex-row items-center gap-6 mb-4">
               <div className="flex-shrink-0">
                 <Image
-                  src={smilingImg}
+                  src={displayImg}
                   alt="Profile picture"
                   width={80}
                   height={80}

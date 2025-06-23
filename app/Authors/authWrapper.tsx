@@ -2,6 +2,7 @@ import React from 'react';
 import Imager from '@/utils/imager';
 import Button from '@/utils/button';
 import { HomeWrapperProps } from '@/types/type';
+import TransitionLink from '@/utils/transitionLink';
 
 const HomeWrapper: React.FC<HomeWrapperProps> = ({
   bg,
@@ -15,6 +16,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   imgName,
   btnCol,
    tag,
+   path,
 }) => {
   return (
     <div
@@ -24,15 +26,18 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
       <section className="flex flex-col md:flex-row gap-8 p-5 md:p-6">
         {/* Image Section */}
         {pics && (
-          <div className="md:flex-1 h-[38vh] md:h-[24rem] relative">
+          <div className="md:flex-1 h-[38vh] md:h-[25rem] relative">
+                      <TransitionLink href={path}>
+
             <Imager
               src={pics}
               alt="Article visual"
               className="w-full h-full object-cover rounded-xl border-1 border-[#333]"
               priority
             />
+            </TransitionLink>
             {(tag) && (
-              <div className="absolute w-full bottom-[7.3rem] p-4">
+              <div className="absolute w-full bottom-[75%] p-4">
                 <div className="flex justify-between items-center w-full">
                   {tag && btnCol && (
                     <div className="md:hidden flex">
@@ -73,9 +78,12 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
           {(h1 || p) && (
             <div>
               {h1 && (
+                          <TransitionLink href={path}>
+
                 <h1 className="text-2xl md:text-4xl md:w-[20rem] font-bold leading-snug text-gray-800 hover:underline transition-all">
                   {h1}
                 </h1>
+                </TransitionLink>
               )}
               {p && (
                 <p className="pt-3 md:text-lg text-sm">

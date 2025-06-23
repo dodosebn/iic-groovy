@@ -1,11 +1,11 @@
-import one from '@/public/images/oneee.jpg';
-import snailLike from '@/public/images/snail-like.jpg';
-import stripeShii from '@/public/images/stripesShii.jpg';
+import one from '@/public/homepagecards/oneee.jpg'
+import snailLike from '@/public/homepagecards/stacked-Food.jpg'
+import stripeShii from '@/public/homepagecards/rag-like.jpg';
 import smilingGirle from '@/public/images/smilingGirlie.jpg';
 // import cupOfTea from '@/public/images/cub-of-tea.jpg';
-import cubofTea from '@/public/images/cuppy.jpg'
-import gadget from '@/public/images/gadgets.jpg';
-import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
+import cubofTea from '@/public/homepagecards/cub-of-tea.jpg'
+import gadget from '@/public/homepagecards/gadgets.jpg';
+import tallHand from '@/public/homepagecards/bulb.jpg';
 import boySmiling from '@/public/images/smiling Gee.jpg';
 import fan from '@/public/images/fan.jpg';
 import kitchen from '@/public/images/kitchen.jpg';
@@ -14,6 +14,7 @@ import shoeLike from '@/public/images/shoe.jpg';
 import { BiSolidMessageRounded } from "react-icons/bi";
 import music from '@/public/images/music.jpg';
 import umbrella from '@/public/images/umbrella.jpg';
+import headSet from '@/public/authors/auth-headset.jpg';
 
 const Page1Maps = [
   {
@@ -143,8 +144,8 @@ const Page1Maps = [
     duration: '2 min read',
     h1: 'Writing and managing content in Ghost',
     p: `Ghost comes with a best-in-class editor which does its very best to get out of the way, and let you focus on your content. Don't...`,
-    img: boySmiling,
-    imgName: " Jonathan Doe",
+    img: dreadedG,
+    imgName: " James Brawson",
     btnCol: "#83ea6c",
     tag: "Health",
     path: '/pages/Writing-and-managing'
@@ -188,8 +189,8 @@ const Page1Maps = [
     h1: 'Apps and scripts for your Ghost website',
     p: `There are three primary ways to work with third-party services in Ghost: using Zapier, editing your theme, or using the Ghost API. Zapier You can connect your Ghost site to over 1,000 external services using the official integration with Zapier. Zapier sets up automations with Triggers and Actions, which allows you to create and...`,
     path: '/pages/musical',
-    img: smilingGirle,
-    imgName: "Brenda Hitchell ",
+    img: headSet,
+    imgName: "Josep Fransics",
     btnCol: "#1dd7c2",
     tag: "Getting Started"
   },
@@ -203,8 +204,8 @@ const Page1Maps = [
     duration: '2 min read',
     h1: 'Managing admin settings',
     p: `There are a couple of things to do next while you're getting set up: Make your site private If you've got a publication that you....`,
-    img: smilingGirle,
-    imgName: "Brenda Hitchell ",
+    img: headSet,
+    imgName: "Joseph Fransics",
     btnCol: "#1dd7c2",
     tag: "Getting Started",
     path: '/pages/managing'
