@@ -10,7 +10,7 @@ export default function Home() {
   // const [subscribed, setSubscribed] = useState(false);
 
   return (
-    <div className="flex justify-center flex-col px-[1rem] md:px-0">
+    <div className="flex justify-center flex-col px-[0.6rem]  pt-[1rem]">
       {/* <FourIt /> */}
       <div className="px-[0.5rem]">
       <HomePage num2={6 } num1={0} />
