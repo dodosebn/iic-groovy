@@ -13,6 +13,7 @@
     "@fontsource-variable/inter-tight": "^5.2.6",
     "@fontsource/inter": "^5.2.6",
     "@hookform/resolvers": "^5.1.1",
+    "@supabase/supabase-js": "^2.50.2",
     "emailjs": "^4.0.3",
     "framer-motion": "^12.19.1",
     "next": "15.3.2",

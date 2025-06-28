@@ -1,3 +1,4 @@
+'use client';
 import React from 'react'
 import Image, { StaticImageData } from 'next/image';
 import Button from '@/utils/button';
@@ -6,7 +7,10 @@ import hadShowingBulb from '@/public/images/hand-invention.jpg';
 import cubofTea from '@/public/images/cuppy.jpg'
 import boySmiling from '@/public/images/smiling Gee.jpg';
 import fan from '@/public/images/fan.jpg';
-import FormSurvey from './formSurvey';
+import { useTagStore } from '@/app/store/useTagStore';
+import FormSurvey from './form/formSurvey';
+import FormSurvey2 from './form/formSurvey2';
+
 interface cardProps {
   imgGen: string | StaticImageData;
  title: string;
@@ -15,6 +19,8 @@ interface cardProps {
  bg: string;
 }
 const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg}) => {
+    const { selectedTag } = useTagStore();
+
   return (
     <main className='px-3 py-3 lg:py-4  mx-auto rounded-xl border-1 border-[#000]' 
       style={{ backgroundColor: bg }}>
@@ -228,9 +234,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg}) =>
           </p>
         </div>
       </section>
-      <div>
-        <FormSurvey />
-      </div>
+            {selectedTag === 'Health' ? <FormSurvey /> : <FormSurvey2 />}
     </main>
   )
 }

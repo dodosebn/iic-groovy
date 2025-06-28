@@ -6,6 +6,7 @@ import { HomeWrapperProps } from '@/types/type';
 import TransitionLink from '@/utils/transitionLink';
 import Image from 'next/image';
 
+
 const HomeWrapper: React.FC<HomeWrapperProps> = ({
   bg,
   pics,
@@ -47,7 +48,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
   }, []);
 
   return (
-
+    <div>
     <main>
       <div
         className="mx-auto flex flex-col justify-between lg:min-h-[44rem] lg:max-h-[50rem]  rounded-xl border border-[rgb(0,0,0)]"
@@ -156,6 +157,9 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
         </section>
       </div>
     </main>
+   
+  
+    </div>
   );
 };
 

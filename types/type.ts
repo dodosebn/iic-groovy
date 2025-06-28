@@ -16,3 +16,14 @@ export type HomeWrapperProps = {
   category?: string;
 path: string;
 };
+export interface AuthState {
+    email: string;
+    password: string;
+    handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  }
+  export interface setAuthProps {
+    email: '',
+    name: '',
+    bio: ''
+  }

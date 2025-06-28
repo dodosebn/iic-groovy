@@ -1,10 +1,9 @@
 import React from 'react'
-import Memoo from './memoo';
-
+import SignIn from './memoo';
 const page = () => {
   return (
     <div className='p-2'>
-      <Memoo />
+      <SignIn />
     </div>
   )
 }
