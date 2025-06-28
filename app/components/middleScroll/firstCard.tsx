@@ -43,7 +43,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
           <div className='flex flex-col space-y-3'>
             <div>
          
-<Button name='Travel' spanBg='#c5c5fe'/>
+<Button name={tag} spanBg='#c5c5fe'/>
             </div>
             <div className='flex items-center space-x-3 text-gray-600'>
               <p>{date}</p>
