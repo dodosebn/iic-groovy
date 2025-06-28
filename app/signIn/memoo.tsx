@@ -8,38 +8,38 @@ import TransitionLink from '@/utils/transitionLink';
 import { toast } from 'react-toastify';
 
 const SignIn = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { email, password, handleEmailChange, handlePasswordChange } = useAuthStore();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
 
-    if (password.length < 6) {
-      toast.error('Password must be at least 6 characters.');
-      setLoading(false);
-      return;
-    }
+  //   if (password.length < 6) {
+  //     toast.error('Password must be at least 6 characters.');
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+  //   const { data, error } = await supabase.auth.signInWithPassword({
+  //     email,
+  //     password,
+  //   });
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success('Welcome back! Signed in successfully 🎉');
-      router.push('/');
-    }
+  //   if (error) {
+  //     toast.error(error.message);
+  //   } else {
+  //     toast.success('Welcome back! Signed in successfully 🎉');
+  //     router.push('/');
+  //   }
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   return (
     <div className='bg-[#fffacd] border-1 border-[#333] rounded-2xl p-6 lg:px-[2rem] lg:py-[3rem] hover:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] transition-all duration-300 w-full max-w-2xl mx-auto flex flex-col justify-between'>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-5 lg:gap-9'>
+      <form  className='flex flex-col gap-5 lg:gap-9'>
         <div className='text-center space-y-5'>
           <h1 className='text-2xl lg:text-4xl font-bold text-[#333]'>Sign In to Groovy</h1>
           <p className='text-base lg:text-lg text-[#555]'>Welcome back! Please enter your details</p>
