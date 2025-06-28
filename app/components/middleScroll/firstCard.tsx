@@ -7,7 +7,7 @@ import hadShowingBulb from '@/public/images/hand-invention.jpg';
 import cubofTea from '@/public/images/cuppy.jpg'
 import boySmiling from '@/public/images/smiling Gee.jpg';
 import fan from '@/public/images/fan.jpg';
-import { useTagStore } from '@/app/store/useTagStore';
+// import { useTagStore } from '@/app/store/useTagStore';
 import FormSurvey from './form/formSurvey';
 import FormSurvey2 from './form/formSurvey2';
 
@@ -17,9 +17,10 @@ interface cardProps {
  date: string;
  duration: string;
  bg: string;
+ tag: string;
 }
-const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg}) => {
-    const { selectedTag } = useTagStore();
+const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag}) => {
+    // const { selectedTag } = useTagStore();
 
   return (
     <main className='px-3 py-3 lg:py-4  mx-auto rounded-xl border-1 border-[#000]' 
@@ -234,7 +235,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg}) =>
           </p>
         </div>
       </section>
-            {selectedTag === 'Health' ? <FormSurvey /> : <FormSurvey2 />}
+            {tag === 'Health' ? <FormSurvey /> : <FormSurvey2 />}
     </main>
   )
 }

@@ -158,7 +158,7 @@ const Navbar = () => {
                     </motion.li>
                   ))}
                   <motion.li variants={itemVariant}>
-                 <button
+                 {/* <button
   onClick={() => handleNavigation('/signIn')}
   className="bg-[#333333] text-white text-sm px-8 py-2 font-bold
     rounded-[5.5rem] hover:bg-white hover:text-[#333] border
@@ -166,7 +166,7 @@ const Navbar = () => {
     ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.5"
 >
   Sign In
-</button>
+</button> */}
 
                   </motion.li>
                 </motion.ul>
@@ -240,14 +240,14 @@ const Navbar = () => {
                   </li>
                 </ul>
 
-                <div className="mt-6 flex justify-center items-center px-6">
+                {/* <div className="mt-6 flex justify-center items-center px-6">
                   <button
                     onClick={() => handleNavigation('/signIn')}
                     className="bg-[#333333] text-white px-8 py-2 font-bold rounded-[5.5rem] hover:bg-white hover:text-[#333] border hover:border-[#333] whitespace-nowrap transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.5"
                   >
                     Sign In
                   </button>
-                </div>
+                </div> */}
               </motion.div>
             )}
           </AnimatePresence>

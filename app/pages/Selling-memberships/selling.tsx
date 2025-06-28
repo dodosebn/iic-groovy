@@ -10,8 +10,8 @@ import snailLike from '@/public/images/snail-like.jpg';
 const Selling = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={snailLike} title={'Selling memberships with recurring revenue'}  bg='#dff9d9'
-          date={'March 16, 2021'} duration={'1 min read'}  />
+          <FirstCard imgGen={snailLike} title={'Selling memberships with recurring revenue'} bg='#dff9d9'
+      date={'March 16, 2021'} duration={'1 min read'} tag={'Health'}  />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

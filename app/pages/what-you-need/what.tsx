@@ -8,9 +8,8 @@ import cubofTea from '@/public/images/cuppy.jpg'
 const What = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={cubofTea} title={'What you need to know about Ghost Editor'} 
-          date={'March 16, 2021'} duration={'2 min read'}     bg='#fff2be'
- />
+          <FirstCard imgGen={cubofTea} title={'What you need to know about Ghost Editor'}
+      date={'March 16, 2021'} duration={'2 min read'} bg='#fff2be' tag={'Music'} />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

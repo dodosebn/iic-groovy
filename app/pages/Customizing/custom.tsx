@@ -8,9 +8,8 @@ import stripeShii from '@/public/images/stripesShii.jpg';
 const Custom = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={stripeShii} title={'Customizing your brand and design settings'} 
-          date={'March 16, 2021'} duration={'1 min read'}     bg='#e0ebfc'
- />
+          <FirstCard imgGen={stripeShii} title={'Customizing your brand and design settings'}
+      date={'March 16, 2021'} duration={'1 min read'} bg='#e0ebfc' tag={'Technology'} />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

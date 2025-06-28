@@ -11,9 +11,9 @@ import kitchen from '@/public/images/kitchen.jpg';
 const Writing = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={kitchen} title={'Writing and managing content in Ghost'}     bg='#dff9d9'
- 
-          date={'March 16, 2021'} duration={'2 min read'}  />
+          <FirstCard imgGen={kitchen} title={'Writing and managing content in Ghost'} bg='#dff9d9'
+
+      date={'March 16, 2021'} duration={'2 min read'} tag={'Health'}  />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>
