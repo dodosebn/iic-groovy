@@ -14,115 +14,115 @@ const Mem = () => {
   const [loading, setLoading] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN') {
-        const user = session?.user;
-        if (user?.email_confirmed_at) {
-          setIsConfirmed(true);
-          toast.success('Thanks for subscribing to Groovy! We will keep you updated on premium information.');
-        }
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange(async (event, session) => {
+  //     if (event === 'SIGNED_IN') {
+  //       const user = session?.user;
+  //       if (user?.email_confirmed_at) {
+  //         setIsConfirmed(true);
+  //         toast.success('Thanks for subscribing to Groovy! We will keep you updated on premium information.');
+  //       }
+  //     }
+  //   });
+  // }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setLoading(true);
 
-    try {
-      // 1. Check if email exists in iic_membership
-      const { data: existingUsers, error: fetchError } = await supabase
-        .from('iic_membership')
-        .select('email')
-        .eq('email', email);
+  //   try {
+  //     // 1. Check if email exists in iic_membership
+  //     const { data: existingUsers, error: fetchError } = await supabase
+  //       .from('iic_membership')
+  //       .select('email')
+  //       .eq('email', email);
 
-      if (fetchError) throw fetchError;
+  //     if (fetchError) throw fetchError;
 
-      if (existingUsers && existingUsers.length > 0) {
-        toast.warning(
-          <div>
-            <p>This email is already registered!</p>
-            <p className="text-sm mt-1">
-              <TransitionLink href="/signIn">
-              <span className="underline font-bold"> Sign in here</span>
-              </TransitionLink>
-            </p>
-          </div>,
-          { autoClose: 5000 }
-        );
-        return;
-      }
+  //     if (existingUsers && existingUsers.length > 0) {
+  //       toast.warning(
+  //         <div>
+  //           <p>This email is already registered!</p>
+  //           <p className="text-sm mt-1">
+  //             <TransitionLink href="/signIn">
+  //             <span className="underline font-bold"> Sign in here</span>
+  //             </TransitionLink>
+  //           </p>
+  //         </div>,
+  //         { autoClose: 5000 }
+  //       );
+  //       return;
+  //     }
 
-      // 2. Sign up with Supabase Auth
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { phone },
-          emailRedirectTo: `${window.location.origin}/signIn`
-        },
-      });
+  //     // 2. Sign up with Supabase Auth
+  //     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+  //       email,
+  //       password,
+  //       options: {
+  //         data: { phone },
+  //         emailRedirectTo: `${window.location.origin}/signIn`
+  //       },
+  //     });
 
-      if (signUpError) throw signUpError;
+  //     if (signUpError) throw signUpError;
 
-      // 3. Only proceed if signup was successful
-      if (signUpData.user) {
-        // 4. Insert into iic_membership table
-        const { error: insertError } = await supabase
-          .from('iic_membership')
-          .insert([{
-            email,
-            phone,
-            user_uid: signUpData.user.id, // Link to auth user
-            created_at: new Date().toISOString()
-          }]);
+  //     // 3. Only proceed if signup was successful
+  //     if (signUpData.user) {
+  //       // 4. Insert into iic_membership table
+  //       const { error: insertError } = await supabase
+  //         .from('iic_membership')
+  //         .insert([{
+  //           email,
+  //           phone,
+  //           user_uid: signUpData.user.id, // Link to auth user
+  //           created_at: new Date().toISOString()
+  //         }]);
 
-        if (insertError) throw insertError;
+  //       if (insertError) throw insertError;
 
-        toast.success(`Check ${email} for confirmation link!`);
-      }
-    } catch (error: any) {
-      console.error('Signup error:', error);
+  //       toast.success(`Check ${email} for confirmation link!`);
+  //     }
+  //   } catch (error: any) {
+  //     console.error('Signup error:', error);
       
-      if (error.message.includes('already registered')) {
-        toast.warning(
-          <div>
-            <p>This email is already registered!</p>
-            <p className="text-sm mt-1">
-              <TransitionLink href="/signIn">
-             <span  className="underline font-bold"> Sign in here</span>  
-              </TransitionLink>
-            </p>
-          </div>,
-          { autoClose: 5000 }
-        );
-      } else {
-        toast.error(error.message || 'Signup failed. Please try again.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (error.message.includes('already registered')) {
+  //       toast.warning(
+  //         <div>
+  //           <p>This email is already registered!</p>
+  //           <p className="text-sm mt-1">
+  //             <TransitionLink href="/signIn">
+  //            <span  className="underline font-bold"> Sign in here</span>  
+  //             </TransitionLink>
+  //           </p>
+  //         </div>,
+  //         { autoClose: 5000 }
+  //       );
+  //     } else {
+  //       toast.error(error.message || 'Signup failed. Please try again.');
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  if (isConfirmed) {
-    return (
-      <div className='bg-[#fffacd] border-1 border-[#333] rounded-2xl p-6 lg:px-[2rem] lg:py-[3rem] hover:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] transition-all duration-300 w-full max-w-2xl mx-auto flex flex-col justify-between'>
-        <div className='text-center space-y-5'>
-          <h1 className='text-2xl lg:text-4xl font-bold text-[#333]'>Welcome to Groovy!</h1>
-          <p className='text-base lg:text-lg text-[#555]'>
-            Thanks for subscribing to Groovy! We will keep you updated on premium information as a member.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (isConfirmed) {
+  //   return (
+  //     <div className='bg-[#fffacd] border-1 border-[#333] rounded-2xl p-6 lg:px-[2rem] lg:py-[3rem] hover:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] transition-all duration-300 w-full max-w-2xl mx-auto flex flex-col justify-between'>
+  //       <div className='text-center space-y-5'>
+  //         <h1 className='text-2xl lg:text-4xl font-bold text-[#333]'>Welcome to Groovy!</h1>
+  //         <p className='text-base lg:text-lg text-[#555]'>
+  //           Thanks for subscribing to Groovy! We will keep you updated on premium information as a member.
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
       <ToastContainer position="top-center" autoClose={5000} />
       <div className='bg-[#fffacd] border-1 border-[#333] rounded-2xl p-6 lg:px-[2rem] lg:py-[3rem] hover:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] transition-all duration-300 w-full max-w-2xl mx-auto flex flex-col justify-between'>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-5 lg:gap-9'>
+        <form className='flex flex-col gap-5 lg:gap-9'>
           <div className='text-center space-y-5'>
             <h1 className='text-2xl lg:text-4xl font-bold text-[#333]'>Subscribe to Groovy</h1>
             <p className='text-base lg:text-lg text-[#555]'>Become a Member & Never Miss an Update</p>
