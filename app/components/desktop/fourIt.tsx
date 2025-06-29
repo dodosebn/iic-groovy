@@ -9,7 +9,7 @@ const FourIt = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleTagClick = (name: string) => {
-    setTag(selectedTag === name ? '' : name);
+    setTag(selectedTag === name.toLowerCase() ? '' : name);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
