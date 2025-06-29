@@ -52,7 +52,6 @@ const HomePage = ({ num1, num2 }: { num1: number; num2: number }) => {
 
   return (
     <div className="home-container">
-      {/* AnimatePresence should wrap CONDITIONAL rendering, not static motion.div */}
       <AnimatePresence mode="wait" initial={false}>
         {visible.length > 0 && (
           <motion.div
