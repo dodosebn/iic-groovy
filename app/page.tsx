@@ -3,11 +3,9 @@
 import TransitionLink from "@/utils/transitionLink";
 import HomePage from "./components/home/homePage";
 import MeetAuthor from "./components/home/customs/meetAuthor";
-// import { useState } from "react";
-// import FourIt from "./components/desktop/fourIt";
+
 
 export default function Home() {
-  // const [subscribed, setSubscribed] = useState(false);
 
   return (
     <div className="flex justify-center flex-col px-[0.6rem]  pt-[1rem]">
@@ -15,26 +13,14 @@ export default function Home() {
       <div className="px-[0.5rem]">
       <HomePage num2={6 } num1={0} />
 </div>
-      {/* {!subscribed && (
-        <p className="text-lg mt-2">
-          <span 
-            className="font-bold text-[#ff4c60] cursor-pointer hover:underline"
-            onClick={() => setSubscribed(true)}
-          >
-            Subscribe
-          </span>{" "}
-          to view more articles
-        </p>
-      )} */}
-
-      {/* Navigation */}
+     
       <div className="flex gap-3 w-full mt-6 justify-center">
         <div>
           <p>Page 1 of 2</p>
         </div>
         <div>
           {/* {subscribed ? ( */}
-            <TransitionLink href="/">
+            <TransitionLink href="/page2">
               <button 
                 className='bg-[#ff4c60] border border-[#333] 
                 text-white px-[1.5rem] py-[0.3rem] font-semibold
