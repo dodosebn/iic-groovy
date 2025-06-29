@@ -10,6 +10,7 @@ import fan from '@/public/images/fan.jpg';
 // import { useTagStore } from '@/app/store/useTagStore';
 import FormSurvey from './form/formSurvey';
 import FormSurvey2 from './form/formSurvey2';
+import FormSurvey3 from './form/formSurvey3';
 
 interface cardProps {
   imgGen: string | StaticImageData;
@@ -235,7 +236,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
           </p>
         </div>
       </section>
-            {tag === 'Health' ? <FormSurvey /> : <FormSurvey2 />}
+            {tag === 'Health' ? <FormSurvey /> : tag === 'Getting Started' ? <FormSurvey3 />: <FormSurvey2 />}
     </main>
   )
 }
