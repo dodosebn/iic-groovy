@@ -20,7 +20,7 @@ export default function Home() {
         </div>
         <div>
           {/* {subscribed ? ( */}
-            <TransitionLink href="/">
+            <TransitionLink href="/page2">
               <button 
                 className='bg-[#ff4c60] border border-[#333] 
                 text-white px-[1.5rem] py-[0.3rem] font-semibold
