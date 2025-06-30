@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-// Types
 type ContactMethod = 'WhatsApp' | 'Telegram' | 'Email' | '';
 type EmploymentStatus = 'Yes' | 'No' | '';
 type RelocationStatus = 'Yes' | 'No' | '';
@@ -42,7 +41,6 @@ interface QuestionConfig {
 }
 
 const FormSurvey2 = () => {
-  // Form configuration
   const questionsConfig: QuestionConfig[] = [
     {
       id: 'roles',
@@ -217,7 +215,6 @@ const FormSurvey2 = () => {
     }
   ];
 
-  // State
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     roles: [],
@@ -246,7 +243,6 @@ const FormSurvey2 = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Effects
   useEffect(() => {
     if (questionRefs.current[currentQuestion]) {
       questionRefs.current[currentQuestion]?.scrollIntoView({
@@ -256,7 +252,6 @@ const FormSurvey2 = () => {
     }
   }, [currentQuestion]);
 
-  // Handlers
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const target = e.target as HTMLInputElement;
@@ -289,7 +284,6 @@ const FormSurvey2 = () => {
       });
     }
 
-    // Auto-advance for non-text inputs
     const currentConfig = questionsConfig[currentQuestion];
     if (type !== 'text' && currentConfig.type !== 'text') {
       setTimeout(() => {
@@ -298,40 +292,39 @@ const FormSurvey2 = () => {
     }
   }, [currentQuestion, errors]);
 
- const validateForm = useCallback(() => {
-  const newErrors: Record<string, string> = {};
-  let isValid = true;
+  const validateForm = useCallback(() => {
+    const newErrors: Record<string, string> = {};
+    let isValid = true;
 
-  questionsConfig.forEach(question => {
-    if (!question.required) return;
+    questionsConfig.forEach(question => {
+      if (!question.required) return;
 
-    const value = formData[question.id];
+      const value = formData[question.id];
 
-    if (
-      (Array.isArray(value) && value.length === 0) ||
-      (!Array.isArray(value) && !value)
-    ) {
-      newErrors[question.id] = 'This field is required';
-      isValid = false;
-      return;
-    }
-
-    if (question.validation) {
-      const validationError = question.validation(
-        Array.isArray(value) ? value.join(', ') : value,
-        formData
-      );
-      if (validationError) {
-        newErrors[question.id] = validationError;
+      if (
+        (Array.isArray(value) && value.length === 0) ||
+        (!Array.isArray(value) && !value)
+      ) {
+        newErrors[question.id] = 'This field is required';
         isValid = false;
+        return;
       }
-    }
-  });
 
-  setErrors(newErrors);
-  return isValid;
-}, [formData]);
+      if (question.validation) {
+        const validationError = question.validation(
+          Array.isArray(value) ? value.join(', ') : value,
+          formData
+        );
+        if (validationError) {
+          newErrors[question.id] = validationError;
+          isValid = false;
+        }
+      }
+    });
 
+    setErrors(newErrors);
+    return isValid;
+  }, [formData]);
 
   const handleCaptchaChange = useCallback((value: string | null) => {
     setIsVerified(!!value);
@@ -345,16 +338,16 @@ const FormSurvey2 = () => {
       position: "top-center"
     });
 
-   const templateParams = {
-  from_name: formData.fullName || 'Anonymous',
-  to_name: 'Survey Administrator',
-  message: questionsConfig.map(question => {
-    const value = formData[question.id];
-    const displayValue = Array.isArray(value) ? value.join(', ') : value;
-    return `${question.text}: ${displayValue || 'No answer'}`;
-  }).join('\n\n'),
-  reply_to: formData.contactMethod.toLowerCase() === 'email' ? formData.contactInfo : 'no-reply@example.com'
-};
+    const templateParams = {
+      from_name: formData.fullName || 'Anonymous',
+      to_name: 'Survey Administrator',
+      message: questionsConfig.map(question => {
+        const value = formData[question.id];
+        const displayValue = Array.isArray(value) ? value.join(', ') : value;
+        return `${question.text}: ${displayValue || 'No answer'}`;
+      }).join('\n\n'),
+      reply_to: formData.contactMethod.toLowerCase() === 'email' ? formData.contactInfo : 'no-reply@example.com'
+    };
 
     emailjs.send(
       process.env.NEXT_PUBLIC_EMAIL_SERVICE!,
@@ -377,7 +370,6 @@ const FormSurvey2 = () => {
         theme: "colored",
       });
       
-      // Reset form
       setFormData({
         fullName: '',
         roles: [],
@@ -455,37 +447,43 @@ const FormSurvey2 = () => {
     setCurrentQuestion(index);
   }, []);
 
-  // Render functions
-const renderQuestionInput = (question: QuestionConfig) => {
+  const renderQuestionInput = (question: QuestionConfig) => {
     const value = formData[question.id];
     const error = errors[question.id];
 
     switch (question.type) {
       case 'text':
         return (
-          <input
-            type="text"
-            name={question.id}
-            className={`w-full max-w-full px-4 py-3 text-base sm:text-lg ring-1 rounded-lg focus:ring-2 outline-none transition-all ${
-              error ? 'ring-red-500' : 'ring-gray-300'
-            }`}
-            onChange={handleChange}
-            value={Array.isArray(value) ? value.join(', ') : value || ''}
-            placeholder={
-              typeof question.placeholder === 'function' 
-                ? question.placeholder(formData) 
-                : question.placeholder
-            }
-          />
+          <div className="w-full">
+            <input
+              type="text"
+              name={question.id}
+              className={`w-full px-4 py-3 text-base sm:text-lg border rounded-lg focus:ring-2 focus:ring-pink-500 outline-none transition-all ${
+                error ? 'border-red-500' : 'border-gray-300'
+              }`}
+              onChange={handleChange}
+              value={Array.isArray(value) ? value.join(', ') : value || ''}
+              placeholder={
+                typeof question.placeholder === 'function' 
+                  ? question.placeholder(formData) 
+                  : question.placeholder
+              }
+            />
+            {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+          </div>
         );
       
       case 'radio':
         return (
-          <div className="flex flex-wrap gap-3 sm:gap-4 mb-6 w-full">
+          <div className="grid grid-cols-2 gap-3 w-full">
             {question.options?.map((option) => (
               <label
                 key={option.value}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-colors text-base sm:text-lg whitespace-normal max-w-full"
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors ${
+                  value === option.value 
+                    ? 'bg-pink-100 border border-pink-500' 
+                    : 'bg-gray-100 hover:bg-gray-200 border border-transparent'
+                }`}
               >
                 <input
                   type="radio"
@@ -493,9 +491,9 @@ const renderQuestionInput = (question: QuestionConfig) => {
                   value={option.value}
                   onChange={handleChange}
                   checked={value === option.value}
-                  className="w-5 h-5 accent-pink-500"
+                  className="w-4 h-4 accent-pink-500"
                 />
-                <span>{option.label}</span>
+                <span className="text-sm sm:text-base">{option.label}</span>
               </label>
             ))}
           </div>
@@ -503,20 +501,24 @@ const renderQuestionInput = (question: QuestionConfig) => {
       
       case 'checkbox':
         return (
-          <div className="flex flex-wrap gap-3 sm:gap-4 mb-6 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
             {question.options?.map((option) => (
               <label
                 key={option.value}
-                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-colors text-base sm:text-lg whitespace-normal max-w-full"
+                className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors ${
+                  Array.isArray(value) && value.includes(option.value)
+                    ? 'bg-pink-100 border border-pink-500' 
+                    : 'bg-gray-100 hover:bg-gray-200 border border-transparent'
+                }`}
               >
                 <input
                   type="checkbox"
                   name={`${question.id}-${option.value}`}
                   onChange={handleChange}
                   checked={Array.isArray(value) && value.includes(option.value)}
-                  className="w-5 h-5 accent-pink-500"
+                  className="w-4 h-4 accent-pink-500"
                 />
-                <span>{option.label}</span>
+                <span className="text-sm sm:text-base">{option.label}</span>
               </label>
             ))}
           </div>
@@ -528,7 +530,7 @@ const renderQuestionInput = (question: QuestionConfig) => {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6">
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -539,14 +541,17 @@ const renderQuestionInput = (question: QuestionConfig) => {
         theme="colored"
       />
 
-      <div className="w-full px-4 sm:px-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 sm:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">
+          Career Survey
+        </h1>
+
         <form 
-          className="w-full max-w-4xl mx-auto py-6 flex flex-col gap-8" 
+          className="space-y-6"
           onSubmit={handleSubmit} 
           ref={formRef}
         >
-          {/* Progress indicator */}
-          <div className="flex overflow-x-auto gap-2 pb-4">
+          <div className="flex overflow-x-auto pb-4 gap-2">
             {questionsConfig.map((_, index) => (
               <button
                 key={index}
@@ -563,35 +568,50 @@ const renderQuestionInput = (question: QuestionConfig) => {
             ))}
           </div>
 
-          {/* Questions */}
-          {questionsConfig.map((question, index) => (
-            <div
-              key={question.id}
-              ref={(el) => { questionRefs.current[index] = el; }}
-              className="w-full"
-            >
-              <label className="block text-lg sm:text-xl font-bold text-gray-800 mb-4">
-                {question.text}
-                {question.required && <span className="text-red-500 ml-1">*</span>}
-              </label>
-              
-              {renderQuestionInput(question)}
-              
-              {errors[question.id] && (
-                <div className="text-red-500 text-sm mt-2">{errors[question.id]}</div>
-              )}
-            </div>
-          ))}
-
-          <button 
-            type="submit" 
-            className="mt-8 bg-pink-500 text-white font-bold py-4 px-8 rounded-full text-base sm:text-xl cursor-pointer hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
+          <div 
+            ref={(el) => { questionRefs.current[currentQuestion] = el; }}
+            className="space-y-4"
           >
-            Submit Survey
-          </button>
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
+              {questionsConfig[currentQuestion].text}
+              {questionsConfig[currentQuestion].required && (
+                <span className="text-red-500 ml-1">*</span>
+              )}
+            </h2>
+            
+            {renderQuestionInput(questionsConfig[currentQuestion])}
+          </div>
+
+          <div className="flex justify-between pt-4">
+            <button
+              type="button"
+              onClick={() => setCurrentQuestion(prev => Math.max(prev - 1, 0))}
+              disabled={currentQuestion === 0}
+              className={`px-4 py-2 rounded-lg ${currentQuestion === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-gray-200 hover:bg-gray-300'}`}
+            >
+              Previous
+            </button>
+            
+            {currentQuestion < questionsConfig.length - 1 ? (
+              <button
+                type="button"
+                onClick={() => setCurrentQuestion(prev => Math.min(prev + 1, questionsConfig.length - 1))}
+                className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600"
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 font-medium"
+              >
+                Submit
+              </button>
+            )}
+          </div>
 
           {showCaptcha && (
-            <div className="mt-8">
+            <div className="pt-6">
               <ReCAPTCHA
                 ref={captchaRef}
                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
@@ -601,7 +621,7 @@ const renderQuestionInput = (question: QuestionConfig) => {
           )}
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
