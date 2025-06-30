@@ -19,7 +19,6 @@ export default function Home() {
           <p>Page 1 of 2</p>
         </div>
         <div>
-          {/* {subscribed ? ( */}
             <TransitionLink href="/page2">
               <button 
                 className='bg-[#ff4c60] border border-[#333] 

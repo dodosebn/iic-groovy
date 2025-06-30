@@ -10,7 +10,7 @@ const HomePage = () => {
     <Building />
             </div>
             <div className="lg:block hidden">
-              <SideBar />
+              <SideBar name="Jonathan Doe"/>
             </div>
           </div>
   )

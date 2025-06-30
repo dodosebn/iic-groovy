@@ -2,17 +2,24 @@ import AboutMeContainer from '@/utils/aboutMeContainer';
 import React from 'react'
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { TiWorld } from 'react-icons/ti';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 // import imgSrc from '@/public/images/introImg.avif';
 import boySmiling from '@/public/images/smiling Gee.jpg';
-const FirstIt = () => {
+interface FirstItProps {
+    displayImg: StaticImageData,
+    name: string,
+    describ: string,
+    paragraph: string
+
+}
+const FirstIt: React.FC<FirstItProps> = ({displayImg, name, describ, paragraph}) => {
   return (
          <section>
         <AboutMeContainer name="About Me">
           <div className="flex gap-4 items-start mb-4">
             <div className="flex-shrink-0">
               <Image
-                src={boySmiling}
+                src={displayImg}
                 alt="Profile picture"
                 width={80}
                 height={80}
@@ -23,8 +30,8 @@ const FirstIt = () => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <h1 className="text-lg font-bold text-[#333]">Jonathan Doe</h1>
-              <p className="text-sm text-gray-600">Chile</p>
+              <h1 className="text-lg font-bold text-[#333]">{name}</h1>
+              <p className="text-sm text-gray-600">{describ}</p>
               <div className="flex gap-3 mt-1">
                 <FaTwitter className="text-[#1DA1F2] text-lg hover:scale-110 transition-transform" />
                 <FaFacebookF className="text-[#4267B2] text-lg hover:scale-110 transition-transform" />
@@ -35,9 +42,7 @@ const FirstIt = () => {
 
           <div className="text-[#333] leading-relaxed border-t border-gray-200 pt-3">
             <p className="w-[15rem]">
-              Hello! My name is Jonathan Doe working from Chile. I create some
-              Ghost and WordPress themes for different markets, also, I offer
-              live support via our ticket system.
+            {paragraph}
             </p>
           </div>
         </AboutMeContainer>

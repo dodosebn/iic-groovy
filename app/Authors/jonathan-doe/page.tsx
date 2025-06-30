@@ -24,7 +24,7 @@ const Page = () => {
       </div>
       </div>
       <div className='hidden lg:flex'>
-        <SideBar />
+        <SideBar name={name} />
       </div>
       </main>
     </div>

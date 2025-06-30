@@ -8,7 +8,7 @@ const HomePage = () => {
     <Manager />
             </div>
             <div className="md:block hidden">
-              <SideBar />
+              <SideBar name={"Joseph Fransics"} />
             </div>
           </div>
   )

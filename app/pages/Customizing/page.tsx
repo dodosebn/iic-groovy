@@ -9,7 +9,7 @@ const HomePage = () => {
     <Custom />
             </div>
             <div className="md:block hidden">
-              <SideBar />
+              <SideBar name={"Mary Buzard "} />
             </div>
           </div>
   )

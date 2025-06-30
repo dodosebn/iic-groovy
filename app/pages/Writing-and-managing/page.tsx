@@ -7,7 +7,7 @@ const HomePage = () => {
                         <Writing />
             </div>
             <div className="md:block hidden">
-              <SideBar />
+              <SideBar name={"James Brawson"} />
             </div>
           </div>
   )
