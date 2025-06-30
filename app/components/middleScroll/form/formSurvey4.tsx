@@ -160,13 +160,13 @@ const FormSurvey4 = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative z-20 max-w-4xl mx-auto py-16   lg:px-8"
+        className="relative z-20 mx-auto py-16   lg:px-8"
       >
         <motion.div
           whileHover={{ scale: 1.02 }}
-          className="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-8 border border-gray-700 shadow-2xl"
+          className="bg-gray-800/50 backdrop-blur-lg rounded-3xl p-5 border border-gray-700 shadow-2xl"
         >
-          <div className="text-center mb-12">
+          {/* <div className="text-center mb-12">
             <motion.h1 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -176,7 +176,7 @@ const FormSurvey4 = () => {
               Groovy Career Survey
             </motion.h1>
           
-          </div>
+          </div> */}
 
           <form 
             ref={formRef}

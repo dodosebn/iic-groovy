@@ -325,7 +325,7 @@ const FormSurvey = () => {
       />
       
       <form 
-        className="w-full max-w-2xl mx-auto p-10 flex flex-col gap-5 bg-transparent" 
+        className="w-full py-3 flex flex-col gap-5 bg-transparent" 
         onSubmit={handleSubmit} 
         ref={formRef}
       >

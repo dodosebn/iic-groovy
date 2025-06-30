@@ -355,7 +355,7 @@ const FormSurvey3 = () => {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 lg:px-8">
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -369,9 +369,9 @@ const FormSurvey3 = () => {
         theme="colored"
       />
       
-      <div className="max-w-3xl mx-auto rounded-xl shadow-md overflow-hidden">
+      <div className="mx-auto rounded-xl shadow-md overflow-hidden">
         {/* Progress Bar */}
-        <div className="px-6 pt-6">
+        <div className=" pt-6">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Career Preferences Survey</h1>
             <p className="text-center text-gray-600 mb-6">
@@ -406,7 +406,7 @@ const FormSurvey3 = () => {
 
         <form 
           ref={formRef}
-          className="px-6 pb-8 space-y-6"
+          className=" pb-5 space-y-6"
           onSubmit={currentSection === 'contact' ? handleFinalSubmit : (e) => handleSectionSubmit(e, progressSteps[progressSteps.findIndex(s => s.id === currentSection) + 1]?.id as FormSection || 'contact')}
         >
           {/* Personal Information Section */}
