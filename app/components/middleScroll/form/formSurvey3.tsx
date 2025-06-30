@@ -369,12 +369,12 @@ const FormSurvey3 = () => {
         theme="colored"
       />
       
-      <div className="mx-auto overflow-hidden">
+      <div>
         {/* Progress Bar */}
         <div className=" pt-6">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Career Preferences Survey</h1>
-           
+      
             
             <div className="relative">
               <div className="flex justify-between mb-2">
