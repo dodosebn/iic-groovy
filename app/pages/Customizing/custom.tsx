@@ -4,12 +4,15 @@ import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import stripeShii from '@/public/images/stripesShii.jpg';
+import smilingGirle from '@/public/images/smilingGirlie.jpg';
 
 const Custom = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={stripeShii} title={'Customizing your brand and design settings'}
-      date={'March 16, 2021'} duration={'1 min read'} bg='#e0ebfc' tag={'Technology'} />
+      date={'March 16, 2021'} duration={'1 min read'} bg='#e0ebfc' tag={'Technology'}  imgName="Mary Buzard " 
+          img={smilingGirle}
+ />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

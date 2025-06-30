@@ -6,12 +6,14 @@ import AboutTheAuthor from '@/app/components/middleScroll/aboutTheAuthor';
 import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
+import boySmiling from '@/public/images/smiling Gee.jpg';
 
 const Building = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={tallHand} title={'Building your audience with subscriber signups'}
-      date={'September 25, 2022'} duration={'3 min read'} bg='#f0f0fe' tag={'Travel'} />
+      date={'September 25, 2022'} duration={'3 min read'} bg='#f0f0fe' tag={'Travel'}  img ={boySmiling} 
+    imgName="Jonathan Doe"/>
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

@@ -7,12 +7,14 @@ import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import gadget from '@/public/images/gadgets.jpg';
+import boySmiling from '@/public/images/smiling Gee.jpg';
 
 const Selling = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={gadget} title={'Setting up apps and custom integrations'}
-      date={'March 16, 2021'} duration={'2 min read'} bg='#c5f4ef' tag={'Getting Started'}/>
+      date={'March 16, 2021'} duration={'2 min read'} bg='#c5f4ef' tag={'Getting Started'}      img={boySmiling}
+   imgName="Jonathan Doe "/>
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>

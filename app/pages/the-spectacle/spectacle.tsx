@@ -7,11 +7,13 @@ import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import shoeLike from '@/public/images/shoe.jpg';
+import smilingGirle from '@/public/images/smilingGirlie.jpg';
 
 const Spectacle = () => {
   return (
      <div className='flex flex-col gap-12'>
-          <FirstCard imgGen={shoeLike} title={'The spectacle before us was indeed sublime'} bg='#ffeae9'
+          <FirstCard imgGen={shoeLike} title={'The spectacle before us was indeed sublime'} 
+          bg='#ffeae9'  imgName="Mary Buzard"  img={smilingGirle}
 
       date={'April 26, 2019'} duration={'2 min read'} tag={'Lifestyle'}  />
           <AboutTheAuthor />

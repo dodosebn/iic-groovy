@@ -7,13 +7,16 @@ import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import fan from '@/public/images/fan.jpg';
+import dreadedG from '@/public/authors/auth-dread.jpg';
 
 const HowToGrow = () => {
   return (
      <div className='flex flex-col gap-12'>
           <FirstCard imgGen={fan} title={'How to grow your business around an audience'} bg='#c5f4ef'
 
-      date={'March 16, 2021'} duration={'2 min read'} tag={'Getting Started'}  />
+      date={'March 16, 2021'} duration={'2 min read'} tag={'Getting Started'}   imgName= " James Brawson" 
+        img={dreadedG}
+ />
           <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>
