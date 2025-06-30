@@ -456,18 +456,18 @@ const FormSurvey2 = () => {
   }, []);
 
   // Render functions
-  const renderQuestionInput = (question: QuestionConfig) => {
+const renderQuestionInput = (question: QuestionConfig) => {
     const value = formData[question.id];
     const error = errors[question.id];
-    
+
     switch (question.type) {
       case 'text':
         return (
           <input
             type="text"
             name={question.id}
-            className={`w-full px-4 py-3 text-lg ring-1 rounded-lg focus:ring-2 outline-none transition-all ${
-              error && 'ring-red-500'
+            className={`w-full max-w-full px-4 py-3 text-base sm:text-lg ring-1 rounded-lg focus:ring-2 outline-none transition-all ${
+              error ? 'ring-red-500' : 'ring-gray-300'
             }`}
             onChange={handleChange}
             value={Array.isArray(value) ? value.join(', ') : value || ''}
@@ -481,10 +481,12 @@ const FormSurvey2 = () => {
       
       case 'radio':
         return (
-          <div className="flex flex-wrap gap-4 mb-6 w-full max-w-2xl">
+          <div className="flex flex-wrap gap-3 sm:gap-4 mb-6 w-full">
             {question.options?.map((option) => (
-              <label key={option.value} className="flex items-center 
-              gap-3 px-4 py-3 rounded-full cursor-pointer transition-colors">
+              <label
+                key={option.value}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-colors text-base sm:text-lg whitespace-normal max-w-full"
+              >
                 <input
                   type="radio"
                   name={question.id}
@@ -493,7 +495,7 @@ const FormSurvey2 = () => {
                   checked={value === option.value}
                   className="w-5 h-5 accent-pink-500"
                 />
-                <span className="text-lg">{option.label}</span>
+                <span>{option.label}</span>
               </label>
             ))}
           </div>
@@ -501,10 +503,12 @@ const FormSurvey2 = () => {
       
       case 'checkbox':
         return (
-          <div className="flex flex-wrap gap-4 mb-6">
+          <div className="flex flex-wrap gap-3 sm:gap-4 mb-6 w-full">
             {question.options?.map((option) => (
-              <label key={option.value} className="flex items-center gap-3 px-4 py-3 rounded-full
-               cursor-pointer transition-colors">
+              <label
+                key={option.value}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-colors text-base sm:text-lg whitespace-normal max-w-full"
+              >
                 <input
                   type="checkbox"
                   name={`${question.id}-${option.value}`}
@@ -512,7 +516,7 @@ const FormSurvey2 = () => {
                   checked={Array.isArray(value) && value.includes(option.value)}
                   className="w-5 h-5 accent-pink-500"
                 />
-                <span className="text-lg">{option.label}</span>
+                <span>{option.label}</span>
               </label>
             ))}
           </div>
@@ -529,79 +533,74 @@ const FormSurvey2 = () => {
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={false}
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
         pauseOnHover
+        draggable
         theme="colored"
       />
-      
-      <form 
-        className="w-full max-w-4xl mx-auto p-6 flex flex-col gap-8" 
-        onSubmit={handleSubmit} 
-        ref={formRef}
-      >
-        {/* Progress indicator */}
-        <div className="flex overflow-x-auto gap-2 pb-4">
-          {questionsConfig.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleQuestionClick(index)}
-              className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                currentQuestion > index ? 'bg-green-500 text-white' : 
-                currentQuestion === index ? 'bg-pink-500 text-white' : 
-                ' text-gray-700'
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
 
-        {/* Questions */}
-        {questionsConfig.map((question, index) => (
-          <div
-            key={question.id}
-            ref={(el) => { questionRefs.current[index] = el; }}
-            // className={`transition-opacity duration-300 ${
-            //   currentQuestion === index ? 'opacity-100' : 'opacity-50'
-            // }`}
-          >
-            <label className="block text-xl font-bold text-gray-800 mb-4">
-              {question.text}
-              {question.required && <span className="text-red-500 ml-1">*</span>}
-            </label>
-            
-            {renderQuestionInput(question)}
-            
-            {errors[question.id] && (
-              <div className="text-red-500 text-sm mt-2">{errors[question.id]}</div>
-            )}
-            
-            
-          </div>
-        ))}
-        
-        <button 
-          type="submit" 
-          className="mt-8 bg-pink-500 text-white font-bold py-4 px-8 rounded-full text-xl cursor-pointer hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
+      <div className="w-full px-4 sm:px-6">
+        <form 
+          className="w-full max-w-4xl mx-auto py-6 flex flex-col gap-8" 
+          onSubmit={handleSubmit} 
+          ref={formRef}
         >
-          Submit Survey
-        </button>
-        
-        {showCaptcha && (
-          <div className="mt-8">
-            <ReCAPTCHA
-              ref={captchaRef}
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-              onChange={handleCaptchaChange}
-            />
+          {/* Progress indicator */}
+          <div className="flex overflow-x-auto gap-2 pb-4">
+            {questionsConfig.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleQuestionClick(index)}
+                className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                  currentQuestion > index ? 'bg-green-500 text-white' : 
+                  currentQuestion === index ? 'bg-pink-500 text-white' : 
+                  'bg-gray-200 text-gray-700'
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
-        )}
-      </form>
+
+          {/* Questions */}
+          {questionsConfig.map((question, index) => (
+            <div
+              key={question.id}
+              ref={(el) => { questionRefs.current[index] = el; }}
+              className="w-full"
+            >
+              <label className="block text-lg sm:text-xl font-bold text-gray-800 mb-4">
+                {question.text}
+                {question.required && <span className="text-red-500 ml-1">*</span>}
+              </label>
+              
+              {renderQuestionInput(question)}
+              
+              {errors[question.id] && (
+                <div className="text-red-500 text-sm mt-2">{errors[question.id]}</div>
+              )}
+            </div>
+          ))}
+
+          <button 
+            type="submit" 
+            className="mt-8 bg-pink-500 text-white font-bold py-4 px-8 rounded-full text-base sm:text-xl cursor-pointer hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
+          >
+            Submit Survey
+          </button>
+
+          {showCaptcha && (
+            <div className="mt-8">
+              <ReCAPTCHA
+                ref={captchaRef}
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+                onChange={handleCaptchaChange}
+              />
+            </div>
+          )}
+        </form>
+      </div>
     </>
   );
 };
