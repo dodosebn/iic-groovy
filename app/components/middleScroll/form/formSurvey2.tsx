@@ -481,7 +481,7 @@ const FormSurvey2 = () => {
       
       case 'radio':
         return (
-          <div className="flex flex-wrap gap-4 mb-6">
+          <div className="flex flex-wrap gap-4 mb-6 w-full max-w-2xl">
             {question.options?.map((option) => (
               <label key={option.value} className="flex items-center 
               gap-3 px-4 py-3 rounded-full cursor-pointer transition-colors">

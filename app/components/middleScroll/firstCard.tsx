@@ -29,7 +29,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
   return (
     <main className='px-3 py-3 lg:py-4  mx-auto rounded-xl border-1 border-[#000]' 
       style={{ backgroundColor: bg }}>
-      <section className='flex flex-col lg:flex-row gap-8 p-5  lg:p-8'>
+      <section className='flex flex-col lg:flex-row gap-8 CC lg:p-8'>
       <div className='lg:flex-1 h-[38vh] lg:h-[25rem]'>
   <Image 
     src={imgGen} 
@@ -81,7 +81,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
             </div>
           </div>
         </div>
-  <div className='flex flex-col justify-center'>
+  <div className='flex flex-col justify-center p-5'>
              {tag === 'Health' ? <FormSurvey />
              : tag === 'Getting Started' ? 
              <FormSurvey3 /> :  tag === 'Music' ? <FormSurvey4 />  :  <FormSurvey2 />}
