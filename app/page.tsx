@@ -2,7 +2,7 @@
 
 import TransitionLink from "@/utils/transitionLink";
 import HomePage from "./components/home/homePage";
-import MeetAuthor from "./components/home/customs/meetAuthor";
+// import MeetAuthor from "./components/home/customs/meetAuthor";
 
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
       <HomePage num2={6 } num1={0} />
 </div>
      
-      <div className="flex gap-3 w-full mt-6 justify-center">
+      <div className="flex gap-3 w-full mt-6 mb-4 justify-center">
         <div>
           <p>Page 1 of 2</p>
         </div>
@@ -51,7 +51,7 @@ export default function Home() {
         </div>  */}
       {/* </div> */}
 </div>
-      <MeetAuthor />
+      {/* <MeetAuthor /> */}
     </div>
   );
 }
