@@ -11,7 +11,7 @@ const Footer = () => {
      <div className='  bg-[#fffacd] md:min-h-screen min-h-[22rem] overflow-y-hidden md:overflow-y-visible'>
             <main className="w-full max-w-[1500px] mx-auto relative">
 
-       <section className='md:flex px-2 gap-10 md:flex-row flex-col hidden'>
+       <section className='md:flex px-2 gap-10 md:flex-row flex-col '>
         <div className='flex-2 mt-9'> 
         <FooterLevel />
         </div>
