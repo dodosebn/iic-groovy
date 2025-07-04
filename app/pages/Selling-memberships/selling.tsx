@@ -7,14 +7,15 @@ import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import snailLike from '@/public/images/snail-like.jpg';
 import boySmiling from '@/public/images/smiling Gee.jpg';
+import CenteringPages from '@/utils/centeringPages';
 
 const Selling = () => {
   return (
-     <div className='flex flex-col gap-12'>
+     <CenteringPages>
           <FirstCard imgGen={snailLike} title={'Selling memberships with recurring revenue'} bg='#dff9d9'
-      date={'March 16, 2021'} duration={'1 min read'} tag={'Health'} imgName="Jonathan Doe"     img={boySmiling}
+      date={'March 16, 2021'} duration={'1 min read'} tag={'Health'}
 />
-          <AboutTheAuthor />
+          {/* <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>
       <div className='lg:flex-2'>
@@ -22,7 +23,9 @@ const Selling = () => {
           </div>
           <div className='lg:flex-[0.5]'></div>
   </div>
-    </div>
+    </div> */}
+         </CenteringPages>
+
   )
 }
 

@@ -5,23 +5,23 @@ import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import cubofTea from '@/public/images/cuppy.jpg'
 import smilingGirle from '@/public/images/smilingGirlie.jpg';
+import CenteringPages from '@/utils/centeringPages';
 
 const What = () => {
   return (
-     <div className='flex flex-col gap-12'>
+     <CenteringPages>
           <FirstCard imgGen={cubofTea} title={'What you need to know about Ghost Editor'}
-      date={'March 16, 2021'} duration={'2 min read'} bg='#fff2be' tag={'Music'}  imgName="Mary Buzard "  
-      img={smilingGirle}
+      date={'March 16, 2021'} duration={'2 min read'} bg='#fff2be' tag={'Music'}  
  />
-          <AboutTheAuthor />
+          {/* <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>
       <div className='lg:flex-2'>
           <Previous />
           </div>
           <div className='lg:flex-[0.5]'></div>
-  </div>
-    </div>
+  </div> */}
+    </CenteringPages>
   )
 }
 

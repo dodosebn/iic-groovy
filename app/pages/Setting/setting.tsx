@@ -8,14 +8,14 @@ import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import gadget from '@/public/images/gadgets.jpg';
 import boySmiling from '@/public/images/smiling Gee.jpg';
+import CenteringPages from '@/utils/centeringPages';
 
 const Selling = () => {
   return (
-     <div className='flex flex-col gap-12'>
+     <CenteringPages>
           <FirstCard imgGen={gadget} title={'Setting up apps and custom integrations'}
-      date={'March 16, 2021'} duration={'2 min read'} bg='#c5f4ef' tag={'Getting Started'}      img={boySmiling}
-   imgName="Jonathan Doe "/>
-          <AboutTheAuthor />
+      date={'March 16, 2021'} duration={'2 min read'} bg='#c5f4ef' tag={'Getting Started'}     />
+          {/* <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>
       <div className='lg:flex-2'>
@@ -23,7 +23,9 @@ const Selling = () => {
           </div>
           <div className='lg:flex-[0.5]'></div>
   </div>
-    </div>
+    </div> */}
+         </CenteringPages>
+
   )
 }
 

@@ -12,7 +12,7 @@ import FormSurvey from './form/formSurvey';
 import FormSurvey2 from './form/formSurvey2';
 import FormSurvey3 from './form/formSurvey3';
 import FormSurvey4 from './form/formSurvey4';
-
+import socioloji from '@/public/images/socioloji.webp';
 interface cardProps {
   imgGen: string | StaticImageData;
  title: string;
@@ -20,10 +20,10 @@ interface cardProps {
  duration: string;
  bg: string;
  tag: string;
- imgName: string;
- img: StaticImageData;
+//  imgName: string;
+//  img: StaticImageData;
 }
-const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag,  imgName, img}) => {
+const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag, }) => {
     // const { selectedTag } = useTagStore();
 
   return (
@@ -49,10 +49,10 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
          
 <Button name={tag} spanBg='#c5c5fe'/>
             </div>
-            <div className='flex items-center space-x-3 text-gray-600'>
+            <div className='flex items-start space-x-3 text-gray-600'>
               <p>{date}</p>
-              <span className='w-1 h-1 bg-pink-600 rounded-full'></span>
-              <p>{duration}</p>
+              {/* <span className='w-1 h-1 bg-pink-600 rounded-full'></span>
+              <p>{duration}</p> */}
             </div>
           </div>
           
@@ -67,18 +67,18 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
           <div className='flex flex-col sm:flex-row sm:items-center lg:justify-between gap-4'>
             <div className='items-center space-x-3 lg:flex hidden'>
               <Image 
-                src={img} 
+                src={socioloji} 
                 alt='Author avatar' 
                 width={40}
                 height={40}
                 className='rounded-full w-10 h-10 object-cover  transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000]
                  hover:-translate-y-0.5'
               />
-              <p className='font-medium '>{imgName}</p>
+              <p className='font-medium '>Socioloji</p>
             </div>
-            <div className='text-sm text-gray-500'>
+            {/* <div className='text-sm text-gray-500'>
               <span className='font-semibold'>Last Update: </span>March 13, 2025
-            </div>
+            </div> */}
           </div>
         </div>
 

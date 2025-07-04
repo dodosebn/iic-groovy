@@ -5,7 +5,7 @@ import Button from '@/utils/button';
 import { HomeWrapperProps } from '@/types/type';
 import TransitionLink from '@/utils/transitionLink';
 import Image from 'next/image';
-
+import socioImg from '@/public/images/socioloji.webp';
 
 const HomeWrapper: React.FC<HomeWrapperProps> = ({
   bg,
@@ -51,7 +51,8 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
     <div>
     <main>
       <div
-        className="mx-auto flex flex-col justify-between lg:min-h-[44rem] lg:max-h-[50rem]  rounded-xl border border-[rgb(0,0,0)]"
+        className="mx-auto flex flex-col justify-between h-[37.5rem]    
+            rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
         <section className="flex flex-col gap-5 p-5 ">
@@ -133,7 +134,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                     hover:shadow-[0px_0px_0px_0px_#000] shadow-[2px_2px_0px_0px_#000] 
                     hover:-translate-y-0 -translate-y-0.5 font-bold"
                   >
-                    Continue Reading
+                    Take Survey
                   </button>
                 </TransitionLink>
               </div>
@@ -142,13 +143,13 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 <div className="text-sm text-gray-500 order-1">
                   <div className="items-center space-x-3 lg:flex hidden">
                     <Imager
-                      src={img}
+                      src={socioImg}
                       alt="Author avatar"
                       width={40}
                       height={40}
                       className="rounded-full w-10 h-10 object-cover"
                     />
-                    <p className="font-medium">{imgName}</p>
+                    <p className="font-medium">Socioloji</p>
                   </div>
                 </div>
               )}

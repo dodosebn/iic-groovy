@@ -7,24 +7,23 @@ import Comments from '@/app/components/middleScroll/comments';
 import FirstCard from '@/app/components/middleScroll/firstCard';
 import Previous from '@/app/components/middleScroll/previous';
 import boySmiling from '@/public/images/smiling Gee.jpg';
+import CenteringPages from '@/utils/centeringPages';
 
 const Far = () => {
   return (
-     <div className='flex flex-col gap-12'>
+    <CenteringPages>
           <FirstCard imgGen={one} title={'Far far away, behind the word mountains'}
-      date={'March 16, 2021'} duration={'3 min read'} bg='#c5f4ef' tag={'Getting Started'}     img={boySmiling}
-  imgName= "Jonathan Doe"
+      date={'March 16, 2021'} duration={'3 min read'} bg='#c5f4ef' tag={'Getting Started'}
 />
-          <AboutTheAuthor />
+          {/* <AboutTheAuthor />
           <Comments />
      <div className='lg:flex'>
       <div className='lg:flex-2'>
           <Previous />
           </div>
           <div className='lg:flex-[0.5]'></div>
-  </div>
-    </div>
-  )
+  </div> */}
+</CenteringPages>  )
 }
 
 export default Far;

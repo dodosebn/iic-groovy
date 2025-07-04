@@ -5,13 +5,13 @@ import Building from "./building";
 
 const HomePage = () => {
   return (
-      <div className="flex px-2 gap-10 lg:flex-row flex-col mt-[1rem] relative">
-                    <div className="flex-2">
+      <div className="flex px-2 flex-col mt-[1rem] relative">
+                    {/* <div className="flex-2"> */}
     <Building />
-            </div>
-            <div className="lg:block hidden">
+            {/* </div> */}
+            {/* <div className="lg:block hidden">
               <SideBar name="Jonathan Doe"/>
-            </div>
+            </div> */}
           </div>
   )
 }

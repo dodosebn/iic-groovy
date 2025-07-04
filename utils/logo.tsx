@@ -4,22 +4,20 @@ import Image from 'next/image';
 export const MLogo = () => {
   return (
     <>
-<Image 
-    src={loogo} 
-    alt="Groovy logo"
-    className="w-32 h-auto object-contain" 
-  />  
+<div
+    className="text-4xl font-black h-auto object-contain" 
+  >  Survey</div>
   </>  
   )
 }
 export const Logo = () => {
   return (
     <>
-<Image 
-    src={loogo} 
-    alt="Groovy logo"
-    className="w-52 h-auto object-contain" 
-  />  
+<div
+    // src={loogo} 
+    // alt="Groovy logo"
+    className="text-7xl font-black h-auto object-contain" 
+  > Survey</div> 
   </>  
   )
 }

@@ -28,7 +28,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       <BackgroundDecor />
       <Navbar />
 
-      <main className="relative lg:px-[4rem] lg:w-full max-w-[1500px] flex flex-col justify-center mx-auto">
+      <main className="relative lg:px-[4rem] lg:w-full max-w-[1500px] flex flex-col 
+      justify-center mx-auto">
         <div className="lg:mt-[5rem] mt-[3rem]">
           {children}
         </div>
