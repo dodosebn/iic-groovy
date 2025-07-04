@@ -45,7 +45,7 @@ const ShareAndCopy = () => {
   };
 
   return (
-    <div className="w-full bg-[#fff7ea] md:bg-none px-4 py-8 rounded-xl">
+<div className="w-full bg-[#fff7ea] md:bg-transparent px-4 py-8 rounded-xl">
       <h3 className="text-[18px] sm:text-[20px] font-bold text-[#3b2e1e] mb-5 text-center">Share Article:</h3>
 
       <div className="flex justify-center flex-wrap gap-4 mb-8">
