@@ -1,5 +1,6 @@
 import SideBar from "@/app/components/desktop/sideBar";
 import Building from "./building";
+import ShareAndCopy from "@/app/components/middleScroll/form/shareandcopy";
 
 
 

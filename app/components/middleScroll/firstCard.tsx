@@ -13,6 +13,7 @@ import FormSurvey2 from './form/formSurvey2';
 import FormSurvey3 from './form/formSurvey3';
 import FormSurvey4 from './form/formSurvey4';
 import socioloji from '@/public/images/socioloji.webp';
+import ShareAndCopy from './form/shareandcopy';
 interface cardProps {
   imgGen: string | StaticImageData;
  title: string;
@@ -88,6 +89,10 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
              : tag === 'Getting Started' ? 
              <FormSurvey3 /> :  tag === 'Music' ? <FormSurvey4 />  : <FormSurvey2 />  }
            </div>
+           <div className="-mx-3 sm:mx-0">
+  <ShareAndCopy />
+</div>
+
     </main>
   )
 }
