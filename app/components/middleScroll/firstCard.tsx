@@ -28,6 +28,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
     // const { selectedTag } = useTagStore();
 
   return (
+    <>
     <main className='px-3 py-3 lg:py-4  mx-auto rounded-xl border-1 border-[#000]' 
       style={{ backgroundColor: bg }}>
       <section className='flex flex-col lg:flex-row gap-8 CC lg:p-8'>
@@ -89,11 +90,15 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
              : tag === 'Getting Started' ? 
              <FormSurvey3 /> :  tag === 'Music' ? <FormSurvey4 />  : <FormSurvey2 />  }
            </div>
-           <div className="-mx-3 sm:mx-0">
+      <div className="hidden md:block">
   <ShareAndCopy />
 </div>
 
     </main>
+         <div className="md:hidden block">
+  <ShareAndCopy />
+</div>
+</>
   )
 }
 

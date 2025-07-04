@@ -22,7 +22,7 @@ const ShareAndCopy = () => {
 
   const shareOnSocialMedia = (platform: string) => {
     let shareUrl = '';
-    const title = ' Hi, Check out this Survey from Idea is Capital';
+    const title = 'Hi, Check out this Survey from Idea is Capital';
 
     switch (platform) {
       case 'facebook':
@@ -45,10 +45,10 @@ const ShareAndCopy = () => {
   };
 
   return (
-    <div className="text-center py-12">
-      <h3 className="text-[20px] font-bold text-[#3b2e1e] mb-5">Share Article:</h3>
+    <div className="w-full bg-[#fff7ea] md:bg-none px-4 py-8 rounded-xl">
+      <h3 className="text-[18px] sm:text-[20px] font-bold text-[#3b2e1e] mb-5 text-center">Share Article:</h3>
 
-      <div className="flex justify-center gap-4 mb-8">
+      <div className="flex justify-center flex-wrap gap-4 mb-8">
         <button
           className="w-10 h-10 rounded-full bg-[#6d92f6] text-white font-bold text-lg"
           onClick={() => shareOnSocialMedia('facebook')}
@@ -75,27 +75,27 @@ const ShareAndCopy = () => {
         </button>
       </div>
 
-<div className="flex justify-center mb-6">
-  <div className="flex items-center gap-2 w-full bg-white px-4 py-2 rounded-full shadow-sm">
-    <input
-      type="text"
-      value={currentUrl}
-      readOnly
-      ref={linkInputRef}
-      className="flex-1 min-w-0 h-12 text-[16px] px-3 outline-none bg-transparent"
-    />
-    <button
-      className="bg-pink-200 border border-[#3b2e1e] text-[#3b2e1e] font-bold py-2 px-4 
-        hover:bg-pink-300 transition-all rounded-full whitespace-nowrap"
-      onClick={copyToClipboard}
-    >
-      {isCopied ? 'Copied!' : 'Copy Link'}
-    </button>
-  </div>
-</div>
+      {/* ✅ COPY BOX */}
+      <div className="w-full max-w-full overflow-hidden">
+        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm w-full max-w-3xl mx-auto">
+          <input
+            type="text"
+            value={currentUrl}
+            readOnly
+            ref={linkInputRef}
+            className="flex-1 min-w-0 h-12 text-sm sm:text-base px-3 outline-none bg-transparent truncate"
+          />
+          <button
+            className="bg-pink-200 border border-[#3b2e1e] text-[#3b2e1e] font-bold py-2 px-4 
+              hover:bg-pink-300 transition-all rounded-full whitespace-nowrap"
+            onClick={copyToClipboard}
+          >
+            {isCopied ? 'Copied!' : 'Copy Link'}
+          </button>
+        </div>
+      </div>
 
-
-      <hr className="mt-6 border-t border-[#3b2e1e] w-[90%] mx-auto" />
+      {/* <hr className="mt-8 border-t border-[#3b2e1e] w-[90%] mx-auto" /> */}
     </div>
   );
 };
