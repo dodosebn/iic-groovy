@@ -54,8 +54,7 @@ const FourIt = () => {
         />
       </div>
 
-      {/* Music (solo row) */}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <TagBtn
           name="Music"
           spanBg="#ffcf00"
@@ -64,7 +63,6 @@ const FourIt = () => {
         />
       </div>
 
-      {/* Technology (solo row) */}
       <div className="mb-4">
         <TagBtn
           name="Technology"
@@ -74,7 +72,6 @@ const FourIt = () => {
         />
       </div>
 
-      {/* Travel (solo row) */}
       <div className="mb-4">
         <TagBtn
           name="Travel"
@@ -82,7 +79,7 @@ const FourIt = () => {
           onClick={() => handleTagClick('Travel')}
           isActive={selectedTag === 'Travel'}
         />
-      </div>
+      </div> */}
     </section>
   );
 };

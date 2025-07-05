@@ -39,7 +39,6 @@ type FormSection = 'personal' | 'preferences' | 'career' | 'contact';
 type ProgressSteps = { id: FormSection; label: string }[];
 
 const FormSurvey3 = () => {
-  const [currentSection, setCurrentSection] = useState<FormSection>('personal');
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
     currentRole: [],
@@ -57,21 +56,6 @@ const FormSurvey3 = () => {
   const [isVerified, setIsVerified] = useState(false);
   const captchaRef = useRef<ReCAPTCHA>(null);
   const formRef = useRef<HTMLFormElement>(null);
-
-  // Section refs for smooth scrolling
-  const sectionRefs = {
-    personal: useRef<HTMLDivElement>(null),
-    preferences: useRef<HTMLDivElement>(null),
-    career: useRef<HTMLDivElement>(null),
-    contact: useRef<HTMLDivElement>(null)
-  };
-
-  useEffect(() => {
-    const ref = sectionRefs[currentSection];
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [currentSection]);
 
   const progressSteps: ProgressSteps = [
     { id: 'personal', label: 'Personal Info' },
@@ -126,108 +110,84 @@ const FormSurvey3 = () => {
     }
   };
 
-  const validateSection = (section: FormSection): boolean => {
+  const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
     let isValid = true;
 
-    switch (section) {
-      case 'personal':
-        if (formData.currentRole.length === 0) {
-          newErrors.currentRole = 'Please select at least one option';
-          isValid = false;
-        }
-        if (!formData.location.city.trim()) {
-          newErrors.location = 'Please enter your current city';
-          isValid = false;
-        }
-        if (!formData.location.willingToRelocate) {
-          newErrors.location = 'Please indicate relocation willingness';
-          isValid = false;
-        }
-        break;
-      
-      case 'preferences':
-        if (formData.workPreferences.environment.length === 0) {
-          newErrors.workPreferences = 'Please select at least one work environment';
-          isValid = false;
-        }
-        if (formData.workPreferences.communication.length === 0) {
-          newErrors.workPreferences = 'Please select at least one communication method';
-          isValid = false;
-        }
-        if (!formData.workPreferences.schedule) {
-          newErrors.workPreferences = 'Please indicate weekend work preference';
-          isValid = false;
-        }
-        break;
-      
-      case 'career':
-        if (!formData.careerGoals.dreamJob.trim()) {
-          newErrors.careerGoals = 'Please describe your dream job';
-          isValid = false;
-        }
-        if (!formData.careerGoals.motivation.trim()) {
-          newErrors.careerGoals = 'Please describe your motivation';
-          isValid = false;
-        }
-        if (!formData.careerGoals.openToInternship) {
-          newErrors.careerGoals = 'Please indicate internship interest';
-          isValid = false;
-        }
-        if (formData.expectations.benefits.length === 0) {
-          newErrors.expectations = 'Please select at least one benefit';
-          isValid = false;
-        }
-        if (!formData.expectations.salaryRange.trim()) {
-          newErrors.expectations = 'Please provide expected salary range';
-          isValid = false;
-        }
-        break;
-      
-      case 'contact':
-        if (!formData.contactInfo.method) {
-          newErrors.contactInfo = 'Please select a contact method';
-          isValid = false;
-        }
-        if (!formData.contactInfo.details.trim()) {
-          newErrors.contactInfo = 'Please provide contact details';
-          isValid = false;
-        } else if (
-          formData.contactInfo.method === 'Email' && 
-          !/^\S+@\S+\.\S+$/.test(formData.contactInfo.details)
-        ) {
-          newErrors.contactInfo = 'Please enter a valid email address';
-          isValid = false;
-        } else if (
-          (formData.contactInfo.method === 'WhatsApp' || formData.contactInfo.method === 'Telegram') && 
-          !/^[0-9]+$/.test(formData.contactInfo.details)
-        ) {
-          newErrors.contactInfo = 'Please enter a valid phone number';
-          isValid = false;
-        }
-        break;
+    // Personal section validation
+    if (formData.currentRole.length === 0) {
+      newErrors.currentRole = 'Please select at least one option';
+      isValid = false;
+    }
+    if (!formData.location.city.trim()) {
+      newErrors.location = 'Please enter your current city';
+      isValid = false;
+    }
+    if (!formData.location.willingToRelocate) {
+      newErrors.location = 'Please indicate relocation willingness';
+      isValid = false;
+    }
+
+    // Preferences section validation
+    if (formData.workPreferences.environment.length === 0) {
+      newErrors.workPreferences = 'Please select at least one work environment';
+      isValid = false;
+    }
+    if (formData.workPreferences.communication.length === 0) {
+      newErrors.workPreferences = 'Please select at least one communication method';
+      isValid = false;
+    }
+    if (!formData.workPreferences.schedule) {
+      newErrors.workPreferences = 'Please indicate weekend work preference';
+      isValid = false;
+    }
+
+    // Career section validation
+    if (!formData.careerGoals.dreamJob.trim()) {
+      newErrors.careerGoals = 'Please describe your dream job';
+      isValid = false;
+    }
+    if (!formData.careerGoals.motivation.trim()) {
+      newErrors.careerGoals = 'Please describe your motivation';
+      isValid = false;
+    }
+    if (!formData.careerGoals.openToInternship) {
+      newErrors.careerGoals = 'Please indicate internship interest';
+      isValid = false;
+    }
+    if (formData.expectations.benefits.length === 0) {
+      newErrors.expectations = 'Please select at least one benefit';
+      isValid = false;
+    }
+    if (!formData.expectations.salaryRange.trim()) {
+      newErrors.expectations = 'Please provide expected salary range';
+      isValid = false;
+    }
+
+    // Contact section validation
+    if (!formData.contactInfo.method) {
+      newErrors.contactInfo = 'Please select a contact method';
+      isValid = false;
+    }
+    if (!formData.contactInfo.details.trim()) {
+      newErrors.contactInfo = 'Please provide contact details';
+      isValid = false;
+    } else if (
+      formData.contactInfo.method === 'Email' && 
+      !/^\S+@\S+\.\S+$/.test(formData.contactInfo.details)
+    ) {
+      newErrors.contactInfo = 'Please enter a valid email address';
+      isValid = false;
+    } else if (
+      (formData.contactInfo.method === 'WhatsApp' || formData.contactInfo.method === 'Telegram') && 
+      !/^[0-9]+$/.test(formData.contactInfo.details)
+    ) {
+      newErrors.contactInfo = 'Please enter a valid phone number';
+      isValid = false;
     }
 
     setErrors(newErrors);
     return isValid;
-  };
-
-  const handleSectionSubmit = (e: React.FormEvent, nextSection: FormSection) => {
-    e.preventDefault();
-    
-    if (validateSection(currentSection)) {
-      setCurrentSection(nextSection);
-    } else {
-      toast.error('Please fill in all required fields correctly', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-      });
-    }
   };
 
   const handleCaptchaChange = (value: string | null) => {
@@ -317,7 +277,6 @@ const FormSurvey3 = () => {
         },
         additionalComments: '',
       });
-      setCurrentSection('personal');
     })
     .catch((err) => {
       toast.update(toastId, {
@@ -333,10 +292,10 @@ const FormSurvey3 = () => {
     });
   };
 
-  const handleFinalSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (validateSection('contact')) {
+    if (validateForm()) {
       setShowCaptcha(true);
       if (isVerified) {
         submitForm();
@@ -370,32 +329,25 @@ const FormSurvey3 = () => {
       />
       
       <div>
-        {/* Progress Bar */}
-        <div className=" pt-6">
+        <div className="pt-6">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Career Preferences Survey</h1>
-      
             
             <div className="relative">
               <div className="flex justify-between mb-2">
-                {progressSteps.map((step, index) => (
-                  <button
+                {progressSteps.map((step) => (
+                  <div
                     key={step.id}
-                    type="button"
-                    onClick={() => currentSection !== 'contact' && setCurrentSection(step.id)}
-                    className={`text-sm font-medium ${currentSection === step.id ? 'text-indigo-600' : 'text-gray-500'}`}
-                    disabled={currentSection === 'contact'}
+                    className="text-sm font-medium text-indigo-600"
                   >
                     {step.label}
-                  </button>
+                  </div>
                 ))}
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5">
                 <div 
-                  className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" 
-                  style={{
-                    width: `${(progressSteps.findIndex(s => s.id === currentSection) / (progressSteps.length - 1)) * 100}%`
-                  }}              
+                  className="bg-indigo-600 h-2.5 rounded-full" 
+                  style={{ width: '100%' }}              
                 />
               </div>
             </div>
@@ -404,380 +356,352 @@ const FormSurvey3 = () => {
 
         <form 
           ref={formRef}
-          className=" pb-5 space-y-6"
-          onSubmit={currentSection === 'contact' ? handleFinalSubmit : (e) => handleSectionSubmit(e, progressSteps[progressSteps.findIndex(s => s.id === currentSection) + 1]?.id as FormSection || 'contact')}
+          className="pb-5 space-y-6"
+          onSubmit={handleSubmit}
         >
           {/* Personal Information Section */}
-          <div ref={sectionRefs.personal}>
-            {currentSection === 'personal' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2
-                     focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="John Doe"
-                  />
-                </div>
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Personal Information</h2>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Full Name (Optional)
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2
+                 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="John Doe"
+              />
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Which of these best describe you? (Select all that apply) *
-                  </label>
-                  {errors.currentRole && <p className="text-red-500 text-xs mb-2">{errors.currentRole}</p>}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {['Student', 'Professional', 'Freelancer', 'Entrepreneur'].map((role) => (
-                      <label key={role} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          name="currentRole"
-                          value={role}
-                          checked={formData.currentRole.includes(role)}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
-                        />
-                        <span className="text-sm text-gray-700">{role}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Current City *
-                    </label>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Which of these best describe you? (Select all that apply) *
+              </label>
+              {errors.currentRole && <p className="text-red-500 text-xs mb-2">{errors.currentRole}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {['Student', 'Professional', 'Freelancer', 'Entrepreneur'].map((role) => (
+                  <label key={role} className="flex items-center space-x-2">
                     <input
-                      type="text"
-                      name="location.city"
-                      value={formData.location.city}
+                      type="checkbox"
+                      name="currentRole"
+                      value={role}
+                      checked={formData.currentRole.includes(role)}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                      placeholder="New York"
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
                     />
-                    {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Would you consider relocating? *
-                    </label>
-                    <select
-                      name="location.willingToRelocate"
-                      value={formData.location.willingToRelocate}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                      <option value="">Select an option</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                      <option value="Maybe">Maybe, for the right opportunity</option>
-                    </select>
-                  </div>
-                </div>
+                    <span className="text-sm text-gray-700">{role}</span>
+                  </label>
+                ))}
               </div>
-            )}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Current City *
+                </label>
+                <input
+                  type="text"
+                  name="location.city"
+                  value={formData.location.city}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="New York"
+                />
+                {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Would you consider relocating? *
+                </label>
+                <select
+                  name="location.willingToRelocate"
+                  value={formData.location.willingToRelocate}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Maybe">Maybe, for the right opportunity</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           {/* Work Preferences Section */}
-          <div ref={sectionRefs.preferences}>
-            {currentSection === 'preferences' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Preferred Work Environments (Select all that apply) *
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Work Preferences</h2>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Preferred Work Environments (Select all that apply) *
+              </label>
+              {errors.workPreferences && <p className="text-red-500 text-xs mb-2">{errors.workPreferences}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {['Office', 'Remote', 'Hybrid', 'Flexible'].map((env) => (
+                  <label key={env} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name="workPreferences.environment"
+                      value={env}
+                      checked={formData.workPreferences.environment.includes(env)}
+                      onChange={handleChange}
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                    />
+                    <span className="text-sm text-gray-700">{env}</span>
                   </label>
-                  {errors.workPreferences && <p className="text-red-500 text-xs mb-2">{errors.workPreferences}</p>}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {['Office', 'Remote', 'Hybrid', 'Flexible'].map((env) => (
-                      <label key={env} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          name="workPreferences.environment"
-                          value={env}
-                          checked={formData.workPreferences.environment.includes(env)}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
-                        />
-                        <span className="text-sm text-gray-700">{env}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Preferred Communication Methods (Select all that apply) *
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {['Email', 'Phone', 'Messaging Apps', 'In-person'].map((method) => (
-                      <label key={method} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          name="workPreferences.communication"
-                          value={method}
-                          checked={formData.workPreferences.communication.includes(method)}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
-                        />
-                        <span className="text-sm text-gray-700">{method}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Are you willing to work weekends? *
-                  </label>
-                  <select
-                    name="workPreferences.schedule"
-                    value={formData.workPreferences.schedule}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md ring-1 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  >
-                    <option value="">Select an option</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                    <option value="Occasionally">Occasionally</option>
-                  </select>
-                </div>
+                ))}
               </div>
-            )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Preferred Communication Methods (Select all that apply) *
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {['Email', 'Phone', 'Messaging Apps', 'In-person'].map((method) => (
+                  <label key={method} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name="workPreferences.communication"
+                      value={method}
+                      checked={formData.workPreferences.communication.includes(method)}
+                      onChange={handleChange}
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                    />
+                    <span className="text-sm text-gray-700">{method}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Are you willing to work weekends? *
+              </label>
+              <select
+                name="workPreferences.schedule"
+                value={formData.workPreferences.schedule}
+                onChange={handleChange}
+                className="w-full px-4 py-2 rounded-md ring-1 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Occasionally">Occasionally</option>
+              </select>
+            </div>
           </div>
 
-          <div ref={sectionRefs.career}>
-            {currentSection === 'career' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Describe your dream job *
-                  </label>
-                  <textarea
-                    name="careerGoals.dreamJob"
-                    value={formData.careerGoals.dreamJob}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Describe the type of work environment, responsibilities, and impact you'd like to have..."
-                  />
-                  {errors.careerGoals && <p className="text-red-500 text-xs mt-1">{errors.careerGoals}</p>}
-                </div>
+          {/* Career Goals Section */}
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Career Goals</h2>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Describe your dream job *
+              </label>
+              <textarea
+                name="careerGoals.dreamJob"
+                value={formData.careerGoals.dreamJob}
+                onChange={handleChange}
+                rows={3}
+                className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Describe the type of work environment, responsibilities, and impact you'd like to have..."
+              />
+              {errors.careerGoals && <p className="text-red-500 text-xs mt-1">{errors.careerGoals}</p>}
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    What motivates you the most in your work? *
-                  </label>
-                  <input
-                    type="text"
-                    name="careerGoals.motivation"
-                    value={formData.careerGoals.motivation}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="E.g., Solving complex problems, helping others, creative expression..."
-                  />
-                </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                What motivates you the most in your work? *
+              </label>
+              <input
+                type="text"
+                name="careerGoals.motivation"
+                value={formData.careerGoals.motivation}
+                onChange={handleChange}
+                className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="E.g., Solving complex problems, helping others, creative expression..."
+              />
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Are you open to internships? *
-                    </label>
-                    <select
-                      name="careerGoals.openToInternship"
-                      value={formData.careerGoals.openToInternship}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 rounded-md ring-1 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                      <option value="">Select an option</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                      <option value="Depends">Depends on the opportunity</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Are you currently studying? (Optional)
-                    </label>
-                    <select
-                      name="educationStatus"
-                      value={formData.educationStatus}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                      <option value="">Select an option</option>
-                      <option value="Yes">Yes</option>
-                      <option value="No">No</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    What benefits are most important to you? (Select all that apply) *
-                  </label>
-                  {errors.expectations && <p className="text-red-500 text-xs mb-2">{errors.expectations}</p>}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {['Health Insurance', 'Remote Work', 'Bonus Pay', 'Vacation Time', 'Professional Development', 'Flexible Hours'].map((benefit) => (
-                      <label key={benefit} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          name="expectations.benefits"
-                          value={benefit}
-                          checked={formData.expectations.benefits.includes(benefit)}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
-                        />
-                        <span className="text-sm text-gray-700">{benefit}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    What is your expected salary range? *
-                  </label>
-                  <input
-                    type="text"
-                    name="expectations.salaryRange"
-                    value={formData.expectations.salaryRange}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 ring-1  rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="E.g., $50,000 - $70,000 or negotiable"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Are you currently employed? (Optional)
-                  </label>
-                  <select
-                    name="employmentStatus"
-                    value={formData.employmentStatus}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  >
-                    <option value="">Select an option</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No, looking for work</option>
-                    <option value="Freelance">Freelance/Contract</option>
-                  </select>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Are you open to internships? *
+                </label>
+                <select
+                  name="careerGoals.openToInternship"
+                  value={formData.careerGoals.openToInternship}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md ring-1 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Depends">Depends on the opportunity</option>
+                </select>
               </div>
-            )}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Are you currently studying? (Optional)
+                </label>
+                <select
+                  name="educationStatus"
+                  value={formData.educationStatus}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                >
+                  <option value="">Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                What benefits are most important to you? (Select all that apply) *
+              </label>
+              {errors.expectations && <p className="text-red-500 text-xs mb-2">{errors.expectations}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {['Health Insurance', 'Remote Work', 'Bonus Pay', 'Vacation Time', 'Professional Development', 'Flexible Hours'].map((benefit) => (
+                  <label key={benefit} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      name="expectations.benefits"
+                      value={benefit}
+                      checked={formData.expectations.benefits.includes(benefit)}
+                      onChange={handleChange}
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                    />
+                    <span className="text-sm text-gray-700">{benefit}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                What is your expected salary range? *
+              </label>
+              <input
+                type="text"
+                name="expectations.salaryRange"
+                value={formData.expectations.salaryRange}
+                onChange={handleChange}
+                className="w-full px-4 py-2 ring-1  rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="E.g., $50,000 - $70,000 or negotiable"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Are you currently employed? (Optional)
+              </label>
+              <select
+                name="employmentStatus"
+                value={formData.employmentStatus}
+                onChange={handleChange}
+                className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No, looking for work</option>
+                <option value="Freelance">Freelance/Contract</option>
+              </select>
+            </div>
           </div>
 
           {/* Contact Information Section */}
-          <div ref={sectionRefs.contact}>
-            {currentSection === 'contact' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    How would you like to be contacted? *
-                  </label>
-                  {errors.contactInfo && <p className="text-red-500 text-xs mb-2">{errors.contactInfo}</p>}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {['Email', 'WhatsApp', 'Telegram'].map((method) => (
-                      <label key={method} className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name="contactInfo.method"
-                          value={method}
-                          checked={formData.contactInfo.method === method}
-                          onChange={handleChange}
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1"
-                        />
-                        <span className="text-sm text-gray-700">{method}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {formData.contactInfo.method === 'Email' 
-                      ? 'Email Address *' 
-                      : 'Phone Number (with country code) *'}
-                  </label>
-                  <input
-                    type={formData.contactInfo.method === 'Email' ? 'email' : 'tel'}
-                    name="contactInfo.details"
-                    value={formData.contactInfo.details}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder={
-                      formData.contactInfo.method === 'Email' 
-                        ? 'your.email@example.com' 
-                        : '+1 123 456 7890'
-                    }
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Any additional comments or notes? (Optional)
-                  </label>
-                  <textarea
-                    name="additionalComments"
-                    value={formData.additionalComments}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2
-                     focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Anything else you'd like to share..."
-                  />
-                </div>
-
-                {showCaptcha && (
-                  <div className="mt-5">
-                    <ReCAPTCHA
-                      ref={captchaRef}
-                      sitekey="6Lc6zFgrAAAAAKj52053YpaBaLUfFuSrgXxUS_G4"
-                      onChange={handleCaptchaChange}
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Contact Information</h2>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                How would you like to be contacted? *
+              </label>
+              {errors.contactInfo && <p className="text-red-500 text-xs mb-2">{errors.contactInfo}</p>}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {['Email', 'WhatsApp', 'Telegram'].map((method) => (
+                  <label key={method} className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      name="contactInfo.method"
+                      value={method}
+                      checked={formData.contactInfo.method === method}
+                      onChange={handleChange}
+                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1"
                     />
-                  </div>
-                )}
+                    <span className="text-sm text-gray-700">{method}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {formData.contactInfo.method === 'Email' 
+                  ? 'Email Address *' 
+                  : 'Phone Number (with country code) *'}
+              </label>
+              <input
+                type={formData.contactInfo.method === 'Email' ? 'email' : 'tel'}
+                name="contactInfo.details"
+                value={formData.contactInfo.details}
+                onChange={handleChange}
+                className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder={
+                  formData.contactInfo.method === 'Email' 
+                    ? 'your.email@example.com' 
+                    : '+1 123 456 7890'
+                }
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Any additional comments or notes? (Optional)
+              </label>
+              <textarea
+                name="additionalComments"
+                value={formData.additionalComments}
+                onChange={handleChange}
+                rows={3}
+                className="w-full px-4 py-2 ring-1 rounded-md focus:ring-2
+                 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Anything else you'd like to share..."
+              />
+            </div>
+
+            {showCaptcha && (
+              <div className="mt-5">
+                <ReCAPTCHA
+                  ref={captchaRef}
+                  sitekey="6Lc6zFgrAAAAAKj52053YpaBaLUfFuSrgXxUS_G4"
+                  onChange={handleCaptchaChange}
+                />
               </div>
             )}
           </div>
 
-          <div className="flex justify-between pt-6">
-            {currentSection !== 'personal' && (
-              <button
-                type="button"
-                onClick={() => setCurrentSection(progressSteps[progressSteps.findIndex(s => s.id === currentSection) - 1]?.id as FormSection || 'personal')}
-                className="px-6 py-2 ring-1 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Back
-              </button>
-            )}
-
-            <div className="ml-auto">
-              {currentSection !== 'contact' ? (
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-indigo-600 rounded-lg text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Next
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-indigo-600 rounded-lg text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  disabled={showCaptcha && !isVerified}
-                >
-                  Submit Survey
-                </button>
-              )}
-            </div>
+          <div className="flex justify-center pt-6">
+            <button
+              type="submit"
+              className="px-8 py-3 bg-indigo-600 rounded-lg text-lg font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              disabled={showCaptcha && !isVerified}
+            >
+              Submit Survey
+            </button>
           </div>
         </form>
       </div>

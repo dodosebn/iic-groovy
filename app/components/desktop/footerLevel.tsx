@@ -11,7 +11,7 @@ const FooterLevel = () => {
     <div className='hidden md:block'>
    <main className='bg-[#fffacd] flex justify-around w-full '>
   {/* Left column */}
-  <div className='flex flex-col pt-[4rem] pl-[3rem] w-[16rem] shrink-0'>
+  <div className='flex flex-col  pl-[3rem] w-[23rem] shrink-0'>
     <div><Logo /></div>
     <div>
       <p className='text-sm py-5'>
@@ -24,13 +24,13 @@ const FooterLevel = () => {
 
   {/* Main section that should take up remaining space */}
   <section className='flex-1'>
-    <div className='relative -top-[3.5rem] left-[11rem]'>
-  <div className='flex flex-row justify-around gap-6'>
-    {[ 'Tag Cloud', 'Follow Me!'].map((itm, ndx) => (
+    <div className='relative -top-[3.5rem] left-[13rem]'>
+  <div className='flex flex-row justify-between gap-20'>
+    {[ 'Tag Cloud', 'Follow Us!'].map((itm, ndx) => (
       <div
         key={ndx}
         className={`font-bold text-xl bg-white px-6 py-1 border border-[#333] rounded-3xl
-        ${ndx === 2 ? 'relative right-[-4rem]' : ''}`} 
+    `} 
       >
         {itm}
       </div>
@@ -39,10 +39,10 @@ const FooterLevel = () => {
 
     </div>
 
-    <section className='pt-5 flex flex-row justify-around'>
+    <section className='flex flex-row justify-around'>
       {/* <div className='relative left-[7rem]'><ThreeStuff /></div> */}
       <div className='relative left-[11rem]' id='tag'><FourIt /></div>
-      <div className='relative left-[15rem]'><FourthStuff /></div>
+      <div className='relative left-[15rem] pb-12'><FourthStuff /></div>
     </section>
   </section>
 </main>

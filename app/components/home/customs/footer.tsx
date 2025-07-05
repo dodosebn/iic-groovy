@@ -22,7 +22,7 @@ const Footer = () => {
     <HorizontalDivider />
 
    <div className="pb-[1rem] py-4">
-  <ul className="flex justify-center space-x-4">
+  <ul className="flex justify-center items-center space-x-4">
     {['Terms & Condition', 'Faq', 'Privacy Policy'].map((item, ndx) => (
       <li
         key={ndx}

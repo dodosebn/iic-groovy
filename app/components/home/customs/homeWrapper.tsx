@@ -51,7 +51,7 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
     <div>
     <main>
       <div
-        className="mx-auto flex flex-col justify-between h-[37.5rem]    
+        className="mx-auto flex flex-col justify-between h-full   
             rounded-xl border border-[rgb(0,0,0)]"
         style={bg ? { backgroundColor: bg } : {}}
       >
@@ -62,14 +62,14 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 <Image
                   src={pics}
                   alt="Article visual"
-                  className="w-full h-full [object-position:center_30%] 
-                    object-cover rounded-2xl border-1 border-[#333]"
+                  className="w-full h-[78%] [object-position:center_30%] 
+                    object-cover rounded-t-2xl border-1 border-[#333]"
                   priority
                 />
               </TransitionLink>
 
               {(tag) && (
-                <div className="w-full absolute bottom-[85%]   px-4">
+                <div className="w-full absolute bottom-[87%]   px-4">
                   <div className="flex justify-between items-center w-full">
                     {tag && btnCol && (
                       <div className="flex">
@@ -82,8 +82,8 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
               )}
 
               {h1 && (
-                <div className="absolute bottom-1 p-4">
-                  <div className="px-4 py-2 mx-auto text-center bg-[#fff] rounded-lg border-1 border-[#333] transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9">
+                <div>
+                  <div className="px-4 py-2 mx-auto text-center bg-[#fff] rounded-b-lg border-1 border-[#333] transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.9">
                     <TransitionLink href={path}>
                       <h1 className="lg:text-[1.3rem] text-md font-bold leading-snug text-gray-900 transition-all">
                         {h1}
@@ -94,36 +94,42 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
               )}
             </div>
           )}
-
-          <div className="flex flex-col items-center justify-center px-2 space-y-3">
-            {(tag || date || duration) && (
-              <div className="flex flex-row space-x-3">
-                {tag && btnCol && (
+<div>
+      {tag && btnCol && (
                   <div className="hidden">
                     <Button name={tag} spanBg={btnCol} />
                   </div>
                 )}
-                {(date || duration) && (
-                  <div className="flex items-center space-x-3 text-gray-600 font-semibold text-sm">
-                    {date && <p>{date}</p>}
-                    {date && duration && (
-                      <span className="w-1 h-1 bg-pink-600 rounded-full lg:flex hidden" />
-                    )}
-                    {duration && <p>{duration}</p>}
+<div className="flex flex-col w-full">
+      
+                {(date || img || imgName) && (
+                  <div className="flex items-center justify-between space-x-3
+                   text-gray-600 font-semibold text-sm ">
+                    {date && <div> <p>{date}</p> </div>}
+                     {/* <div className='w-1/2'> </div> */}
+                                 {img && imgName && (
+                <div className="text-sm text-gray-500 order-1">
+                  <div className="items-center space-x-3 flex ">
+                    <Imager
+                      src={socioImg}
+                      alt="Author avatar"
+                      width={40}
+                      height={40}
+                      className="rounded-full w-10 h-10 object-cover"
+                    />
+                    <p className="font-medium">Socioloji</p>
+                  </div>
+                </div>
+              )}
                   </div>
                 )}
-              </div>
-            )}
+           
+</div>
 
-            {p && (
-              <div className="flex flex-col items-center justify-center  text-center">
-                <p className="text-md leading-loose text-center lg:px-10">{p}</p>
-              </div>
-            )}
+           
 
             <div
-              className={`lg:flex mt-5 lg:mt-0 flex-col sm:flex-row flex-wrap gap-3 
-                 'items-center' : 'items-center'
+              className={`flex mt-5 lg:pt-1 flex-col items-center justify-center
               `}
             >
               <div className="order-2 lg:mt-1">
@@ -139,20 +145,6 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
                 </TransitionLink>
               </div>
 
-              {img && imgName && (
-                <div className="text-sm text-gray-500 order-1">
-                  <div className="items-center space-x-3 lg:flex hidden">
-                    <Imager
-                      src={socioImg}
-                      alt="Author avatar"
-                      width={40}
-                      height={40}
-                      className="rounded-full w-10 h-10 object-cover"
-                    />
-                    <p className="font-medium">Socioloji</p>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </section>

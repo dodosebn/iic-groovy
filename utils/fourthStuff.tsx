@@ -28,12 +28,12 @@ const FourthStuff = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       {mapElements.map(({ name, icon: Icon, color, path }) => (
         <div key={name} className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-white border-2 border-[#333] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
+          <div className="w-10 h-10 bg-white border-2 border-[#333] rounded-full flex items-center justify-center transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5">
             <TransitionLink href={path}>
-              <Icon size={28} style={{ color }} />
+              <Icon size={22} style={{ color }} />
             </TransitionLink>
           </div>
           <h1 className="text-[#333] font-bold text-lg">{name}</h1>

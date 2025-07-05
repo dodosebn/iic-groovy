@@ -8,13 +8,13 @@ import HomePage from "./components/home/homePage";
 export default function Home() {
 
   return (
-    <div className="flex justify-center flex-col px-[0.6rem]  pt-[1rem]">
+    <div className="flex justify-center flex-col px-[0.6rem] space-y-6 pt-[1rem]">
       {/* <FourIt /> */}
       <div className="px-[0.5rem]">
       <HomePage num2={6 } num1={0} />
 </div>
      
-      <div className="flex gap-3 w-full mt-6 mb-4 justify-center">
+      <div className="flex gap-3 w-full my-16 justify-center">
         <div>
           <p>Page 1 of 2</p>
         </div>
@@ -30,28 +30,8 @@ export default function Home() {
               </button>
             </TransitionLink>
             </div>
-          {/* ) : (
-            <div className="relative group">
-              <button 
-                disabled
-                className='bg-gray-300 border border-[#333] text-gray-500 px-[1rem] py-[0.2rem] 
-                           rounded-2xl flex items-center gap-2 cursor-not-allowed'
-              >
-                Next
-              </button>
-
-              {/* Tooltip on hover */}
-              {/* <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 
-                              bg-black text-white text-sm px-2 py-1 rounded opacity-0 
-                              group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                Subscribe to view more
-              </div>
-            </div>
-          )}
-        </div>  */}
-      {/* </div> */}
+          
 </div>
-      {/* <MeetAuthor /> */}
     </div>
   );
 }

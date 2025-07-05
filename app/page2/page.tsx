@@ -9,14 +9,14 @@ const Page2 = () => {
   const { selectedTag, clicked, resetTag } = useTagStore();
 
   const isFiltering = selectedTag && clicked;
-  const num1 = isFiltering ? 0 : 6;
-  const num2 = isFiltering ? 6 : 12;
+  const num1 = isFiltering ? 0 : 5;
+  const num2 = isFiltering ? 5 : 12;
 
   return (
     <div className="flex justify-center flex-col px-[1rem]">
       <HomePage num1={num1} num2={num2} />
 
-      <div className="flex gap-3 w-full py-6 justify-center">
+      <div className="flex gap-3 w-full my-16 justify-center">
         <div>
           <TransitionLink href="/" onClick={resetTag}>
             <button

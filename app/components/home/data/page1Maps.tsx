@@ -29,7 +29,7 @@ const Page1Maps = [
     img: boySmiling,
     imgName: "Jonathan Doe",
     btnCol: "#c5c5fe",
-    tag: "Travel",
+    tag: "Health",
     path: '/pages/building-your-audience'
   },
   {
@@ -78,7 +78,7 @@ const Page1Maps = [
     img: smilingGirle,
     imgName: "Socioloji",
     btnCol: "#85b2f4",
-    tag: "Technology",
+    tag: "Lifestyle",
     path: '/pages/Customizing'
   },
   {
@@ -93,7 +93,7 @@ const Page1Maps = [
     img: smilingGirle,
     imgName: "Socioloji",
     btnCol: "#ffcf00",
-    tag: "Music",
+    tag: "Lifestyle",
     path: '/pages/what-you-need'
   },
   {
@@ -167,21 +167,10 @@ const Page1Maps = [
     img: boySmiling,
     imgName: "Socioloji",
     btnCol: "#ffcf00",
-    tag: "Music",
+    tag: "Lifestyle",
     path: '/pages/musical'
   },
-  {
-    id: 10,
-    bg: '#c5f4ef',
-    date: 'April 26, 2019',
-    h1: 'Apps and scripts for your Ghost website',
-    p: `There are three primary ways to work with third-party services in Ghost: using Zapier, editing your theme, or using the Ghost API. Zapier You can connect your Ghost site to over 1,000 external services using the official integration with Zapier. Zapier sets up automations with Triggers and Actions, which allows you to create and...`,
-    path: '/pages/musical',
-    img: headSet,
-    imgName: "Socioloji",
-    btnCol: "#1dd7c2",
-    tag: "Getting Started"
-  },
+
   {
     id: 12,
     bg: '#c5f4ef',
@@ -189,7 +178,7 @@ const Page1Maps = [
     picsIcon1: BiSolidMessageRounded,
     picsIcon2: BiSolidMessageRounded,
     date: 'April 26, 2019',
-    h1: 'Managing admin settings',
+    h1: 'Managing admin settings, and all you need to know',
     p: `There are a couple of things to do next while you're getting set up: Make your site....`,
     img: headSet,
     imgName: "Socioloji",
