@@ -95,11 +95,11 @@ const HomeWrapper: React.FC<HomeWrapperProps> = ({
             </div>
           )}
 <div>
-      {tag && btnCol && (
+      {/* {tag && btnCol && (
                   <div className="hidden">
                     <Button name={tag} spanBg={btnCol} />
                   </div>
-                )}
+                )} */}
 <div className="flex flex-col w-full">
       
                 {(date || img || imgName) && (
