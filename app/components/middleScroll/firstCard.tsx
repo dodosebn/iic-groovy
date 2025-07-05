@@ -78,9 +78,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
               />
               <p className='font-medium '>Socioloji</p>
             </div>
-            {/* <div className='text-sm text-gray-500'>
-              <span className='font-semibold'>Last Update: </span>March 13, 2025
-            </div> */}
+          
           </div>
         </div>
 
