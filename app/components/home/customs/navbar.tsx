@@ -118,7 +118,7 @@ const Navbar = () => {
                   className="text-3xl text-gray-700 cursor-pointer rotate-90 block md:absolute md:right-5 md:top-1/2 md:-translate-y-1/2"
                   onClick={() => setMenuOpen(true)}
                 >
-                  <IoMenu />
+                  <IoMenu size={40} />
                 </div>
               </div>
             </div>
@@ -126,13 +126,15 @@ const Navbar = () => {
 
           <AnimatePresence>
             {menuOpen && (
-              <motion.div
-                className="fixed inset-0 bg-[#54cbca] z-[999] flex items-center justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+                        <motion.div
+            className="fixed inset-0 bg-[#54cbca] z-50 flex items-center justify-center"
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
+
+           
                 <div
                   className="absolute top-8 right-12 text-3xl cursor-pointer"
                   onClick={closeAllMenus}
