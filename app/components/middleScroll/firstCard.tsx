@@ -11,7 +11,6 @@ import fan from '@/public/images/fan.jpg';
 import FormSurvey from './form/formSurvey';
 import FormSurvey2 from './form/formSurvey2';
 import FormSurvey3 from './form/formSurvey3';
-import FormSurvey4 from './form/formSurvey4';
 import socioloji from '@/public/images/socioloji.webp';
 import ShareAndCopy from './form/shareandcopy';
 interface cardProps {

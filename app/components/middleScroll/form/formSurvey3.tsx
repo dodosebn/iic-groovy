@@ -35,9 +35,6 @@ type FormData = {
   additionalComments: string;
 };
 
-type FormSection = 'personal' | 'preferences' | 'career' | 'contact';
-type ProgressSteps = { id: FormSection; label: string }[];
-
 const FormSurvey3 = () => {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -56,13 +53,6 @@ const FormSurvey3 = () => {
   const [isVerified, setIsVerified] = useState(false);
   const captchaRef = useRef<ReCAPTCHA>(null);
   const formRef = useRef<HTMLFormElement>(null);
-
-  const progressSteps: ProgressSteps = [
-    { id: 'personal', label: 'Personal Info' },
-    { id: 'preferences', label: 'Preferences' },
-    { id: 'career', label: 'Career Goals' },
-    { id: 'contact', label: 'Contact' },
-  ];
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -332,25 +322,6 @@ const FormSurvey3 = () => {
         <div className="pt-6">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Career Preferences Survey</h1>
-            
-            <div className="relative">
-              <div className="flex justify-between mb-2">
-                {progressSteps.map((step) => (
-                  <div
-                    key={step.id}
-                    className="text-sm font-medium text-indigo-600"
-                  >
-                    {step.label}
-                  </div>
-                ))}
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div 
-                  className="bg-indigo-600 h-2.5 rounded-full" 
-                  style={{ width: '100%' }}              
-                />
-              </div>
-            </div>
           </div>
         </div>
 
@@ -359,9 +330,7 @@ const FormSurvey3 = () => {
           className="pb-5 space-y-6"
           onSubmit={handleSubmit}
         >
-          {/* Personal Information Section */}
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Personal Information</h2>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -380,7 +349,7 @@ const FormSurvey3 = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Which of these best describe you? (Select all that apply) *
+                Which of these best describe you? (Select all that apply) 
               </label>
               {errors.currentRole && <p className="text-red-500 text-xs mb-2">{errors.currentRole}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -389,6 +358,7 @@ const FormSurvey3 = () => {
                     <input
                       type="checkbox"
                       name="currentRole"
+
                       value={role}
                       checked={formData.currentRole.includes(role)}
                       onChange={handleChange}
@@ -403,7 +373,7 @@ const FormSurvey3 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current City *
+                  Current City 
                 </label>
                 <input
                   type="text"
@@ -418,7 +388,7 @@ const FormSurvey3 = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Would you consider relocating? *
+                  Would you consider relocating? 
                 </label>
                 <select
                   name="location.willingToRelocate"
@@ -435,13 +405,12 @@ const FormSurvey3 = () => {
             </div>
           </div>
 
-          {/* Work Preferences Section */}
           <div className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Work Preferences</h2>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Preferred Work Environments (Select all that apply) *
+                Preferred Work Environments (Select all that apply) 
               </label>
               {errors.workPreferences && <p className="text-red-500 text-xs mb-2">{errors.workPreferences}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -463,7 +432,7 @@ const FormSurvey3 = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Preferred Communication Methods (Select all that apply) *
+                Preferred Communication Methods (Select all that apply) 
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {['Email', 'Phone', 'Messaging Apps', 'In-person'].map((method) => (
@@ -484,7 +453,7 @@ const FormSurvey3 = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Are you willing to work weekends? *
+                Are you willing to work weekends? 
               </label>
               <select
                 name="workPreferences.schedule"
@@ -500,13 +469,11 @@ const FormSurvey3 = () => {
             </div>
           </div>
 
-          {/* Career Goals Section */}
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Career Goals</h2>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Describe your dream job *
+                Describe your dream job 
               </label>
               <textarea
                 name="careerGoals.dreamJob"
@@ -521,7 +488,7 @@ const FormSurvey3 = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                What motivates you the most in your work? *
+                What motivates you the most in your work? 
               </label>
               <input
                 type="text"
@@ -536,7 +503,7 @@ const FormSurvey3 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Are you open to internships? *
+                  Are you open to internships? 
                 </label>
                 <select
                   name="careerGoals.openToInternship"
@@ -570,7 +537,7 @@ const FormSurvey3 = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                What benefits are most important to you? (Select all that apply) *
+                What benefits are most important to you? (Select all that apply) 
               </label>
               {errors.expectations && <p className="text-red-500 text-xs mb-2">{errors.expectations}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -592,7 +559,7 @@ const FormSurvey3 = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                What is your expected salary range? *
+                What is your expected salary range? 
               </label>
               <input
                 type="text"
@@ -622,13 +589,12 @@ const FormSurvey3 = () => {
             </div>
           </div>
 
-          {/* Contact Information Section */}
           <div className="space-y-6">
             <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Contact Information</h2>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                How would you like to be contacted? *
+                How would you like to be contacted? 
               </label>
               {errors.contactInfo && <p className="text-red-500 text-xs mb-2">{errors.contactInfo}</p>}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -651,8 +617,8 @@ const FormSurvey3 = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 {formData.contactInfo.method === 'Email' 
-                  ? 'Email Address *' 
-                  : 'Phone Number (with country code) *'}
+                  ? 'Email Address ' 
+                  : 'Phone Number (with country code) '}
               </label>
               <input
                 type={formData.contactInfo.method === 'Email' ? 'email' : 'tel'}
