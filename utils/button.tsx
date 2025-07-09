@@ -9,7 +9,7 @@ const Button = ({ name, spanBg }: ButtonProps) => {
   return (
     <button 
       className='bg-[#fff] border border-[#333] text-[rgb(0,0,0)] px-[1rem] py-[0.2rem] 
-      rounded-2xl flex items-center gap-2 w-[10rem] mx-auto justify-center
+      rounded-2xl flex items-center gap-2 w-[12rem] mx-auto justify-center
   transition-transform duration-300 ease-in-out hover:shadow-[2px_2px_0px_0px_#000] hover:-translate-y-0.5'
     >
       <span 

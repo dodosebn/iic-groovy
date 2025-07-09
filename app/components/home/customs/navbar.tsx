@@ -30,8 +30,7 @@ const itemVariant: Variants = {
 
 const navItems = [
   { id: 1, path: '/', name: 'Home' },
-  { id: 2, path: '/membership/signUp', name: 'Membership' },
-  { id: 3, path: '/', name: 'Style Guide✨' },
+  // { id: 3, path: '/', name: 'Style Guide✨' },
   { id: 4, path: '#tag', name: '#Tag' },
 ];
 
@@ -143,20 +142,29 @@ const Navbar = () => {
                 </div>
 
                 <motion.ul
-                  className="w-full text-xl sm:text-3xl space-y-6 text-center"
-                  variants={containerVariant}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                >
-                  {navItems.map((item) => (
+                 className="w-full text-xl absolute md:top-5 
+       sm:text-3xl space-y-5
+       font-light text-center"
+                variants={containerVariant}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                  {navItems.map((item, index) => (
                     <motion.li key={item.id} variants={itemVariant}>
                       <button
                         onClick={() => handleNavigation(item.path)}
-                        className="hover:text-blue-400 tracking-[3px] text-xl text-black transition block w-full bg-transparent border-none"
-                      >
+   className={`hover:text-blue-400 tracking-[3px] uppercase cursor-pointer text-black transition ${
+                      index === 0
+                        ? "text-2xl md:text-4xl font-bold"
+                        : "text-xl font-light"
+                    }`}                                >
                         {item.name}
                       </button>
+                       {item.name === "Home" && (
+                    <div className="h-px w-[80%] font-extrabold
+                    md:w-130 mx-auto bg-black/20 mt-9" />
+                  )}
                     </motion.li>
                   ))}
                   <motion.li variants={itemVariant}>
