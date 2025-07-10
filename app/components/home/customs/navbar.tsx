@@ -135,12 +135,11 @@ const Navbar = () => {
 
            
                 <div
-                  className="absolute top-8 right-12 text-3xl cursor-pointer"
+                  className="absolute top-8 right-12 text-3xl cursor-pointer z-[9999]"
                   onClick={closeAllMenus}
                 >
                   <GrClose />
                 </div>
-
                 <motion.ul
                  className="w-full text-xl absolute md:top-5 
        sm:text-3xl space-y-5
