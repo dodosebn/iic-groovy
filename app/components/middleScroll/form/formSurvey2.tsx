@@ -1,38 +1,46 @@
 'use client'
 import React, { useState, useRef, ChangeEvent, FormEvent, useEffect, useCallback } from 'react';
-import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 // Types
 type ContactMethod = 'WhatsApp' | 'Telegram' | 'Email' | '';
-type EmploymentStatus = 'Yes' | 'No' | '';
-type RelocationStatus = 'Yes' | 'No' | '';
-type WorkPreference = 'Yes' | 'No' | '';
+type YesNo = 'Yes' | 'No' | '';
 
 interface FormData {
   fullName: string;
-  roles: string[];
-  currentCity: string;
-  willingToRelocate: RelocationStatus;
-  preferredWorkEnvironments: string[];
-  dreamJobDescription: string;
-  openToInternships: WorkPreference;
-  preferredCommunicationMethods: string[];
-  motivation: string;
-  willingToWorkWeekends: WorkPreference;
-  importantBenefits: string[];
-  expectedSalaryRange: string;
-  currentlyStudying: EmploymentStatus;
+  currentRole: string[];
+  location: {
+    city: string;
+    willingToRelocate: YesNo;
+  };
+  workPreferences: {
+    environment: string[];
+    communication: string[];
+    schedule: YesNo;
+  };
+  careerGoals: {
+    dreamJob: string;
+    motivation: string;
+    openToInternship: YesNo;
+  };
+  expectations: {
+    benefits: string[];
+    salaryRange: string;
+  };
+  educationStatus: YesNo;
+  employmentStatus: YesNo;
+  contactInfo: {
+    method: ContactMethod;
+    details: string;
+  };
   additionalComments: string;
-  contactMethod: ContactMethod;
-  contactInfo: string;
-  currentlyEmployed: EmploymentStatus;
 }
 
 interface QuestionConfig {
-  id: keyof FormData;
+  id: string;
+  path: string[]; // Path to the field in the FormData structure
   type: 'text' | 'radio' | 'checkbox';
   text: string;
   options?: { value: string; label: string }[];
@@ -45,19 +53,21 @@ const FormSurvey2 = () => {
   // Form configuration
   const questionsConfig: QuestionConfig[] = [
     {
-      id: 'roles',
+      id: 'currentRole',
+      path: ['currentRole'],
       type: 'checkbox',
       text: '1. Which of these best describe you? (Select all that apply)',
       required: true,
       options: [
-        { value: 'A', label: 'Student' },
-        { value: 'B', label: 'Professional' },
-        { value: 'C', label: 'Freelancer' },
-        { value: 'D', label: 'Entrepreneur' }
+        { value: 'Student', label: 'Student' },
+        { value: 'Professional', label: 'Professional' },
+        { value: 'Freelancer', label: 'Freelancer' },
+        { value: 'Entrepreneur', label: 'Entrepreneur' }
       ]
     },
     {
       id: 'currentCity',
+      path: ['location', 'city'],
       type: 'text',
       text: '2. What is your current city?',
       required: true,
@@ -65,6 +75,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'willingToRelocate',
+      path: ['location', 'willingToRelocate'],
       type: 'radio',
       text: '3. Would you consider relocating?',
       required: true,
@@ -75,18 +86,20 @@ const FormSurvey2 = () => {
     },
     {
       id: 'preferredWorkEnvironments',
+      path: ['workPreferences', 'environment'],
       type: 'checkbox',
       text: '4. What are your preferred work environments? (Select all that apply)',
       required: true,
       options: [
-        { value: 'A', label: 'Office' },
-        { value: 'B', label: 'Remote' },
-        { value: 'C', label: 'Hybrid' },
-        { value: 'D', label: 'Flexible' }
+        { value: 'Office', label: 'Office' },
+        { value: 'Remote', label: 'Remote' },
+        { value: 'Hybrid', label: 'Hybrid' },
+        { value: 'Flexible', label: 'Flexible' }
       ]
     },
     {
       id: 'dreamJobDescription',
+      path: ['careerGoals', 'dreamJob'],
       type: 'text',
       text: '5. Write a short description of your dream job.',
       required: true,
@@ -94,6 +107,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'openToInternships',
+      path: ['careerGoals', 'openToInternship'],
       type: 'radio',
       text: '6. Are you open to internships?',
       required: true,
@@ -104,18 +118,20 @@ const FormSurvey2 = () => {
     },
     {
       id: 'preferredCommunicationMethods',
+      path: ['workPreferences', 'communication'],
       type: 'checkbox',
       text: '7. How do you prefer to communicate? (Select all that apply)',
       required: true,
       options: [
-        { value: 'A', label: 'Email' },
-        { value: 'B', label: 'Phone' },
-        { value: 'C', label: 'Messaging Apps' },
-        { value: 'D', label: 'In-person' }
+        { value: 'Email', label: 'Email' },
+        { value: 'Phone', label: 'Phone' },
+        { value: 'Messaging Apps', label: 'Messaging Apps' },
+        { value: 'In-person', label: 'In-person' }
       ]
     },
     {
       id: 'motivation',
+      path: ['careerGoals', 'motivation'],
       type: 'text',
       text: '8. What motivates you the most?',
       required: true,
@@ -123,6 +139,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'willingToWorkWeekends',
+      path: ['workPreferences', 'schedule'],
       type: 'radio',
       text: '9. Are you willing to work weekends?',
       required: true,
@@ -133,18 +150,20 @@ const FormSurvey2 = () => {
     },
     {
       id: 'importantBenefits',
+      path: ['expectations', 'benefits'],
       type: 'checkbox',
       text: '10. What benefits are most important to you? (Select all that apply)',
       required: true,
       options: [
-        { value: 'A', label: 'Health Insurance' },
-        { value: 'B', label: 'Remote Work' },
-        { value: 'C', label: 'Bonus Pay' },
-        { value: 'D', label: 'Vacation Time' }
+        { value: 'Health Insurance', label: 'Health Insurance' },
+        { value: 'Remote Work', label: 'Remote Work' },
+        { value: 'Bonus Pay', label: 'Bonus Pay' },
+        { value: 'Vacation Time', label: 'Vacation Time' }
       ]
     },
     {
       id: 'expectedSalaryRange',
+      path: ['expectations', 'salaryRange'],
       type: 'text',
       text: '11. What is your expected salary range?',
       required: true,
@@ -152,6 +171,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'currentlyStudying',
+      path: ['educationStatus'],
       type: 'radio',
       text: '12. Are you currently studying?',
       required: true,
@@ -162,6 +182,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'additionalComments',
+      path: ['additionalComments'],
       type: 'text',
       text: '13. Any additional comments or notes?',
       required: true,
@@ -169,6 +190,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'contactMethod',
+      path: ['contactInfo', 'method'],
       type: 'radio',
       text: '14. How would you like to be contacted? (Choose one)',
       required: true,
@@ -180,19 +202,20 @@ const FormSurvey2 = () => {
     },
     {
       id: 'contactInfo',
+      path: ['contactInfo', 'details'],
       type: 'text',
       text: '15. Please provide your contact information:',
       required: true,
       placeholder: (formData: FormData) => 
-        formData.contactMethod === 'Email' ? 'Enter your email address' : 
-        formData.contactMethod ? 'Enter your phone number' : 
+        formData.contactInfo.method === 'Email' ? 'Enter your email address' : 
+        formData.contactInfo.method ? 'Enter your phone number' : 
         'Enter your WhatsApp/Telegram number or Email address',
       validation: (value, formData) => {
         if (!value) return 'Contact information is required';
-        if (formData.contactMethod === 'Email' && !/^\S+@\S+\.\S+$/.test(value)) {
+        if (formData.contactInfo.method === 'Email' && !/^\S+@\S+\.\S+$/.test(value)) {
           return 'Please enter a valid email address';
         }
-        if ((formData.contactMethod === 'WhatsApp' || formData.contactMethod === 'Telegram') && !/^[0-9]+$/.test(value)) {
+        if ((formData.contactInfo.method === 'WhatsApp' || formData.contactInfo.method === 'Telegram') && !/^[0-9]+$/.test(value)) {
           return 'Please enter a valid phone number';
         }
         return null;
@@ -200,6 +223,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'currentlyEmployed',
+      path: ['employmentStatus'],
       type: 'radio',
       text: '16. Are you currently employed? (Optional)',
       required: false,
@@ -210,6 +234,7 @@ const FormSurvey2 = () => {
     },
     {
       id: 'fullName',
+      path: ['fullName'],
       type: 'text',
       text: '17. What is your full name? (Optional)',
       required: false,
@@ -220,22 +245,32 @@ const FormSurvey2 = () => {
   // State
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
-    roles: [],
-    currentCity: '',
-    willingToRelocate: '',
-    preferredWorkEnvironments: [],
-    dreamJobDescription: '',
-    openToInternships: '',
-    preferredCommunicationMethods: [],
-    motivation: '',
-    willingToWorkWeekends: '',
-    importantBenefits: [],
-    expectedSalaryRange: '',
-    currentlyStudying: '',
-    additionalComments: '',
-    contactMethod: '',
-    contactInfo: '',
-    currentlyEmployed: ''
+    currentRole: [],
+    location: {
+      city: '',
+      willingToRelocate: '',
+    },
+    workPreferences: {
+      environment: [],
+      communication: [],
+      schedule: '',
+    },
+    careerGoals: {
+      dreamJob: '',
+      motivation: '',
+      openToInternship: '',
+    },
+    expectations: {
+      benefits: [],
+      salaryRange: '',
+    },
+    educationStatus: '',
+    employmentStatus: '',
+    contactInfo: {
+      method: '',
+      details: '',
+    },
+    additionalComments: ''
   });
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -245,6 +280,28 @@ const FormSurvey2 = () => {
   const captchaRef = useRef<ReCAPTCHA>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Helper function to get nested field value
+  const getNestedValue = (obj: any, path: string[]) => {
+    return path.reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : ''), obj);
+  };
+
+  // Helper function to set nested field value
+  const setNestedValue = (obj: any, path: string[], value: any) => {
+    const newObj = { ...obj };
+    let current = newObj;
+    
+    for (let i = 0; i < path.length - 1; i++) {
+      const key = path[i];
+      if (!current[key]) {
+        current[key] = {};
+      }
+      current = current[key];
+    }
+    
+    current[path[path.length - 1]] = value;
+    return newObj;
+  };
 
   // Effects
   useEffect(() => {
@@ -262,23 +319,22 @@ const FormSurvey2 = () => {
     const target = e.target as HTMLInputElement;
     const checked = target.type === 'checkbox' ? target.checked : undefined;
     
+    const question = questionsConfig.find(q => q.id === name.split('-')[0]);
+    if (!question) return;
+
     if (type === 'checkbox') {
-      const questionName = name.split('-')[0] as keyof FormData;
       const optionValue = name.split('-')[1];
+      const currentValue = getNestedValue(formData, question.path) || [];
       
       setFormData(prev => {
-        const currentOptions = prev[questionName] as string[] || [];
         if (checked) {
-          return { ...prev, [questionName]: [...currentOptions, optionValue] };
+          return setNestedValue(prev, question.path, [...currentValue, optionValue]);
         } else {
-          return { 
-            ...prev, 
-            [questionName]: (currentOptions as string[]).filter(item => item !== optionValue) 
-          };
+          return setNestedValue(prev, question.path, currentValue.filter((item: string) => item !== optionValue));
         }
       });
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData(prev => setNestedValue(prev, question.path, value));
     }
     
     if (errors[name]) {
@@ -290,48 +346,46 @@ const FormSurvey2 = () => {
     }
 
     // Auto-advance for non-text inputs
-    const currentConfig = questionsConfig[currentQuestion];
-    if (type !== 'text' && currentConfig.type !== 'text') {
+    if (type !== 'text' && question.type !== 'text') {
       setTimeout(() => {
         setCurrentQuestion(prev => Math.min(prev + 1, questionsConfig.length - 1));
       }, 300);
     }
-  }, [currentQuestion, errors]);
+  }, [formData, errors]);
 
- const validateForm = useCallback(() => {
-  const newErrors: Record<string, string> = {};
-  let isValid = true;
+  const validateForm = useCallback(() => {
+    const newErrors: Record<string, string> = {};
+    let isValid = true;
 
-  questionsConfig.forEach(question => {
-    if (!question.required) return;
+    questionsConfig.forEach(question => {
+      if (!question.required) return;
 
-    const value = formData[question.id];
+      const value = getNestedValue(formData, question.path);
 
-    if (
-      (Array.isArray(value) && value.length === 0) ||
-      (!Array.isArray(value) && !value)
-    ) {
-      newErrors[question.id] = 'This field is required';
-      isValid = false;
-      return;
-    }
-
-    if (question.validation) {
-      const validationError = question.validation(
-        Array.isArray(value) ? value.join(', ') : value,
-        formData
-      );
-      if (validationError) {
-        newErrors[question.id] = validationError;
+      if (
+        (Array.isArray(value) && value.length === 0) ||
+        (!Array.isArray(value) && !value)
+      ) {
+        newErrors[question.id] = 'This field is required';
         isValid = false;
+        return;
       }
-    }
-  });
 
-  setErrors(newErrors);
-  return isValid;
-}, [formData]);
+      if (question.validation) {
+        const validationError = question.validation(
+          Array.isArray(value) ? value.join(', ') : value,
+          formData
+        );
+        if (validationError) {
+          newErrors[question.id] = validationError;
+          isValid = false;
+        }
+      }
+    });
 
+    setErrors(newErrors);
+    return isValid;
+  }, [formData]);
 
   const handleCaptchaChange = useCallback((value: string | null) => {
     setIsVerified(!!value);
@@ -340,85 +394,79 @@ const FormSurvey2 = () => {
     }
   }, []);
 
-  const submitForm = useCallback(() => {
+  const submitForm = async () => {
     const toastId = toast.loading('Submitting your form...', {
       position: "top-center"
     });
 
-   const templateParams = {
-  from_name: formData.fullName || 'Anonymous',
-  to_name: 'Survey Administrator',
-  message: questionsConfig.map(question => {
-    const value = formData[question.id];
-    const displayValue = Array.isArray(value) ? value.join(', ') : value;
-    return `${question.text}: ${displayValue || 'No answer'}`;
-  }).join('\n\n'),
-  reply_to: formData.contactMethod.toLowerCase() === 'email' ? formData.contactInfo : 'no-reply@example.com'
-};
+    try {
+      const res = await fetch("/api/send-second", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    emailjs.send(
-      process.env.NEXT_PUBLIC_EMAIL_SERVICE!,
-      process.env.NEXT_PUBLIC_EMAIL_TEMPLATE!,
-      templateParams,
-      process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
-    )
-    .then((response) => {
+      const data = await res.json();
+
+      if (res.ok && data?.success) {
+        toast.update(toastId, {
+          render: "Form submitted successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+        });
+
+        // Reset form
+        setFormData({
+          fullName: '',
+          currentRole: [],
+          location: {
+            city: '',
+            willingToRelocate: '',
+          },
+          workPreferences: {
+            environment: [],
+            communication: [],
+            schedule: '',
+          },
+          careerGoals: {
+            dreamJob: '',
+            motivation: '',
+            openToInternship: '',
+          },
+          expectations: {
+            benefits: [],
+            salaryRange: '',
+          },
+          educationStatus: '',
+          employmentStatus: '',
+          contactInfo: {
+            method: '',
+            details: '',
+          },
+          additionalComments: ''
+        });
+        window.location.reload();
+
+      } else {
+        toast.update(toastId, {
+          render: data?.message || 'Something went wrong!',
+          type: "error",
+          isLoading: false,
+        });
+      }
+    } catch (err: any) {
       toast.update(toastId, {
-        render: "Form submitted successfully!",
-        type: "success",
-        isLoading: false,
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      
-      // Reset form
-      setFormData({
-        fullName: '',
-        roles: [],
-        currentCity: '',
-        willingToRelocate: '',
-        preferredWorkEnvironments: [],
-        dreamJobDescription: '',
-        openToInternships: '',
-        preferredCommunicationMethods: [],
-        motivation: '',
-        willingToWorkWeekends: '',
-        importantBenefits: [],
-        expectedSalaryRange: '',
-        currentlyStudying: '',
-        additionalComments: '',
-        contactMethod: '',
-        contactInfo: '',
-        currentlyEmployed: ''
-      });
-    })
-    .catch((err) => {
-      toast.update(toastId, {
-        render: `Failed to submit form: ${err.text || 'Please try again later.'}`,
+        render: `Failed to submit form: ${err.message || 'Please try again later.'}`,
         type: "error",
         isLoading: false,
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
       });
-    })
-    .finally(() => {
+    } finally {
       setShowCaptcha(false);
       setIsVerified(false);
       captchaRef.current?.reset();
-    });
-  }, [formData]);
+    }
+  };
 
   const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
@@ -457,7 +505,7 @@ const FormSurvey2 = () => {
 
   // Render functions
   const renderQuestionInput = (question: QuestionConfig) => {
-    const value = formData[question.id];
+    const value = getNestedValue(formData, question.path);
     const error = errors[question.id];
     
     switch (question.type) {
@@ -538,40 +586,36 @@ const FormSurvey2 = () => {
         theme="colored"
       />
       
-<form
-        className="w-full  mx-auto py-5 flex flex-col gap-5" 
+      <form
+        className="w-full mx-auto py-5 flex flex-col gap-5" 
         onSubmit={handleSubmit} 
         ref={formRef}
       >
         {/* Progress indicator */}
-    <div className="flex flex-wrap gap-2 pb-4 sm:px-4">
-  {questionsConfig.map((_, index) => (
-    <button
-      key={index}
-      type="button"
-      onClick={() => handleQuestionClick(index)}
-      className={`w-8 h-8 flex-shrink-0 rounded-full flex items-center justify-center text-sm font-medium ${
-        currentQuestion > index
-          ? 'bg-green-500 text-white'
-          : currentQuestion === index
-          ? 'bg-pink-500 text-white'
-          : 'text-gray-700 border border-gray-300'
-      }`}
-    >
-      {index + 1}
-    </button>
-  ))}
-</div>
-
+        <div className="flex flex-wrap gap-2 pb-4 sm:px-4">
+          {questionsConfig.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => handleQuestionClick(index)}
+              className={`w-8 h-8 flex-shrink-0 rounded-full flex items-center justify-center text-sm font-medium ${
+                currentQuestion > index
+                  ? 'bg-green-500 text-white'
+                  : currentQuestion === index
+                  ? 'bg-pink-500 text-white'
+                  : 'text-gray-700 border border-gray-300'
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
 
         {/* Questions */}
         {questionsConfig.map((question, index) => (
           <div
             key={question.id}
             ref={(el) => { questionRefs.current[index] = el; }}
-            // className={`transition-opacity duration-300 ${
-            //   currentQuestion === index ? 'opacity-100' : 'opacity-50'
-            // }`}
           >
             <label className="block text-lg md:text-xl font-bold text-gray-800 mb-4">
               {question.text}
@@ -583,14 +627,12 @@ const FormSurvey2 = () => {
             {errors[question.id] && (
               <div className="text-red-500 text-sm mt-2">{errors[question.id]}</div>
             )}
-            
-            
           </div>
         ))}
         
         <button 
           type="submit" 
-          className="mt-8 bg-pink-500 text-white font-bold py-4  rounded-full text-xl cursor-pointer hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
+          className="mt-8 bg-pink-500 text-white font-bold py-4 rounded-full text-xl cursor-pointer hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
         >
           Submit Survey
         </button>

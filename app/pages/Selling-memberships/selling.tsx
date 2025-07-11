@@ -15,15 +15,7 @@ const Selling = () => {
           <FirstCard imgGen={snailLike} title={'Selling memberships with recurring revenue'} bg='#dff9d9'
       date={'March 16, 2021'} duration={'1 min read'} tag={'Health'}
 />
-          {/* <AboutTheAuthor />
-          <Comments />
-     <div className='lg:flex'>
-      <div className='lg:flex-2'>
-          <Previous />
-          </div>
-          <div className='lg:flex-[0.5]'></div>
-  </div>
-    </div> */}
+         
          </CenteringPages>
 
   )

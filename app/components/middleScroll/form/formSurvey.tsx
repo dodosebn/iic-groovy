@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useRef, ChangeEvent, FormEvent } from 'react';
-import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -166,69 +165,57 @@ const FormSurvey = () => {
     return value;
   };
 
-  const submitForm = () => {
-    const toastId = toast.loading('Submitting your form...', {
-      position: "top-center"
+  const submitForm = async () => {
+  const toastId = toast.loading('Submitting your form...', {
+    position: "top-center"
+  });
+
+  try {
+    const res = await fetch("/api/senddy-oneyy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.q17, // Using q17 for full name
+        currentRole: formData.q1,
+        location: {
+          city: formData.q2,
+          willingToRelocate: formData.q3
+        },
+        workPreferences: {
+          environment: formData.q4,
+          communication: formData.q7,
+          schedule: formData.q9
+        },
+        careerGoals: {
+          dreamJob: formData.q5,
+          motivation: formData.q8,
+          openToInternship: formData.q6
+        },
+        expectations: {
+          benefits: formData.q10,
+          salaryRange: formData.q11
+        },
+        educationStatus: formData.q12,
+        employmentStatus: formData.q16,
+        contactInfo: {
+          method: formData.q14,
+          details: formData.q15
+        },
+        additionalComments: formData.q13
+      }),
     });
 
-    const questionTexts = {
-      q1: '1. Which of these best describe you?',
-      q2: '2. What is your current city?',
-      q3: '3. Would you consider relocating?',
-      q4: '4. What are your preferred work environments?',
-      q5: '5. Write a short description of your dream job.',
-      q6: '6. Are you open to internships?',
-      q7: '7. How do you prefer to communicate?',
-      q8: '8. What motivates you the most?',
-      q9: '9. Are you willing to work weekends?',
-      q10: '10. What benefits are most important to you?',
-      q11: '11. What is your expected salary range?',
-      q12: '12. Are you currently studying?',
-      q13: '13. Any additional comments or notes?',
-      q14: '14. How would you like to be contacted?',
-      q15: '15. Contact information:',
-      q16: '16. Are you currently employed?',
-      q17: '17. Full name:'
-    };
+    const data = await res.json();
 
-    const templateParams = {
-      from_name: formData.q17 || 'Anonymous',
-      to_name: 'Survey Administrator',
-      message: Object.entries(formData)
-        .map(([key, value]) => {
-          const displayValue = getDisplayValue(key, value);
-          return `${questionTexts[key as keyof typeof questionTexts]}: ${displayValue || 'No answer'}`;
-        })
-        .join('\n\n'),
-      reply_to: formData.q14 === 'email' ? formData.q15 : 'no-reply@example.com'
-    };
-
-    console.log('Sending email with params:', templateParams);
-
-  emailjs.send(
-  process.env.EMAIL_SERVICE!,
-  process.env.EMAIL_TEMPLATE!,
-  templateParams,
-  process.env.EMAIL_GENERAL
-)
-
-    .then((response) => {
-      console.log('SUCCESS!', response.status, response.text);
-      
+    if (res.ok && data?.success) {
       toast.update(toastId, {
         render: "Form submitted successfully!",
         type: "success",
         isLoading: false,
-        position: "top-center",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
       });
-      
+
+      // Reset form
       setFormData({
         name: '',
         q1: [],
@@ -249,32 +236,27 @@ const FormSurvey = () => {
         q16: '',
         q17: ''
       });
-    })
-    .catch((err) => {
-      console.error('FAILED...', err);
-      
+      window.location.reload();
+
+    } else {
       toast.update(toastId, {
-        render: `Failed to submit form: ${err.text || 'Please try again later.'}`,
+        render: data?.message || 'Something went wrong!',
         type: "error",
         isLoading: false,
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
       });
-    })
-    .finally(() => {
-      setShowCaptcha(false);
-      setIsVerified(false);
-      if (captchaRef.current) {
-        captchaRef.current.reset();
-      }
+    }
+  } catch (err: any) {
+    toast.update(toastId, {
+      render: `Failed to submit form: ${err.message || 'Please try again later.'}`,
+      type: "error",
+      isLoading: false,
     });
-  };
+  } finally {
+    setShowCaptcha(false);
+    setIsVerified(false);
+    captchaRef.current?.reset();
+  }
+};
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

@@ -12,14 +12,7 @@ const Custom = () => {
     <CenteringPages>
           <FirstCard imgGen={stripeShii} title={'Customizing your brand and design settings'}
       date={'March 16, 2021'} bg='#e0ebfc' tag={'Technology'} duration={''} />
-          {/* <AboutTheAuthor />
-          <Comments />
-     <div className='lg:flex'>
-      <div className='lg:flex-2'>
-          <Previous />
-          </div>
-          <div className='lg:flex-[0.5]'></div>
-  </div> */}
+      
 </CenteringPages>  )
 }
 

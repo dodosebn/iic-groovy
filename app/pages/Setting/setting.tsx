@@ -15,15 +15,7 @@ const Selling = () => {
      <CenteringPages>
           <FirstCard imgGen={gadget} title={'Setting up apps and custom integrations'}
       date={'March 16, 2021'} duration={'2 min read'} bg='#c5f4ef' tag={'Getting Started'}     />
-          {/* <AboutTheAuthor />
-          <Comments />
-     <div className='lg:flex'>
-      <div className='lg:flex-2'>
-          <Previous />
-          </div>
-          <div className='lg:flex-[0.5]'></div>
-  </div>
-    </div> */}
+      
          </CenteringPages>
 
   )

@@ -13,7 +13,7 @@ const Building = () => {
           date={'September 25, 2022'}
           duration={'3 min read'}
           bg="#f0f0fe"
-          tag={'Travel'}
+          tag={'Health'}
         />
    </CenteringPages>
   );

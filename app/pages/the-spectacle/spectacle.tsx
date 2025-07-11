@@ -17,14 +17,7 @@ const Spectacle = () => {
           bg='#ffeae9'  
 
       date={'April 26, 2019'} duration={'2 min read'} tag={'Lifestyle'}  />
-          {/* <AboutTheAuthor />
-          <Comments />
-     <div className='lg:flex'>
-      <div className='lg:flex-2'>
-          <Previous />
-          </div>
-          <div className='lg:flex-[0.5]'></div>
-  </div> */}
+       
     </CenteringPages>
   )
 }

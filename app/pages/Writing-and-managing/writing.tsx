@@ -17,14 +17,7 @@ const Writing = () => {
 //  imgName=" James Brawson"     img={dreadedG}
 
       date={'March 16, 2021'} duration={'2 min read'} tag={'Health'}  />
-          {/* <AboutTheAuthor />
-          <Comments />
-     <div className='lg:flex'>
-      <div className='lg:flex-2'>
-          <Previous />
-          </div>
-          <div className='lg:flex-[0.5]'></div>
-  </div> */}
+     
     </CenteringPages>
   )
 }

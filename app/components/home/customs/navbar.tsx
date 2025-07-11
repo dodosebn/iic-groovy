@@ -114,7 +114,6 @@ const Navbar = () => {
   return (
     <div>
       {/* DESKTOP NAV */}
-      {!isMobile && (
         <>
           <nav className="w-full z-40 relative">
             <div className="max-w-7xl mx-auto px-8 md:px-12">
@@ -122,9 +121,10 @@ const Navbar = () => {
                 <h1 className="text-3xl md:text-6xl font-bold tracking-tight text-gray-800">
                   <Link
                     href="/"
-                    className="hidden md:block md:-translate-y-1/2 absolute left-1/2 -translate-x-1/2"
+                    className="-translate-y-1/2 absolute left-1/2 -translate-x-1/2"
                   >
-                    <Logo />
+                    {isMobile ? <MLogo />
+ : <Logo />}
                   </Link>
                 </h1>
                 <div
@@ -240,7 +240,6 @@ const Navbar = () => {
           )}
         </AnimatePresence>
         </>
-      )}
 
       {/* MOBILE NAV */}
       {/* {isMobile && (

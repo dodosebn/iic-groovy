@@ -211,6 +211,8 @@ const FormSurvey3 = () => {
           contactInfo: { method: '', details: '' },
           additionalComments: '',
         });
+        window.location.reload();
+
       } else {
         toast.update(toastId, {
           render: data?.message || 'Something went wrong!',
@@ -599,23 +601,22 @@ const FormSurvey3 = () => {
             <div className="flex justify-center">
               <ReCAPTCHA
                 ref={captchaRef}
-              sitekey='6LcmtH8rAAAAAJCynsvQcGeqJvvP5ZvEI66zUs3H'
+              sitekey='6Lemw38rAAAAANPBwI2j9ok5IEG0-hXkb845dJp-
+'
                 onChange={handleCaptchaChange}
               />
             </div>
           )}
 
-          <div className="flex justify-center pt-6">
             <button
               type="submit"
-              className="px-8 py-3 bg-indigo-600 rounded-lg text-lg font-medium
+              className="px-8 py-3 w-full bg-indigo-600 rounded-lg text-lg font-medium
                text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2
                 focus:ring-indigo-500"
               disabled={showCaptcha && !isVerified}
             >
               Submit Survey
             </button>
-          </div>
         </form>
       </div>
     </div>

@@ -72,7 +72,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
       </section>
            <div className='flex flex-col justify-center md:p-5 py-3'>
 
-            <FormSurvey3 />
+         {tag === 'Health' ? <FormSurvey2 /> : tag === 'Getting Started' ? <FormSurvey3 /> : <FormSurvey />}
              {/* {tag === 'Health' ? <FormSurvey />
              : tag === 'Getting Started' ?  */}
              {/* <FormSurvey3 /> : <FormSurvey2 />  } */}

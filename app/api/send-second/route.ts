@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
     </head>
     <body>
       <div class="container">
-        <h1>New Survey Submission</h1>
+        <h1>New Career Preferences Survey Submission</h1>
         
         <div class="section">
           <h2 class="section-title">Basic Information</h2>
@@ -99,15 +99,15 @@ export async function POST(req: NextRequest) {
             <div class="field-value">${formatField(body.fullName)}</div>
           </div>
           <div class="field">
-            <div class="field-label">Current Role:</div>
+            <div class="field-label">Current Role(s):</div>
             <div class="field-value">${formatField(body.currentRole)}</div>
           </div>
         </div>
         
         <div class="section">
-          <h2 class="section-title">Location Information</h2>
+          <h2 class="section-title">Location Preferences</h2>
           <div class="field">
-            <div class="field-label">City:</div>
+            <div class="field-label">Current City:</div>
             <div class="field-value">${formatField(body.location?.city)}</div>
           </div>
           <div class="field">
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
         <div class="section">
           <h2 class="section-title">Work Preferences</h2>
           <div class="field">
-            <div class="field-label">Work Environment:</div>
+            <div class="field-label">Preferred Environment:</div>
             <div class="field-value">${formatField(body.workPreferences?.environment)}</div>
           </div>
           <div class="field">
@@ -127,7 +127,7 @@ export async function POST(req: NextRequest) {
             <div class="field-value">${formatField(body.workPreferences?.communication)}</div>
           </div>
           <div class="field">
-            <div class="field-label">Weekend Work:</div>
+            <div class="field-label">Willing to Work Weekends:</div>
             <div class="field-value">${formatField(body.workPreferences?.schedule)}</div>
           </div>
         </div>
@@ -135,11 +135,11 @@ export async function POST(req: NextRequest) {
         <div class="section">
           <h2 class="section-title">Career Goals</h2>
           <div class="field">
-            <div class="field-label">Dream Job:</div>
+            <div class="field-label">Dream Job Description:</div>
             <div class="field-value highlight">${formatField(body.careerGoals?.dreamJob)}</div>
           </div>
           <div class="field">
-            <div class="field-label">Motivation:</div>
+            <div class="field-label">Primary Motivation:</div>
             <div class="field-value highlight">${formatField(body.careerGoals?.motivation)}</div>
           </div>
           <div class="field">
@@ -151,23 +151,23 @@ export async function POST(req: NextRequest) {
         <div class="section">
           <h2 class="section-title">Expectations</h2>
           <div class="field">
-            <div class="field-label">Benefits:</div>
+            <div class="field-label">Important Benefits:</div>
             <div class="field-value">${formatField(body.expectations?.benefits)}</div>
           </div>
           <div class="field">
-            <div class="field-label">Salary Range:</div>
+            <div class="field-label">Expected Salary Range:</div>
             <div class="field-value highlight">${formatField(body.expectations?.salaryRange)}</div>
           </div>
         </div>
         
         <div class="section">
-          <h2 class="section-title">Status Information</h2>
+          <h2 class="section-title">Current Status</h2>
           <div class="field">
-            <div class="field-label">Education Status:</div>
+            <div class="field-label">Currently Studying:</div>
             <div class="field-value">${formatField(body.educationStatus)}</div>
           </div>
           <div class="field">
-            <div class="field-label">Employment Status:</div>
+            <div class="field-label">Currently Employed:</div>
             <div class="field-value">${formatField(body.employmentStatus)}</div>
           </div>
         </div>
@@ -175,7 +175,7 @@ export async function POST(req: NextRequest) {
         <div class="section">
           <h2 class="section-title">Contact Information</h2>
           <div class="field">
-            <div class="field-label">Contact Method:</div>
+            <div class="field-label">Preferred Contact Method:</div>
             <div class="field-value">${formatField(body.contactInfo?.method)}</div>
           </div>
           <div class="field">
@@ -185,7 +185,7 @@ export async function POST(req: NextRequest) {
         </div>
         
         <div class="section">
-          <h2 class="section-title">Additional Information</h2>
+          <h2 class="section-title">Additional Comments</h2>
           <div class="field">
             <div class="field-value">${formatField(body.additionalComments) || 'No additional comments provided'}</div>
           </div>

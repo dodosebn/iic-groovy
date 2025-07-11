@@ -5,7 +5,7 @@ export const MLogo = () => {
   return (
     <>
 <div
-    className="text-4xl font-black h-auto object-contain" 
+    className="text-5xl font-black h-auto object-contain" 
   >  Survey</div>
   </>  
   )

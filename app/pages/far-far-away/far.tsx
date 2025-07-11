@@ -15,14 +15,7 @@ const Far = () => {
           <FirstCard imgGen={one} title={'Far far away, behind the word mountains'}
       date={'March 16, 2021'} duration={'3 min read'} bg='#c5f4ef' tag={'Getting Started'}
 />
-          {/* <AboutTheAuthor />
-          <Comments />
-     <div className='lg:flex'>
-      <div className='lg:flex-2'>
-          <Previous />
-          </div>
-          <div className='lg:flex-[0.5]'></div>
-  </div> */}
+     
 </CenteringPages>  )
 }
 
