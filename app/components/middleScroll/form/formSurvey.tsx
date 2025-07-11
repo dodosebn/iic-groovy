@@ -707,7 +707,7 @@ const FormSurvey = () => {
           <div className="mt-5">
             <ReCAPTCHA
               ref={captchaRef}
-              sitekey="6Lc6zFgrAAAAAKj52053YpaBaLUfFuSrgXxUS_G4"
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
               onChange={handleCaptchaChange}
             />
           </div>

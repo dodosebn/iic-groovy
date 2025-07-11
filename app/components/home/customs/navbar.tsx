@@ -2,7 +2,7 @@
 
 import { useEffect, useState, startTransition } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { IoMenu } from 'react-icons/io5';
+import { IoMail, IoMenu } from 'react-icons/io5';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { GrClose } from 'react-icons/gr';
 import { RiArrowDropDownLine, RiCloseLine, RiMenu2Fill } from 'react-icons/ri';
@@ -10,6 +10,9 @@ import Link from 'next/link';
 
 import { Logo, MLogo } from '@/utils/logo';
 import { useNavbarStore } from '@/app/store/useNavStore';
+import { FaFacebookSquare, FaInstagram } from 'react-icons/fa';
+import { createPortal } from 'react-dom';
+import SectionContent from '../sectionCont';
 
 const containerVariant: Variants = {
   hidden: { opacity: 0 },
@@ -28,12 +31,22 @@ const itemVariant: Variants = {
   },
 };
 
+// const navItems = [
+//   { id: 1, path: '/', name: 'Home' },
+//   // { id: 3, path: '/', name: 'Style Guide✨' },
+//   { id: 4, path: '#tag', name: '#Tag' },
+// ];
 const navItems = [
-  { id: 1, path: '/', name: 'Home' },
-  // { id: 3, path: '/', name: 'Style Guide✨' },
-  { id: 4, path: '#tag', name: '#Tag' },
+  { name: "LAST GENERATION", key: "last-generation" },
+  { name: "SOSIOLOJI", key: "sosioloji" },
+  { name: "OUR PURPOSE", key: "purpose" },
+  { name: "THE EDITOR", key: "editor" },
+  { name: "CONTRIBUTORS", key: "contributors" },
+  { name: "JOIN THE MOVEMENT", key: "movement" },
+  { name: "FILOSOFI", key: "filosofi" },
+  { name: "IDEA IS CAP", key: "ideaiscapital" },
+  { name: "CONNECT", key: "connect" },
 ];
-
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -46,6 +59,7 @@ const Navbar = () => {
     moreOpen,
     setMoreOpen,
   } = useNavbarStore();
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -123,25 +137,31 @@ const Navbar = () => {
             </div>
           </nav>
 
-          <AnimatePresence>
-            {menuOpen && (
-                        <motion.div
-            className="fixed inset-0 bg-[#54cbca] z-50 flex items-center justify-center"
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-          >
+   
 
            
-                <div
-                  className="absolute top-8 right-12 text-3xl cursor-pointer z-[9999]"
-                  onClick={closeAllMenus}
-                >
-                  <GrClose />
-                </div>
-                <motion.ul
-                 className="w-full text-xl absolute md:top-5 
+ <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              className="fixed inset-0 bg-[#54cbca] z-50
+              flex items-center justify-center"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <button
+  className="absolute top-5 right-5 text-4xl cursor-pointer z-50"
+  onClick={(e) => {
+    e.preventDefault();
+    setMenuOpen(false);
+  }}
+>
+  <GrClose color="#000000" />
+</button>
+
+              <motion.ul
+      className="w-full text-xl absolute 
        sm:text-3xl space-y-5
        font-light text-center"
                 variants={containerVariant}
@@ -149,44 +169,81 @@ const Navbar = () => {
                 animate="visible"
                 exit="hidden"
               >
-                  {navItems.map((item, index) => (
-                    <motion.li key={item.id} variants={itemVariant}>
-                      <button
-                        onClick={() => handleNavigation(item.path)}
+                {navItems.map((item, index) => (
+                  <motion.li key={item.key} variants={itemVariant}>
+                    <button
+                      onClick={() => setActiveSection(item.key)}
    className={`hover:text-blue-400 tracking-[3px] uppercase cursor-pointer text-black transition ${
                       index === 0
                         ? "text-2xl md:text-4xl font-bold"
                         : "text-xl font-light"
-                    }`}                                >
-                        {item.name}
-                      </button>
-                       {item.name === "Home" && (
+                    }`}                    >
+                      {item.name}
+                    </button>
+                      {item.name === "LAST GENERATION" && (
                     <div className="h-px w-[80%] font-extrabold
-                    md:w-130 mx-auto bg-black/20 mt-9" />
+                    md:w-130 mx-auto bg-black mt-9" />
                   )}
-                    </motion.li>
-                  ))}
-                  <motion.li variants={itemVariant}>
-                 {/* <button
-  onClick={() => handleNavigation('/signIn')}
-  className="bg-[#333333] text-white text-sm px-8 py-2 font-bold
-    rounded-[5.5rem] hover:bg-white hover:text-[#333] border
-    hover:border-[#333] whitespace-nowrap transition-transform duration-300
-    ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.5"
->
-  Sign In
-</button> */}
-
+                       {item.name === "JOIN THE MOVEMENT" && (
+                    <div className="h-px w-[80%]  md:w-80 mx-auto bg-black/20 mt-9" />
+                  )}
                   </motion.li>
-                </motion.ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                ))}
+                {/* {!isDesktop && (
+                  <motion.li variants={itemVariant}>
+                    <div className="flex justify-center gap-6 pt-3 text-3xl text-gray-700">
+                      <motion.a
+                        href="https://twitter.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variants={itemVariant}
+                      >
+                        <FaXTwitter />
+                      </motion.a>
+                      <motion.a
+                        href="https://facebook.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variants={itemVariant}
+                      >
+                        <FaFacebookSquare />
+                      </motion.a>
+                      <motion.a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variants={itemVariant}
+                      >
+                        <FaInstagram />
+                      </motion.a>
+                      <motion.a
+                        href="https://tiktok.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variants={itemVariant}
+                      >
+                        <FaTiktok />
+                      </motion.a>
+                      <motion.a
+                        href={`mailto:?subject=Check this out&body=${shareMessage}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variants={itemVariant}
+                      >
+                        <IoMail />
+                      </motion.a>
+                    </div>
+                  </motion.li>
+                )} */}
+              </motion.ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
         </>
       )}
 
       {/* MOBILE NAV */}
-      {isMobile && (
+      {/* {isMobile && (
         <div className="bg-[#F9F9F9] border-b border-[#333] shadow-lg">
         <nav className="flex items-center justify-between px-4 py-2">
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-700 p-2">
@@ -211,9 +268,9 @@ const Navbar = () => {
               >
                 <ul className="mt-16 px-10 space-y-7">
                   {navItems.map((item) => (
-                    <li key={item.id} className="text-[#333] hover:text-pink-600 font-medium">
+                    <li key={item.key} className="text-[#333] hover:text-pink-600 font-medium">
                       <button
-                        onClick={() => handleNavigation(item.path)}
+                        onClick={() => handleNavigation(item.key)}
                         className="block w-full text-left bg-transparent border-none"
                       >
                         {item.name}
@@ -238,7 +295,7 @@ const Navbar = () => {
                         {navItems.map((sub) => (
                           <button
                             key={sub.name}
-                            onClick={() => handleNavigation(sub.path)}
+                            onClick={() => handleNavigation(sub.key)}
                             className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600 w-full text-left bg-transparent border-none"
                           >
                             {sub.name}
@@ -249,19 +306,24 @@ const Navbar = () => {
                   </li>
                 </ul>
 
-                {/* <div className="mt-6 flex justify-center items-center px-6">
-                  <button
-                    onClick={() => handleNavigation('/signIn')}
-                    className="bg-[#333333] text-white px-8 py-2 font-bold rounded-[5.5rem] hover:bg-white hover:text-[#333] border hover:border-[#333] whitespace-nowrap transition-transform duration-300 ease-in-out hover:shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.5"
-                  >
-                    Sign In
-                  </button>
-                </div> */}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-      )}
+      )} */}
+           {typeof window !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {activeSection && (
+              <SectionContent
+                key={activeSection}
+                section={activeSection}
+                onClose={() => setActiveSection(null)}
+              />
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </div>
   );
 };

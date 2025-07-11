@@ -1,6 +1,5 @@
-'use client'
-import React, { useState, useRef, ChangeEvent, FormEvent, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
+'use client';
+import React, { useState, useRef, ChangeEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -8,10 +7,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 type FormData = {
   fullName: string;
   currentRole: string[];
-  location: {
-    city: string;
-    willingToRelocate: string;
-  };
+  location: { city: string; willingToRelocate: string };
   workPreferences: {
     environment: string[];
     communication: string[];
@@ -48,9 +44,10 @@ const FormSurvey3 = () => {
     contactInfo: { method: '', details: '' },
     additionalComments: ''
   });
+
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
-  const [showCaptcha, setShowCaptcha] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [showCaptcha, setShowCaptcha] = useState(false);
   const captchaRef = useRef<ReCAPTCHA>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -58,16 +55,15 @@ const FormSurvey3 = () => {
     const { name, value, type } = e.target;
     const target = e.target as HTMLInputElement;
     const checked = target.type === 'checkbox' ? target.checked : undefined;
-    
+
     if (name.includes('.')) {
       const [parent, child] = name.split('.') as [keyof FormData, string];
-      
+
       if (type === 'checkbox') {
         const currentOptions = (formData[parent] as any)[child] as string[] || [];
         const updatedOptions = checked 
           ? [...currentOptions, value]
           : currentOptions.filter(item => item !== value);
-        
         setFormData(prev => ({
           ...prev,
           [parent]: {
@@ -90,10 +86,10 @@ const FormSurvey3 = () => {
         [name]: value
       }));
     }
-    
+
     if (errors[name as keyof FormData]) {
       setErrors(prev => {
-        const newErrors = {...prev};
+        const newErrors = { ...prev };
         delete newErrors[name as keyof FormData];
         return newErrors;
       });
@@ -104,7 +100,6 @@ const FormSurvey3 = () => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
     let isValid = true;
 
-    // Personal section validation
     if (formData.currentRole.length === 0) {
       newErrors.currentRole = 'Please select at least one option';
       isValid = false;
@@ -117,8 +112,6 @@ const FormSurvey3 = () => {
       newErrors.location = 'Please indicate relocation willingness';
       isValid = false;
     }
-
-    // Preferences section validation
     if (formData.workPreferences.environment.length === 0) {
       newErrors.workPreferences = 'Please select at least one work environment';
       isValid = false;
@@ -131,8 +124,6 @@ const FormSurvey3 = () => {
       newErrors.workPreferences = 'Please indicate weekend work preference';
       isValid = false;
     }
-
-    // Career section validation
     if (!formData.careerGoals.dreamJob.trim()) {
       newErrors.careerGoals = 'Please describe your dream job';
       isValid = false;
@@ -153,8 +144,6 @@ const FormSurvey3 = () => {
       newErrors.expectations = 'Please provide expected salary range';
       isValid = false;
     }
-
-    // Contact section validation
     if (!formData.contactInfo.method) {
       newErrors.contactInfo = 'Please select a contact method';
       isValid = false;
@@ -180,111 +169,70 @@ const FormSurvey3 = () => {
     return isValid;
   };
 
-  const handleCaptchaChange = (value: string | null) => {
-    setIsVerified(!!value);
-    if (value) {
+  const handleCaptchaChange = (token: string | null) => {
+    setIsVerified(!!token);
+    if (token) {
       submitForm();
     }
   };
 
-  const submitForm = () => {
+  const submitForm = async () => {
     const toastId = toast.loading('Submitting your form...', {
       position: "top-center"
     });
 
-    const templateParams = {
-      from_name: formData.fullName || 'Anonymous',
-      to_name: 'Survey Administrator',
-      message: `
-        Full Name: ${formData.fullName || 'Not provided'}
-        
-        Current Role: ${formData.currentRole.join(', ') || 'Not specified'}
-        Location: ${formData.location.city || 'Not specified'}
-        Willing to Relocate: ${formData.location.willingToRelocate || 'Not specified'}
-        
-        Preferred Work Environment: ${formData.workPreferences.environment.join(', ') || 'Not specified'}
-        Preferred Communication: ${formData.workPreferences.communication.join(', ') || 'Not specified'}
-        Willing to Work Weekends: ${formData.workPreferences.schedule || 'Not specified'}
-        
-        Dream Job Description: ${formData.careerGoals.dreamJob || 'Not provided'}
-        Primary Motivation: ${formData.careerGoals.motivation || 'Not provided'}
-        Open to Internship: ${formData.careerGoals.openToInternship || 'Not specified'}
-        
-        Desired Benefits: ${formData.expectations.benefits.join(', ') || 'Not specified'}
-        Expected Salary Range: ${formData.expectations.salaryRange || 'Not specified'}
-        
-        Currently Studying: ${formData.educationStatus || 'Not specified'}
-        Currently Employed: ${formData.employmentStatus || 'Not specified'}
-        
-        Preferred Contact Method: ${formData.contactInfo.method || 'Not specified'}
-        Contact Details: ${formData.contactInfo.details || 'Not provided'}
-        
-        Additional Comments: ${formData.additionalComments || 'None'}
-      `,
-      reply_to: formData.contactInfo.method === 'Email' ? formData.contactInfo.details : 'no-reply@example.com'
-    };
+    try {
+      const res = await fetch("/api/send-survey", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    emailjs.send(
-      process.env.EMAIL_SERVICE!,
-      process.env.EMAIL_TEMPLATE!,
-      templateParams,
-      process.env.EMAIL_GENERAL
-    )
-    .then(() => {
+      const data = await res.json();
+
+      if (res.ok && data?.success) {
+        toast.update(toastId, {
+          render: "Form submitted successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+        });
+
+        // Reset form
+        setFormData({
+          fullName: '',
+          currentRole: [],
+          location: { city: '', willingToRelocate: '' },
+          workPreferences: { environment: [], communication: [], schedule: '' },
+          careerGoals: { dreamJob: '', motivation: '', openToInternship: '' },
+          expectations: { benefits: [], salaryRange: '' },
+          educationStatus: '',
+          employmentStatus: '',
+          contactInfo: { method: '', details: '' },
+          additionalComments: '',
+        });
+      } else {
+        toast.update(toastId, {
+          render: data?.message || 'Something went wrong!',
+          type: "error",
+          isLoading: false,
+        });
+      }
+    } catch (err: any) {
       toast.update(toastId, {
-        render: "Form submitted successfully!",
-        type: "success",
-        isLoading: false,
-        autoClose: 5000,
-      });
-      
-      setFormData({
-        fullName: '',
-        currentRole: [],
-        location: {
-          city: '',
-          willingToRelocate: '',
-        },
-        workPreferences: {
-          environment: [],
-          communication: [],
-          schedule: '',
-        },
-        careerGoals: {
-          dreamJob: '',
-          motivation: '',
-          openToInternship: '',
-        },
-        expectations: {
-          benefits: [],
-          salaryRange: '',
-        },
-        educationStatus: '',
-        employmentStatus: '',
-        contactInfo: {
-          method: '',
-          details: '',
-        },
-        additionalComments: '',
-      });
-    })
-    .catch((err) => {
-      toast.update(toastId, {
-        render: `Failed to submit form: ${err.text || 'Please try again later.'}`,
+        render: `Failed to submit form: ${err.message || 'Please try again later.'}`,
         type: "error",
         isLoading: false,
       });
-    })
-    .finally(() => {
+    } finally {
       setShowCaptcha(false);
       setIsVerified(false);
       captchaRef.current?.reset();
-    });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (validateForm()) {
       setShowCaptcha(true);
       if (isVerified) {
@@ -294,11 +242,6 @@ const FormSurvey3 = () => {
       toast.error('Please fill in all required fields correctly', {
         position: "top-center",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
       });
     }
   };
@@ -330,10 +273,11 @@ const FormSurvey3 = () => {
           className="pb-5 space-y-6"
           onSubmit={handleSubmit}
         >
+
           <div className="space-y-6">
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Full Name (Optional)
               </label>
               <input
@@ -348,7 +292,7 @@ const FormSurvey3 = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Which of these best describe you? (Select all that apply) 
               </label>
               {errors.currentRole && <p className="text-red-500 text-xs mb-2">{errors.currentRole}</p>}
@@ -358,13 +302,12 @@ const FormSurvey3 = () => {
                     <input
                       type="checkbox"
                       name="currentRole"
-
                       value={role}
                       checked={formData.currentRole.includes(role)}
                       onChange={handleChange}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                      className="h-4 w-4 rounded"
                     />
-                    <span className="text-sm text-gray-700">{role}</span>
+                    <span className="text-md text-gray-700">{role}</span>
                   </label>
                 ))}
               </div>
@@ -372,7 +315,7 @@ const FormSurvey3 = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-md font-medium text-gray-700 mb-1">
                   Current City 
                 </label>
                 <input
@@ -380,21 +323,23 @@ const FormSurvey3 = () => {
                   name="location.city"
                   value={formData.location.city}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2
+                   focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="New York"
                 />
                 {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-md font-medium text-gray-700 mb-1">
                   Would you consider relocating? 
                 </label>
                 <select
                   name="location.willingToRelocate"
                   value={formData.location.willingToRelocate}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-2 ring-1 rounded-lg focus:ring-2
+                   focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <option value="">Select an option</option>
                   <option value="Yes">Yes</option>
@@ -406,10 +351,9 @@ const FormSurvey3 = () => {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Work Preferences</h2>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Preferred Work Environments (Select all that apply) 
               </label>
               {errors.workPreferences && <p className="text-red-500 text-xs mb-2">{errors.workPreferences}</p>}
@@ -422,16 +366,16 @@ const FormSurvey3 = () => {
                       value={env}
                       checked={formData.workPreferences.environment.includes(env)}
                       onChange={handleChange}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                      className="h-4 w-4 "
                     />
-                    <span className="text-sm text-gray-700">{env}</span>
+                    <span className="text-md text-gray-700">{env}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Preferred Communication Methods (Select all that apply) 
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -443,16 +387,16 @@ const FormSurvey3 = () => {
                       value={method}
                       checked={formData.workPreferences.communication.includes(method)}
                       onChange={handleChange}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                      className="h-4 w-4"
                     />
-                    <span className="text-sm text-gray-700">{method}</span>
+                    <span className="text-md text-gray-700">{method}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Are you willing to work weekends? 
               </label>
               <select
@@ -472,7 +416,7 @@ const FormSurvey3 = () => {
           <div className="space-y-6">
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Describe your dream job 
               </label>
               <textarea
@@ -487,7 +431,7 @@ const FormSurvey3 = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 What motivates you the most in your work? 
               </label>
               <input
@@ -502,7 +446,7 @@ const FormSurvey3 = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-md font-medium text-gray-700 mb-1">
                   Are you open to internships? 
                 </label>
                 <select
@@ -519,7 +463,7 @@ const FormSurvey3 = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-md font-medium text-gray-700 mb-1">
                   Are you currently studying? (Optional)
                 </label>
                 <select
@@ -536,7 +480,7 @@ const FormSurvey3 = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 What benefits are most important to you? (Select all that apply) 
               </label>
               {errors.expectations && <p className="text-red-500 text-xs mb-2">{errors.expectations}</p>}
@@ -549,16 +493,16 @@ const FormSurvey3 = () => {
                       value={benefit}
                       checked={formData.expectations.benefits.includes(benefit)}
                       onChange={handleChange}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1 rounded"
+                      className="h-4 w-4"
                     />
-                    <span className="text-sm text-gray-700">{benefit}</span>
+                    <span className="text-md text-gray-700">{benefit}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 What is your expected salary range? 
               </label>
               <input
@@ -572,7 +516,7 @@ const FormSurvey3 = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Are you currently employed? (Optional)
               </label>
               <select
@@ -590,10 +534,9 @@ const FormSurvey3 = () => {
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">Contact Information</h2>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 How would you like to be contacted? 
               </label>
               {errors.contactInfo && <p className="text-red-500 text-xs mb-2">{errors.contactInfo}</p>}
@@ -606,19 +549,19 @@ const FormSurvey3 = () => {
                       value={method}
                       checked={formData.contactInfo.method === method}
                       onChange={handleChange}
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 ring-1"
+                      className="h-4 w-4"
                     />
-                    <span className="text-sm text-gray-700">{method}</span>
+                    <span className="text-md text-gray-700">{method}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 {formData.contactInfo.method === 'Email' 
                   ? 'Email Address ' 
-                  : 'Phone Number (with country code) '}
+                  : 'Phone Number'}
               </label>
               <input
                 type={formData.contactInfo.method === 'Email' ? 'email' : 'tel'}
@@ -635,7 +578,7 @@ const FormSurvey3 = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-md font-medium text-gray-700 mb-1">
                 Any additional comments or notes? (Optional)
               </label>
               <textarea
@@ -649,21 +592,25 @@ const FormSurvey3 = () => {
               />
             </div>
 
-            {showCaptcha && (
-              <div className="mt-5">
-                <ReCAPTCHA
-                  ref={captchaRef}
-                  sitekey="6Lc6zFgrAAAAAKj52053YpaBaLUfFuSrgXxUS_G4"
-                  onChange={handleCaptchaChange}
-                />
-              </div>
-            )}
+            
           </div>
+
+                    {showCaptcha && (
+            <div className="flex justify-center">
+              <ReCAPTCHA
+                ref={captchaRef}
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+                onChange={handleCaptchaChange}
+              />
+            </div>
+          )}
 
           <div className="flex justify-center pt-6">
             <button
               type="submit"
-              className="px-8 py-3 bg-indigo-600 rounded-lg text-lg font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="px-8 py-3 bg-indigo-600 rounded-lg text-lg font-medium
+               text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2
+                focus:ring-indigo-500"
               disabled={showCaptcha && !isVerified}
             >
               Submit Survey
@@ -672,6 +619,7 @@ const FormSurvey3 = () => {
         </form>
       </div>
     </div>
+
   );
 };
 

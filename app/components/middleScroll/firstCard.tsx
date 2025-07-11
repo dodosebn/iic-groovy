@@ -2,17 +2,14 @@
 import React from 'react'
 import Image, { StaticImageData } from 'next/image';
 import Button from '@/utils/button';
-import HorizontalDivider from '@/utils/horizontal';
-import hadShowingBulb from '@/public/images/hand-invention.jpg';
-import cubofTea from '@/public/images/cuppy.jpg'
-import boySmiling from '@/public/images/smiling Gee.jpg';
-import fan from '@/public/images/fan.jpg';
+
 // import { useTagStore } from '@/app/store/useTagStore';
 import FormSurvey from './form/formSurvey';
 import FormSurvey2 from './form/formSurvey2';
 import FormSurvey3 from './form/formSurvey3';
-import socioloji from '@/public/images/socioloji.webp';
 import ShareAndCopy from './form/shareandcopy';
+import socioloji from '@/public/images/socioloji.webp';
+
 interface cardProps {
   imgGen: string | StaticImageData;
  title: string;
@@ -74,9 +71,11 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
           </div>
       </section>
            <div className='flex flex-col justify-center md:p-5 py-3'>
-             {tag === 'Health' ? <FormSurvey />
-             : tag === 'Getting Started' ? 
-             <FormSurvey3 /> : <FormSurvey2 />  }
+
+            <FormSurvey3 />
+             {/* {tag === 'Health' ? <FormSurvey />
+             : tag === 'Getting Started' ?  */}
+             {/* <FormSurvey3 /> : <FormSurvey2 />  } */}
            </div>
       <div className="hidden md:block">
   <ShareAndCopy />
