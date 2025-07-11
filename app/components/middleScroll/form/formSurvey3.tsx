@@ -599,7 +599,7 @@ const FormSurvey3 = () => {
             <div className="flex justify-center">
               <ReCAPTCHA
                 ref={captchaRef}
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+              sitekey='6LcmtH8rAAAAAJCynsvQcGeqJvvP5ZvEI66zUs3H'
                 onChange={handleCaptchaChange}
               />
             </div>
