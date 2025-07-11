@@ -56,7 +56,7 @@ const FormSurvey2 = () => {
       id: 'currentRole',
       path: ['currentRole'],
       type: 'checkbox',
-      text: '1. Which of these best describe you? (Select all that apply)',
+      text: 'Which of these best describe you? (Select all that apply)',
       required: true,
       options: [
         { value: 'Student', label: 'Student' },
@@ -69,7 +69,7 @@ const FormSurvey2 = () => {
       id: 'currentCity',
       path: ['location', 'city'],
       type: 'text',
-      text: '2. What is your current city?',
+      text: 'What is your current city?',
       required: true,
       placeholder: 'Enter your current city'
     },
@@ -77,7 +77,7 @@ const FormSurvey2 = () => {
       id: 'willingToRelocate',
       path: ['location', 'willingToRelocate'],
       type: 'radio',
-      text: '3. Would you consider relocating?',
+      text: 'Would you consider relocating?',
       required: true,
       options: [
         { value: 'Yes', label: 'Yes' },
@@ -88,7 +88,7 @@ const FormSurvey2 = () => {
       id: 'preferredWorkEnvironments',
       path: ['workPreferences', 'environment'],
       type: 'checkbox',
-      text: '4. What are your preferred work environments? (Select all that apply)',
+      text: 'What are your preferred work environments? (Select all that apply)',
       required: true,
       options: [
         { value: 'Office', label: 'Office' },
@@ -101,7 +101,7 @@ const FormSurvey2 = () => {
       id: 'dreamJobDescription',
       path: ['careerGoals', 'dreamJob'],
       type: 'text',
-      text: '5. Write a short description of your dream job.',
+      text: 'Write a short description of your dream job.',
       required: true,
       placeholder: 'Describe your dream job'
     },
@@ -109,7 +109,7 @@ const FormSurvey2 = () => {
       id: 'openToInternships',
       path: ['careerGoals', 'openToInternship'],
       type: 'radio',
-      text: '6. Are you open to internships?',
+      text: 'Are you open to internships?',
       required: true,
       options: [
         { value: 'Yes', label: 'Yes' },
@@ -120,7 +120,7 @@ const FormSurvey2 = () => {
       id: 'preferredCommunicationMethods',
       path: ['workPreferences', 'communication'],
       type: 'checkbox',
-      text: '7. How do you prefer to communicate? (Select all that apply)',
+      text: 'How do you prefer to communicate? (Select all that apply)',
       required: true,
       options: [
         { value: 'Email', label: 'Email' },
@@ -133,7 +133,7 @@ const FormSurvey2 = () => {
       id: 'motivation',
       path: ['careerGoals', 'motivation'],
       type: 'text',
-      text: '8. What motivates you the most?',
+      text: 'What motivates you the most?',
       required: true,
       placeholder: 'Describe what motivates you'
     },
@@ -141,7 +141,7 @@ const FormSurvey2 = () => {
       id: 'willingToWorkWeekends',
       path: ['workPreferences', 'schedule'],
       type: 'radio',
-      text: '9. Are you willing to work weekends?',
+      text: 'Are you willing to work weekends?',
       required: true,
       options: [
         { value: 'Yes', label: 'Yes' },
@@ -152,7 +152,7 @@ const FormSurvey2 = () => {
       id: 'importantBenefits',
       path: ['expectations', 'benefits'],
       type: 'checkbox',
-      text: '10. What benefits are most important to you? (Select all that apply)',
+      text: 'What benefits are most important to you? (Select all that apply)',
       required: true,
       options: [
         { value: 'Health Insurance', label: 'Health Insurance' },
@@ -165,7 +165,7 @@ const FormSurvey2 = () => {
       id: 'expectedSalaryRange',
       path: ['expectations', 'salaryRange'],
       type: 'text',
-      text: '11. What is your expected salary range?',
+      text: 'What is your expected salary range?',
       required: true,
       placeholder: 'Enter your expected salary range'
     },
@@ -173,7 +173,7 @@ const FormSurvey2 = () => {
       id: 'currentlyStudying',
       path: ['educationStatus'],
       type: 'radio',
-      text: '12. Are you currently studying?',
+      text: 'Are you currently studying?',
       required: true,
       options: [
         { value: 'Yes', label: 'Yes' },
@@ -184,7 +184,7 @@ const FormSurvey2 = () => {
       id: 'additionalComments',
       path: ['additionalComments'],
       type: 'text',
-      text: '13. Any additional comments or notes?',
+      text: 'Any additional comments or notes?',
       required: true,
       placeholder: 'Add any additional comments'
     },
@@ -192,7 +192,7 @@ const FormSurvey2 = () => {
       id: 'contactMethod',
       path: ['contactInfo', 'method'],
       type: 'radio',
-      text: '14. How would you like to be contacted? (Choose one)',
+      text: 'How would you like to be contacted? (Choose one)',
       required: true,
       options: [
         { value: 'WhatsApp', label: 'WhatsApp' },
@@ -204,7 +204,7 @@ const FormSurvey2 = () => {
       id: 'contactInfo',
       path: ['contactInfo', 'details'],
       type: 'text',
-      text: '15. Please provide your contact information:',
+      text: 'Please provide your contact information:',
       required: true,
       placeholder: (formData: FormData) => 
         formData.contactInfo.method === 'Email' ? 'Enter your email address' : 
@@ -225,7 +225,7 @@ const FormSurvey2 = () => {
       id: 'currentlyEmployed',
       path: ['employmentStatus'],
       type: 'radio',
-      text: '16. Are you currently employed? (Optional)',
+      text: 'Are you currently employed? (Optional)',
       required: false,
       options: [
         { value: 'Yes', label: 'Yes' },
@@ -236,7 +236,7 @@ const FormSurvey2 = () => {
       id: 'fullName',
       path: ['fullName'],
       type: 'text',
-      text: '17. What is your full name? (Optional)',
+      text: 'What is your full name? (Optional)',
       required: false,
       placeholder: 'Enter your full name'
     }
@@ -303,16 +303,6 @@ const FormSurvey2 = () => {
     return newObj;
   };
 
-  // Effects
-  useEffect(() => {
-    if (questionRefs.current[currentQuestion]) {
-      questionRefs.current[currentQuestion]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      });
-    }
-  }, [currentQuestion]);
-
   // Handlers
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -343,13 +333,6 @@ const FormSurvey2 = () => {
         delete newErrors[name];
         return newErrors;
       });
-    }
-
-    // Auto-advance for non-text inputs
-    if (type !== 'text' && question.type !== 'text') {
-      setTimeout(() => {
-        setCurrentQuestion(prev => Math.min(prev + 1, questionsConfig.length - 1));
-      }, 300);
     }
   }, [formData, errors]);
 
@@ -446,7 +429,7 @@ const FormSurvey2 = () => {
           },
           additionalComments: ''
         });
-        window.location.reload();
+              window.location.reload();
 
       } else {
         toast.update(toastId, {
@@ -455,6 +438,7 @@ const FormSurvey2 = () => {
           isLoading: false,
         });
       }
+
     } catch (err: any) {
       toast.update(toastId, {
         render: `Failed to submit form: ${err.message || 'Please try again later.'}`,
@@ -591,27 +575,6 @@ const FormSurvey2 = () => {
         onSubmit={handleSubmit} 
         ref={formRef}
       >
-        {/* Progress indicator */}
-        <div className="flex flex-wrap gap-2 pb-4 sm:px-4">
-          {questionsConfig.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleQuestionClick(index)}
-              className={`w-8 h-8 flex-shrink-0 rounded-full flex items-center justify-center text-sm font-medium ${
-                currentQuestion > index
-                  ? 'bg-green-500 text-white'
-                  : currentQuestion === index
-                  ? 'bg-pink-500 text-white'
-                  : 'text-gray-700 border border-gray-300'
-              }`}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-
-        {/* Questions */}
         {questionsConfig.map((question, index) => (
           <div
             key={question.id}
