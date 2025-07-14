@@ -29,7 +29,7 @@ const FooterLevel = () => {
     {[ 'Tag Cloud', 'Follow Us!'].map((itm, ndx) => (
       <div
         key={ndx}
-        className={`font-bold text-xl bg-white px-6 py-1 border border-[#333] rounded-3xl
+        className={`font-bold text-xl bg-white px-6 border border-[#333] rounded-3xl
     `} 
       >
         {itm}
@@ -84,9 +84,9 @@ Tag Cloud            </div> <div className='w-1/2'></div></div><FourIt /></div>
 <div className='flex'>
             <div
               // key={ndx}<
-              className='font-bold text-xl bg-white px-6 py-1 border border-[#333] rounded-3xl'
+              className='font-bold text-xl flex justify-center bg-white px-6 w-[55%] py-1 border border-[#333] rounded-3xl'
             >
-Follow Me!            </div> <div className='w-1/2'></div></div> <FourthStuff /></div>
+Follow US!            </div> <div className='w-1/2'></div></div> <FourthStuff /></div>
         </section>
       </section>
     </main>
