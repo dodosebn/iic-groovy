@@ -17,17 +17,17 @@ interface cardProps {
  duration: string;
  bg: string;
  tag: string;
-//  imgName: string;
-//  img: StaticImageData;
+
 }
 const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag, }) => {
-    // const { selectedTag } = useTagStore();
 
   return (
     <>
+        
     <main className='px-3 py-3 lg:py-4  mx-auto rounded-xl border-1 border-[#000]' 
       style={{ backgroundColor: bg }}>
         <div className='relative'>
+ 
       <div className='lg:flex-1 md:px-4 relative md:h-[25rem] h-[18rem]'>
   <Image 
     src={imgGen} 
@@ -73,9 +73,7 @@ const FirstCard: React.FC<cardProps > = ({imgGen, title, date, duration, bg, tag
            <div className='flex flex-col justify-center md:p-5 py-3'>
 
          {tag === 'Health' ? <FormSurvey2 /> : tag === 'Getting Started' ? <FormSurvey3 /> : <FormSurvey />}
-             {/* {tag === 'Health' ? <FormSurvey />
-             : tag === 'Getting Started' ?  */}
-             {/* <FormSurvey3 /> : <FormSurvey2 />  } */}
+        
            </div>
       <div className="hidden md:block">
   <ShareAndCopy />

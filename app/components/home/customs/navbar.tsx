@@ -31,17 +31,12 @@ const itemVariant: Variants = {
   },
 };
 
-// const navItems = [
-//   { id: 1, path: '/', name: 'Home' },
-//   // { id: 3, path: '/', name: 'Style Guide✨' },
-//   { id: 4, path: '#tag', name: '#Tag' },
-// ];
 const navItems = [
   { name: "LAST GENERATION", key: "last-generation" },
-  { name: "SOSIOLOJI", key: "sosioloji" },
+  { name: "IDEA IS CAP SURVEYS", key: "sosioloji" },
   { name: "OUR PURPOSE", key: "purpose" },
-  { name: "THE EDITOR", key: "editor" },
-  { name: "CONTRIBUTORS", key: "contributors" },
+  // { name: "THE EDITOR", key: "editor" },
+  // { name: "CONTRIBUTORS", key: "contributors" },
   { name: "JOIN THE MOVEMENT", key: "movement" },
   { name: "FILOSOFI", key: "filosofi" },
   { name: "IDEA IS CAP", key: "ideaiscapital" },
@@ -62,7 +57,7 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const [searchOpen, setSearchOpen] = useState(false);
-
+const [bacck, setBacck] = useState(false);
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 999;
@@ -77,6 +72,8 @@ const Navbar = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [setIsMobile, setMenuOpen]);
+
+
 
   const toggleMore = () => {
     setMoreOpen(!moreOpen);
@@ -113,11 +110,21 @@ const Navbar = () => {
 
   return (
     <div>
-      {/* DESKTOP NAV */}
         <>
           <nav className="w-full z-40 relative">
             <div className="max-w-7xl mx-auto px-8 md:px-12">
-              <div className="flex items-center justify-between min-h-[100px] md:min-h-[200px] relative">
+            
+          {(pathname !== '/' && pathname !== '/page2') && (
+  <Link href={'/'}>
+    <div className="absolute top-4 left-5 z-50">
+      <button className="text-black underline text-sm md:text-lg font-medium hover:text-blue-700 transition">
+        ← Back to Survey List
+      </button>
+    </div>
+  </Link>
+)}
+
+              <div className="flex items-center top-7 md:top-0 justify-between min-h-[100px] md:min-h-[200px] relative">
                 <h1 className="text-3xl md:text-6xl font-bold tracking-tight text-gray-800">
                   <Link
                     href="/"
@@ -141,7 +148,7 @@ const Navbar = () => {
 
            
  <AnimatePresence>
-          {menuOpen && (
+          {menuOpen && ( 
             <motion.div
               className="fixed inset-0 bg-[#54cbca] z-50
               flex items-center justify-center"
@@ -172,7 +179,8 @@ const Navbar = () => {
                 {navItems.map((item, index) => (
                   <motion.li key={item.key} variants={itemVariant}>
                     <button
-                      onClick={() => setActiveSection(item.key)}
+                      onClick={() => 
+                        setActiveSection(item.key)}
    className={`hover:text-blue-400 tracking-[3px] uppercase cursor-pointer text-black transition ${
                       index === 0
                         ? "text-2xl md:text-4xl font-bold"
@@ -189,127 +197,13 @@ const Navbar = () => {
                   )}
                   </motion.li>
                 ))}
-                {/* {!isDesktop && (
-                  <motion.li variants={itemVariant}>
-                    <div className="flex justify-center gap-6 pt-3 text-3xl text-gray-700">
-                      <motion.a
-                        href="https://twitter.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variants={itemVariant}
-                      >
-                        <FaXTwitter />
-                      </motion.a>
-                      <motion.a
-                        href="https://facebook.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variants={itemVariant}
-                      >
-                        <FaFacebookSquare />
-                      </motion.a>
-                      <motion.a
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variants={itemVariant}
-                      >
-                        <FaInstagram />
-                      </motion.a>
-                      <motion.a
-                        href="https://tiktok.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variants={itemVariant}
-                      >
-                        <FaTiktok />
-                      </motion.a>
-                      <motion.a
-                        href={`mailto:?subject=Check this out&body=${shareMessage}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        variants={itemVariant}
-                      >
-                        <IoMail />
-                      </motion.a>
-                    </div>
-                  </motion.li>
-                )} */}
+             
               </motion.ul>
             </motion.div>
           )}
         </AnimatePresence>
         </>
 
-      {/* MOBILE NAV */}
-      {/* {isMobile && (
-        <div className="bg-[#F9F9F9] border-b border-[#333] shadow-lg">
-        <nav className="flex items-center justify-between px-4 py-2">
-            <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-700 p-2">
-              {menuOpen ? <RiCloseLine size={37} /> : <RiMenu2Fill size={37} />}
-            </button>
-            {menuOpen ? (
-              <button onClick={() => setMenuOpen(false)}>
-                <RiCloseLine size={37} className="text-[#333]" />
-              </button>
-            ) : (
-              <MLogo />
-            )}
-          </nav>
-          <AnimatePresence>
-            {menuOpen && (
-              <motion.div
-                className="fixed top-0 left-0 h-full w-[18rem] bg-white z-50"
-                initial={{ x: '-100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '-100%' }}
-                transition={{ type: 'tween', duration: 0.3 }}
-              >
-                <ul className="mt-16 px-10 space-y-7">
-                  {navItems.map((item) => (
-                    <li key={item.key} className="text-[#333] hover:text-pink-600 font-medium">
-                      <button
-                        onClick={() => handleNavigation(item.key)}
-                        className="block w-full text-left bg-transparent border-none"
-                      >
-                        {item.name}
-                      </button>
-                    </li>
-                  ))}
-
-                  <li className="relative">
-                    <button
-                      onClick={toggleMore}
-                      className="flex items-center w-full text-[#333] hover:text-pink-600 font-medium whitespace-nowrap"
-                    >
-                      <span>More</span>
-                      <RiArrowDropDownLine
-                        className={`ml-auto text-xl transition-transform ease-in-out duration-300 ${
-                          moreOpen ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-                    {moreOpen && (
-                      <div className="mt-2 bg-white py-2 w-full">
-                        {navItems.map((sub) => (
-                          <button
-                            key={sub.name}
-                            onClick={() => handleNavigation(sub.key)}
-                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-pink-600 w-full text-left bg-transparent border-none"
-                          >
-                            {sub.name}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </li>
-                </ul>
-
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      )} */}
            {typeof window !== "undefined" &&
         createPortal(
           <AnimatePresence>

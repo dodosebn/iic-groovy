@@ -5,7 +5,7 @@ import HomePage from "./components/home/homePage";
 // import MeetAuthor from "./components/home/customs/meetAuthor";
 
 
-export default function Home() {
+export default function Hooome() {
 
   return (
     <div className="flex justify-center flex-col px-[0.6rem] space-y-6 pt-[1rem]">

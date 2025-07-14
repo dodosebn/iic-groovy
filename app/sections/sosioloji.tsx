@@ -1,9 +1,11 @@
 import React from 'react'
+import Hooome from './sosio/Hoome';
 
 const Sosioloji = () => {
   return (
-    <div>
-      Support
+    <div className='mt-16'>
+      
+      <Hooome />
     </div>
   )
 }
