@@ -22,7 +22,7 @@ export default function Hooome() {
   href="/page2"
   onClick={(e) => {
     e.preventDefault();
-    window.location.href = '/page2'; // triggers full reload
+    window.location.href = '/page2'; 
   }}
 >
   <button 

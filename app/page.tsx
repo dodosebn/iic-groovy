@@ -2,7 +2,6 @@
 
 import TransitionLink from "@/utils/transitionLink";
 import HomePage from "./components/home/homePage";
-// import MeetAuthor from "./components/home/customs/meetAuthor";
 
 
 export default function Hooome() {
