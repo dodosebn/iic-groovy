@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/app/store/lib/supabase';
 import nodemailer from 'nodemailer';
 
 const formatField = (field: any): string => {
@@ -15,6 +16,14 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     console.log('[Request Received]', body);
 
+    const { fullName, currentRole } = body;
+    if (!fullName || !currentRole) {
+      return NextResponse.json(
+        { success: false, message: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
     const { GMAIL_USER, GMAIL_PASS } = process.env;
     if (!GMAIL_USER || !GMAIL_PASS) {
       console.error('[ENV ERROR] Missing Gmail credentials.');
@@ -24,6 +33,38 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Insert into Supabase
+    const { error: dbError } = await supabase.from('survey1').insert([
+      {
+        full_name: body.fullName,
+        current_role: body.currentRole,
+        location_city: body.location?.city,
+        willing_to_relocate: body.location?.willingToRelocate,
+        work_environment: body.workPreferences?.environment,
+        communication: body.workPreferences?.communication,
+        schedule: body.workPreferences?.schedule,
+        dream_job: body.careerGoals?.dreamJob,
+        motivation: body.careerGoals?.motivation,
+        open_to_internship: body.careerGoals?.openToInternship,
+        benefits: body.expectations?.benefits,
+        salary_range: body.expectations?.salaryRange,
+        education_status: body.educationStatus,
+        employment_status: body.employmentStatus,
+        contact_method: body.contactInfo?.method,
+        contact_details: body.contactInfo?.details,
+        additional_comments: body.additionalComments,
+      },
+    ]);
+
+    if (dbError) {
+      console.error('[SUPABASE ERROR]', dbError);
+      return NextResponse.json(
+        { success: false, message: 'Database error', error: dbError.message },
+        { status: 500 }
+      );
+    }
+
+    // Configure transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -209,9 +250,9 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     console.error('[SERVER ERROR]', error instanceof Error ? error.stack : error);
     return NextResponse.json(
-      { 
-        success: false, 
-        message: 'Failed to send email', 
+      {
+        success: false,
+        message: 'Failed to process survey',
         error: error?.message || 'Unknown error',
         ...(process.env.NODE_ENV === 'development' ? { stack: error?.stack } : {})
       },

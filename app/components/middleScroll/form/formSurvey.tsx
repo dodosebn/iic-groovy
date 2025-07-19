@@ -4,54 +4,68 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 
+type ContactMethod = 'WhatsApp' | 'Telegram' | 'Email' | '';
+type YesNo = 'Yes' | 'No' | '';
 
 interface FormData {
-  name: string;
-  q1: string[];
-  q2: string;
-  q3: string;
-  q4: string[];
-  q5: string;
-  q6: string;
-  q7: string[];
-  q8: string;
-  q9: string;
-  q10: string[];
-  q11: string;
-  q12: string;
-  q13: string;
-  q14: string;
-  q15: string;
-  q16: string;
-  q17: string;
-}
-
-interface OptionTexts {
-  [key: string]: {
-    [key: string]: string;
+  fullName: string;
+  currentRole: string[];
+  location: {
+    city: string;
+    willingToRelocate: YesNo;
   };
+  workPreferences: {
+    environment: string[];
+    communication: string[];
+    schedule: YesNo;
+  };
+  careerGoals: {
+    dreamJob: string;
+    motivation: string;
+    openToInternship: YesNo;
+  };
+  expectations: {
+    benefits: string[];
+    salaryRange: string;
+  };
+  educationStatus: YesNo;
+  employmentStatus: YesNo;
+  contactInfo: {
+    method: ContactMethod;
+    details: string;
+  };
+  additionalComments: string;
 }
 
 const FormSurvey = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    q1: [],
-    q2: '',
-    q3: '',
-    q4: [],
-    q5: '',
-    q6: '',
-    q7: [],
-    q8: '',
-    q9: '',
-    q10: [],
-    q11: '',
-    q12: '',
-    q13: '',
-    q14: '',
-    q15: '',
-    q16: '',
-    q17: ''
+    fullName: '',
+    currentRole: [],
+    location: {
+      city: '',
+      willingToRelocate: '',
+    },
+    workPreferences: {
+      environment: [],
+      communication: [],
+      schedule: '',
+    },
+    careerGoals: {
+      dreamJob: '',
+      motivation: '',
+      openToInternship: '',
+    },
+    expectations: {
+      benefits: [],
+      salaryRange: '',
+    },
+    educationStatus: '',
+    employmentStatus: '',
+    contactInfo: {
+      method: '',
+      details: '',
+    },
+    additionalComments: ''
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -60,54 +74,160 @@ const FormSurvey = () => {
   const captchaRef = useRef<ReCAPTCHA>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const optionTexts: OptionTexts = {
-    'q1': {
-      'A': 'Student',
-      'B': 'Professional',
-      'C': 'Freelancer',
-      'D': 'Entrepreneur'
-    },
-    'q4': {
-      'A': 'Office',
-      'B': 'Remote',
-      'C': 'Hybrid',
-      'D': 'Flexible'
-    },
-    'q7': {
-      'A': 'Email',
-      'B': 'Phone',
-      'C': 'Messaging Apps',
-      'D': 'In-person'
-    },
-    'q10': {
-      'A': 'Health Insurance',
-      'B': 'Remote Work',
-      'C': 'Bonus Pay',
-      'D': 'Vacation Time'
-    }
-  };
-
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const target = e.target as HTMLInputElement;
     const checked = target.type === 'checkbox' ? target.checked : undefined;
     
-    if (type === 'checkbox') {
-      const questionName = name.split('-')[0];
-      const optionValue = name.split('-')[1];
-      
-      setFormData(prev => {
-        const currentOptions = prev[questionName as keyof FormData] as string[] || [];
-        if (checked) {
-          return { ...prev, [questionName]: [...currentOptions, optionValue] };
-        } else {
-          return { ...prev, [questionName]: currentOptions.filter(item => item !== optionValue) };
+    if (name.startsWith('currentRole-')) {
+      const role = name.split('-')[1];
+      setFormData(prev => ({
+        ...prev,
+        currentRole: checked 
+          ? [...prev.currentRole, role] 
+          : prev.currentRole.filter(r => r !== role)
+      }));
+    } 
+    else if (name.startsWith('workEnvironment-')) {
+      const env = name.split('-')[1];
+      setFormData(prev => ({
+        ...prev,
+        workPreferences: {
+          ...prev.workPreferences,
+          environment: checked 
+            ? [...prev.workPreferences.environment, env] 
+            : prev.workPreferences.environment.filter(e => e !== env)
         }
-      });
-    } else if (type === 'radio') {
-      setFormData({ ...formData, [name]: value });
-    } else {
-      setFormData({ ...formData, [name]: value });
+      }));
+    }
+    else if (name.startsWith('communication-')) {
+      const method = name.split('-')[1];
+      setFormData(prev => ({
+        ...prev,
+        workPreferences: {
+          ...prev.workPreferences,
+          communication: checked 
+            ? [...prev.workPreferences.communication, method] 
+            : prev.workPreferences.communication.filter(m => m !== method)
+        }
+      }));
+    }
+    else if (name.startsWith('benefits-')) {
+      const benefit = name.split('-')[1];
+      setFormData(prev => ({
+        ...prev,
+        expectations: {
+          ...prev.expectations,
+          benefits: checked 
+            ? [...prev.expectations.benefits, benefit] 
+            : prev.expectations.benefits.filter(b => b !== benefit)
+        }
+      }));
+    }
+    else if (name === 'city') {
+      setFormData(prev => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          city: value
+        }
+      }));
+    }
+    else if (name === 'willingToRelocate') {
+      setFormData(prev => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          willingToRelocate: value as YesNo
+        }
+      }));
+    }
+    else if (name === 'dreamJob') {
+      setFormData(prev => ({
+        ...prev,
+        careerGoals: {
+          ...prev.careerGoals,
+          dreamJob: value
+        }
+      }));
+    }
+    else if (name === 'openToInternship') {
+      setFormData(prev => ({
+        ...prev,
+        careerGoals: {
+          ...prev.careerGoals,
+          openToInternship: value as YesNo
+        }
+      }));
+    }
+    else if (name === 'motivation') {
+      setFormData(prev => ({
+        ...prev,
+        careerGoals: {
+          ...prev.careerGoals,
+          motivation: value
+        }
+      }));
+    }
+    else if (name === 'willingToWorkWeekends') {
+      setFormData(prev => ({
+        ...prev,
+        workPreferences: {
+          ...prev.workPreferences,
+          schedule: value as YesNo
+        }
+      }));
+    }
+    else if (name === 'salaryRange') {
+      setFormData(prev => ({
+        ...prev,
+        expectations: {
+          ...prev.expectations,
+          salaryRange: value
+        }
+      }));
+    }
+    else if (name === 'currentlyStudying') {
+      setFormData(prev => ({
+        ...prev,
+        educationStatus: value as YesNo
+      }));
+    }
+    else if (name === 'additionalComments') {
+      setFormData(prev => ({
+        ...prev,
+        additionalComments: value
+      }));
+    }
+    else if (name === 'contactMethod') {
+      setFormData(prev => ({
+        ...prev,
+        contactInfo: {
+          ...prev.contactInfo,
+          method: value as ContactMethod
+        }
+      }));
+    }
+    else if (name === 'contactDetails') {
+      setFormData(prev => ({
+        ...prev,
+        contactInfo: {
+          ...prev.contactInfo,
+          details: value
+        }
+      }));
+    }
+    else if (name === 'currentlyEmployed') {
+      setFormData(prev => ({
+        ...prev,
+        employmentStatus: value as YesNo
+      }));
+    }
+    else if (name === 'fullName') {
+      setFormData(prev => ({
+        ...prev,
+        fullName: value
+      }));
     }
     
     if (errors[name]) {
@@ -123,31 +243,109 @@ const FormSurvey = () => {
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
-    if (formData.q1.length === 0) newErrors.q1 = 'Please select at least one option';
-    if (!formData.q2.trim()) newErrors.q2 = 'Please enter your current city';
-    if (!formData.q3) newErrors.q3 = 'Please select an option';
-    if (formData.q4.length === 0) newErrors.q4 = 'Please select at least one option';
-    if (!formData.q5.trim()) newErrors.q5 = 'Please describe your dream job';
-    if (!formData.q6) newErrors.q6 = 'Please select an option';
-    if (formData.q7.length === 0) newErrors.q7 = 'Please select at least one option';
-    if (!formData.q8.trim()) newErrors.q8 = 'Please enter what motivates you';
-    if (!formData.q9) newErrors.q9 = 'Please select an option';
-    if (formData.q10.length === 0) newErrors.q10 = 'Please select at least one option';
-    if (!formData.q11.trim()) newErrors.q11 = 'Please enter your expected salary range';
-    if (!formData.q12) newErrors.q12 = 'Please select an option';
-    if (!formData.q13.trim()) newErrors.q13 = 'Please enter any additional comments';
-    if (!formData.q14) newErrors.q14 = 'Please select a contact method';
-    if (!formData.q15.trim()) newErrors.q15 = 'Please provide your contact information';
+    // Current Role validation
+    if (formData.currentRole.length === 0) {
+      newErrors.currentRole = 'Please select at least one option';
+      isValid = false;
+    }
 
-    if (formData.q14 === 'Email' && formData.q15 && !/^\S+@\S+\.\S+$/.test(formData.q15)) {
-      newErrors.q15 = 'Please enter a valid email address';
-    } else if ((formData.q14 === 'WhatsApp' || formData.q14 === 'Telegram') && formData.q15 && !/^[0-9]+$/.test(formData.q15)) {
-      newErrors.q15 = 'Please enter a valid phone number';
+    // City validation
+    if (!formData.location.city.trim()) {
+      newErrors.city = 'Please enter your current city';
+      isValid = false;
+    }
+
+    // Willing to relocate validation
+    if (!formData.location.willingToRelocate) {
+      newErrors.willingToRelocate = 'Please select an option';
+      isValid = false;
+    }
+
+    // Work environment validation
+    if (formData.workPreferences.environment.length === 0) {
+      newErrors.workEnvironment = 'Please select at least one option';
+      isValid = false;
+    }
+
+    // Dream job validation
+    if (!formData.careerGoals.dreamJob.trim()) {
+      newErrors.dreamJob = 'Please describe your dream job';
+      isValid = false;
+    }
+
+    // Open to internship validation
+    if (!formData.careerGoals.openToInternship) {
+      newErrors.openToInternship = 'Please select an option';
+      isValid = false;
+    }
+
+    // Communication methods validation
+    if (formData.workPreferences.communication.length === 0) {
+      newErrors.communication = 'Please select at least one option';
+      isValid = false;
+    }
+
+    // Motivation validation
+    if (!formData.careerGoals.motivation.trim()) {
+      newErrors.motivation = 'Please enter what motivates you';
+      isValid = false;
+    }
+
+    // Willing to work weekends validation
+    if (!formData.workPreferences.schedule) {
+      newErrors.willingToWorkWeekends = 'Please select an option';
+      isValid = false;
+    }
+
+    // Benefits validation
+    if (formData.expectations.benefits.length === 0) {
+      newErrors.benefits = 'Please select at least one option';
+      isValid = false;
+    }
+
+    // Salary range validation
+    if (!formData.expectations.salaryRange.trim()) {
+      newErrors.salaryRange = 'Please enter your expected salary range';
+      isValid = false;
+    }
+
+    // Education status validation
+    if (!formData.educationStatus) {
+      newErrors.currentlyStudying = 'Please select an option';
+      isValid = false;
+    }
+
+    // Additional comments validation
+    if (!formData.additionalComments.trim()) {
+      newErrors.additionalComments = 'Please enter any additional comments';
+      isValid = false;
+    }
+
+    // Contact method validation
+    if (!formData.contactInfo.method) {
+      newErrors.contactMethod = 'Please select a contact method';
+      isValid = false;
+    }
+
+    // Contact details validation
+    if (!formData.contactInfo.details.trim()) {
+      newErrors.contactDetails = 'Please provide your contact information';
+      isValid = false;
+    } else if (
+      formData.contactInfo.method === 'Email' && 
+      !/^\S+@\S+\.\S+$/.test(formData.contactInfo.details)
+    ) {
+      newErrors.contactDetails = 'Please enter a valid email address';
+      isValid = false;
+    } else if (
+      (formData.contactInfo.method === 'WhatsApp' || formData.contactInfo.method === 'Telegram') && 
+      !/^[0-9]+$/.test(formData.contactInfo.details)
+    ) {
+      newErrors.contactDetails = 'Please enter a valid phone number';
+      isValid = false;
     }
 
     setErrors(newErrors);
-    isValid = Object.keys(newErrors).length === 0;
-    
     return isValid;
   };
 
@@ -158,105 +356,79 @@ const FormSurvey = () => {
     }
   };
 
-  const getDisplayValue = (question: string, value: string | string[]) => {
-    if (Array.isArray(value)) {
-      return value.map(v => optionTexts[question]?.[v] || v).join(', ');
-    }
-    return value;
-  };
-
   const submitForm = async () => {
-  const toastId = toast.loading('Submitting your form...', {
-    position: "top-center"
-  });
-
-  try {
-    const res = await fetch("/api/senddy-oneyy", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: formData.q17, // Using q17 for full name
-        currentRole: formData.q1,
-        location: {
-          city: formData.q2,
-          willingToRelocate: formData.q3
-        },
-        workPreferences: {
-          environment: formData.q4,
-          communication: formData.q7,
-          schedule: formData.q9
-        },
-        careerGoals: {
-          dreamJob: formData.q5,
-          motivation: formData.q8,
-          openToInternship: formData.q6
-        },
-        expectations: {
-          benefits: formData.q10,
-          salaryRange: formData.q11
-        },
-        educationStatus: formData.q12,
-        employmentStatus: formData.q16,
-        contactInfo: {
-          method: formData.q14,
-          details: formData.q15
-        },
-        additionalComments: formData.q13
-      }),
+    const toastId = toast.loading('Submitting your form...', {
+      position: "top-center"
     });
 
-    const data = await res.json();
-
-    if (res.ok && data?.success) {
-      toast.update(toastId, {
-        render: "Form submitted successfully!",
-        type: "success",
-        isLoading: false,
-        autoClose: 5000,
+    try {
+      const res = await fetch("/api/send-second", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      // Reset form
-      setFormData({
-        name: '',
-        q1: [],
-        q2: '',
-        q3: '',
-        q4: [],
-        q5: '',
-        q6: '',
-        q7: [],
-        q8: '',
-        q9: '',
-        q10: [],
-        q11: '',
-        q12: '',
-        q13: '',
-        q14: '',
-        q15: '',
-        q16: '',
-        q17: ''
-      });
-      window.location.reload();
+      const data = await res.json();
 
-    } else {
+      if (res.ok && data?.success) {
+        toast.update(toastId, {
+          render: "Form submitted successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+        });
+
+        // Reset form
+        setFormData({
+          fullName: '',
+          currentRole: [],
+          location: {
+            city: '',
+            willingToRelocate: '',
+          },
+          workPreferences: {
+            environment: [],
+            communication: [],
+            schedule: '',
+          },
+          careerGoals: {
+            dreamJob: '',
+            motivation: '',
+            openToInternship: '',
+          },
+          expectations: {
+            benefits: [],
+            salaryRange: '',
+          },
+          educationStatus: '',
+          employmentStatus: '',
+          contactInfo: {
+            method: '',
+            details: '',
+          },
+          additionalComments: ''
+        });
+        window.location.reload();
+
+      } else {
+        toast.update(toastId, {
+          render: data?.message || 'Something went wrong!',
+          type: "error",
+          isLoading: false,
+        });
+      }
+    } catch (err: any) {
       toast.update(toastId, {
-        render: data?.message || 'Something went wrong!',
+        render: `Failed to submit form: ${err.message || 'Please try again later.'}`,
         type: "error",
         isLoading: false,
       });
+    } finally {
+      setShowCaptcha(false);
+      setIsVerified(false);
+      captchaRef.current?.reset();
     }
-  } catch (err: any) {
-    toast.update(toastId, {
-      render: `Failed to submit form: ${err.message || 'Please try again later.'}`,
-      type: "error",
-      isLoading: false,
-    });
-  } finally {
-    setShowCaptcha(false);
-    setIsVerified(false);
-    captchaRef.current?.reset();
-  }
-};
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -311,371 +483,247 @@ const FormSurvey = () => {
         onSubmit={handleSubmit} 
         ref={formRef}
       >
+        {/* Current Role */}
         <label className="font-sans text-lg text-gray-800">
-          1. Which of these best describe you? (Select all that apply)
+          Which of these best describe you? (Select all that apply)
         </label>
         <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q1-A" 
-              onChange={handleChange} 
-              checked={formData.q1.includes('A')} 
-              className="w-4 h-4"
-            /> 
-            Student
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q1-B" 
-              onChange={handleChange} 
-              checked={formData.q1.includes('B')} 
-              className="w-4 h-4"
-            /> 
-            Professional
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q1-C" 
-              onChange={handleChange} 
-              checked={formData.q1.includes('C')} 
-              className="w-4 h-4"
-            /> 
-            Freelancer
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q1-D" 
-              onChange={handleChange} 
-              checked={formData.q1.includes('D')} 
-              className="w-4 h-4"
-            /> 
-            Entrepreneur
-          </label>
+          {['Student', 'Professional', 'Freelancer', 'Entrepreneur'].map(role => (
+            <label key={role} className="flex items-center gap-2 text-base">
+              <input 
+                type="checkbox" 
+                name={`currentRole-${role}`} 
+                onChange={handleChange} 
+                checked={formData.currentRole.includes(role)} 
+                className="w-4 h-4"
+              /> 
+              {role}
+            </label>
+          ))}
         </div>
-        {errors.q1 && <div className="text-red-500 text-sm mt-1">{errors.q1}</div>}
+        {errors.currentRole && <div className="text-red-500 text-sm mt-1">{errors.currentRole}</div>}
 
-        {/* Question 2 */}
-        <label className="font-sans text-lg text-gray-800">2. What is your current city?</label>
+        {/* Current City */}
+        <label className="font-sans text-lg text-gray-800">What is your current city?</label>
         <input 
           type="text" 
-          name="q2" 
+          name="city" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           onChange={handleChange} 
-          value={formData.q2} 
+          value={formData.location.city} 
         />
-        {errors.q2 && <div className="text-red-500 text-sm mt-1">{errors.q2}</div>}
+        {errors.city && <div className="text-red-500 text-sm mt-1">{errors.city}</div>}
 
-        {/* Question 3 */}
-        <label className="font-sans text-lg text-gray-800">3. Would you consider relocating?</label>
+        {/* Willing to Relocate */}
+        <label className="font-sans text-lg text-gray-800">Would you consider relocating?</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
-          name="q3" 
+          name="willingToRelocate" 
           onChange={handleChange} 
-          value={formData.q3}
+          value={formData.location.willingToRelocate}
         >
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
-        {errors.q3 && <div className="text-red-500 text-sm mt-1">{errors.q3}</div>}
+        {errors.willingToRelocate && <div className="text-red-500 text-sm mt-1">{errors.willingToRelocate}</div>}
 
-        {/* Question 4 */}
-        <label className="font-sans text-lg text-gray-800">4. What are your preferred work environments?</label>
+        {/* Work Environment */}
+        <label className="font-sans text-lg text-gray-800">What are your preferred work environments? (Select all that apply)</label>
         <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q4-A" 
-              onChange={handleChange} 
-              checked={formData.q4.includes('A')} 
-              className="w-4 h-4"
-            /> 
-            Office
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q4-B" 
-              onChange={handleChange} 
-              checked={formData.q4.includes('B')} 
-              className="w-4 h-4"
-            /> 
-            Remote
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q4-C" 
-              onChange={handleChange} 
-              checked={formData.q4.includes('C')} 
-              className="w-4 h-4"
-            /> 
-            Hybrid
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q4-D" 
-              onChange={handleChange} 
-              checked={formData.q4.includes('D')} 
-              className="w-4 h-4"
-            /> 
-            Flexible
-          </label>
+          {['Office', 'Remote', 'Hybrid', 'Flexible'].map(env => (
+            <label key={env} className="flex items-center gap-2 text-base">
+              <input 
+                type="checkbox" 
+                name={`workEnvironment-${env}`} 
+                onChange={handleChange} 
+                checked={formData.workPreferences.environment.includes(env)} 
+                className="w-4 h-4"
+              /> 
+              {env}
+            </label>
+          ))}
         </div>
-        {errors.q4 && <div className="text-red-500 text-sm mt-1">{errors.q4}</div>}
+        {errors.workEnvironment && <div className="text-red-500 text-sm mt-1">{errors.workEnvironment}</div>}
 
-        {/* Question 5 */}
-        <label className="font-sans text-lg text-gray-800">5. Write a short description of your dream job.</label>
+        {/* Dream Job */}
+        <label className="font-sans text-lg text-gray-800">Write a short description of your dream job.</label>
         <input 
           type="text" 
-          name="q5" 
+          name="dreamJob" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           onChange={handleChange} 
-          value={formData.q5} 
+          value={formData.careerGoals.dreamJob} 
         />
-        {errors.q5 && <div className="text-red-500 text-sm mt-1">{errors.q5}</div>}
+        {errors.dreamJob && <div className="text-red-500 text-sm mt-1">{errors.dreamJob}</div>}
 
-        {/* Question 6 */}
-        <label className="font-sans text-lg text-gray-800">6. Are you open to internships?</label>
+        {/* Open to Internship */}
+        <label className="font-sans text-lg text-gray-800">Are you open to internships?</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
-          name="q6" 
+          name="openToInternship" 
           onChange={handleChange} 
-          value={formData.q6}
+          value={formData.careerGoals.openToInternship}
         >
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
-        {errors.q6 && <div className="text-red-500 text-sm mt-1">{errors.q6}</div>}
+        {errors.openToInternship && <div className="text-red-500 text-sm mt-1">{errors.openToInternship}</div>}
 
-        {/* Question 7 */}
-        <label className="font-sans text-lg text-gray-800">7. How do you prefer to communicate?</label>
+        {/* Communication Methods */}
+        <label className="font-sans text-lg text-gray-800">How do you prefer to communicate? (Select all that apply)</label>
         <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q7-A" 
-              onChange={handleChange} 
-              checked={formData.q7.includes('A')} 
-              className="w-4 h-4"
-            /> 
-            Email
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q7-B" 
-              onChange={handleChange} 
-              checked={formData.q7.includes('B')} 
-              className="w-4 h-4"
-            /> 
-            Phone
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q7-C" 
-              onChange={handleChange} 
-              checked={formData.q7.includes('C')} 
-              className="w-4 h-4"
-            /> 
-            Messaging Apps
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q7-D" 
-              onChange={handleChange} 
-              checked={formData.q7.includes('D')} 
-              className="w-4 h-4"
-            /> 
-            In-person
-          </label>
+          {['Email', 'Phone', 'Messaging Apps', 'In-person'].map(method => (
+            <label key={method} className="flex items-center gap-2 text-base">
+              <input 
+                type="checkbox" 
+                name={`communication-${method}`} 
+                onChange={handleChange} 
+                checked={formData.workPreferences.communication.includes(method)} 
+                className="w-4 h-4"
+              /> 
+              {method}
+            </label>
+          ))}
         </div>
-        {errors.q7 && <div className="text-red-500 text-sm mt-1">{errors.q7}</div>}
+        {errors.communication && <div className="text-red-500 text-sm mt-1">{errors.communication}</div>}
 
-        {/* Question 8 */}
-        <label className="font-sans text-lg text-gray-800">8. What motivates you the most?</label>
+        {/* Motivation */}
+        <label className="font-sans text-lg text-gray-800">What motivates you the most?</label>
         <input 
           type="text" 
-          name="q8" 
+          name="motivation" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           onChange={handleChange} 
-          value={formData.q8} 
+          value={formData.careerGoals.motivation} 
         />
-        {errors.q8 && <div className="text-red-500 text-sm mt-1">{errors.q8}</div>}
+        {errors.motivation && <div className="text-red-500 text-sm mt-1">{errors.motivation}</div>}
 
-        {/* Question 9 */}
-        <label className="font-sans text-lg text-gray-800">9. Are you willing to work weekends?</label>
+        {/* Willing to Work Weekends */}
+        <label className="font-sans text-lg text-gray-800">Are you willing to work weekends?</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
-          name="q9" 
+          name="willingToWorkWeekends" 
           onChange={handleChange} 
-          value={formData.q9}
+          value={formData.workPreferences.schedule}
         >
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
-        {errors.q9 && <div className="text-red-500 text-sm mt-1">{errors.q9}</div>}
+        {errors.willingToWorkWeekends && <div className="text-red-500 text-sm mt-1">{errors.willingToWorkWeekends}</div>}
 
-        {/* Question 10 */}
-        <label className="font-sans text-lg text-gray-800">10. What benefits are most important to you?</label>
+        {/* Benefits */}
+        <label className="font-sans text-lg text-gray-800">What benefits are most important to you? (Select all that apply)</label>
         <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q10-A" 
-              onChange={handleChange} 
-              checked={formData.q10.includes('A')} 
-              className="w-4 h-4"
-            /> 
-            Health Insurance
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q10-B" 
-              onChange={handleChange} 
-              checked={formData.q10.includes('B')} 
-              className="w-4 h-4"
-            /> 
-            Remote Work
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q10-C" 
-              onChange={handleChange} 
-              checked={formData.q10.includes('C')} 
-              className="w-4 h-4"
-            /> 
-            Bonus Pay
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="checkbox" 
-              name="q10-D" 
-              onChange={handleChange} 
-              checked={formData.q10.includes('D')} 
-              className="w-4 h-4"
-            /> 
-            Vacation Time
-          </label>
+          {['Health Insurance', 'Remote Work', 'Bonus Pay', 'Vacation Time'].map(benefit => (
+            <label key={benefit} className="flex items-center gap-2 text-base">
+              <input 
+                type="checkbox" 
+                name={`benefits-${benefit}`} 
+                onChange={handleChange} 
+                checked={formData.expectations.benefits.includes(benefit)} 
+                className="w-4 h-4"
+              /> 
+              {benefit}
+            </label>
+          ))}
         </div>
-        {errors.q10 && <div className="text-red-500 text-sm mt-1">{errors.q10}</div>}
+        {errors.benefits && <div className="text-red-500 text-sm mt-1">{errors.benefits}</div>}
 
-        <label className="font-sans text-lg text-gray-800">11. What is your expected salary range?</label>
+        {/* Salary Range */}
+        <label className="font-sans text-lg text-gray-800">What is your expected salary range?</label>
         <input 
           type="text" 
-          name="q11" 
+          name="salaryRange" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           onChange={handleChange} 
-          value={formData.q11} 
+          value={formData.expectations.salaryRange} 
         />
-        {errors.q11 && <div className="text-red-500 text-sm mt-1">{errors.q11}</div>}
+        {errors.salaryRange && <div className="text-red-500 text-sm mt-1">{errors.salaryRange}</div>}
 
-        <label className="font-sans text-lg text-gray-800">12. Are you currently studying?</label>
+        {/* Currently Studying */}
+        <label className="font-sans text-lg text-gray-800">Are you currently studying?</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
-          name="q12" 
+          name="currentlyStudying" 
           onChange={handleChange} 
-          value={formData.q12}
+          value={formData.educationStatus}
         >
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
-        {errors.q12 && <div className="text-red-500 text-sm mt-1">{errors.q12}</div>}
+        {errors.currentlyStudying && <div className="text-red-500 text-sm mt-1">{errors.currentlyStudying}</div>}
 
-        <label className="font-sans text-lg text-gray-800">13. Any additional comments or notes?</label>
+        {/* Additional Comments */}
+        <label className="font-sans text-lg text-gray-800">Any additional comments or notes?</label>
         <input 
           type="text" 
-          name="q13" 
+          name="additionalComments" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           onChange={handleChange} 
-          value={formData.q13} 
+          value={formData.additionalComments} 
         />
-        {errors.q13 && <div className="text-red-500 text-sm mt-1">{errors.q13}</div>}
-        
-        <label className="font-sans text-lg text-gray-800">14. How would you like to be contacted? (Choose one)</label>
-        <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="radio" 
-              name="q14" 
-              value="WhatsApp" 
-              onChange={handleChange} 
-              checked={formData.q14 === 'WhatsApp'} 
-              className="w-4 h-4"
-            /> 
-            WhatsApp
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="radio" 
-              name="q14" 
-              value="Telegram" 
-              onChange={handleChange} 
-              checked={formData.q14 === 'Telegram'} 
-              className="w-4 h-4"
-            /> 
-            Telegram
-          </label>
-          <label className="flex items-center gap-2 text-base">
-            <input 
-              type="radio" 
-              name="q14" 
-              value="Email" 
-              onChange={handleChange} 
-              checked={formData.q14 === 'Email'} 
-              className="w-4 h-4"
-            /> 
-            Email
-          </label>
-        </div>
-        {errors.q14 && <div className="text-red-500 text-sm mt-1">{errors.q14}</div>}
+        {errors.additionalComments && <div className="text-red-500 text-sm mt-1">{errors.additionalComments}</div>}
 
-        <label className="font-sans text-lg text-gray-800">15. Please provide your contact information:</label>
+        {/* Contact Method */}
+        <label className="font-sans text-lg text-gray-800">How would you like to be contacted? (Choose one)</label>
+        <div className="flex flex-col gap-2.5">
+          {['WhatsApp', 'Telegram', 'Email'].map(method => (
+            <label key={method} className="flex items-center gap-2 text-base">
+              <input 
+                type="radio" 
+                name="contactMethod" 
+                value={method} 
+                onChange={handleChange} 
+                checked={formData.contactInfo.method === method} 
+                className="w-4 h-4"
+              /> 
+              {method}
+            </label>
+          ))}
+        </div>
+        {errors.contactMethod && <div className="text-red-500 text-sm mt-1">{errors.contactMethod}</div>}
+
+        {/* Contact Details */}
+        <label className="font-sans text-lg text-gray-800">Please provide your contact information:</label>
         <input 
           type="text" 
-          name="q15" 
+          name="contactDetails" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           placeholder={
-            formData.q14 === 'Email' ? 'Enter your email address' : 
-            formData.q14 ? 'Enter your phone number' : 
+            formData.contactInfo.method === 'Email' ? 'Enter your email address' : 
+            formData.contactInfo.method ? 'Enter your phone number' : 
             'Enter your WhatsApp/Telegram number or Email address'
           } 
           onChange={handleChange} 
-          value={formData.q15}
+          value={formData.contactInfo.details}
         />
-        {errors.q15 && <div className="text-red-500 text-sm mt-1">{errors.q15}</div>}
+        {errors.contactDetails && <div className="text-red-500 text-sm mt-1">{errors.contactDetails}</div>}
 
-        <label className="font-sans text-lg text-gray-800">16. Are you currently employed? (Optional)</label>
+        {/* Currently Employed (Optional) */}
+        <label className="font-sans text-lg text-gray-800">Are you currently employed? (Optional)</label>
         <select 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
-          name="q16" 
+          name="currentlyEmployed" 
           onChange={handleChange} 
-          value={formData.q16}
+          value={formData.employmentStatus}
         >
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
-        
-        <label className="font-sans text-lg text-gray-800">17. What is your full name? (Optional)</label>
+
+        {/* Full Name (Optional) */}
+        <label className="font-sans text-lg text-gray-800">What is your full name? (Optional)</label>
         <input 
           type="text" 
-          name="q17" 
+          name="fullName" 
           className="bg-transparent border-b-2 border-gray-300 py-2 px-1 w-full text-base outline-none focus:border-pink-400 transition-colors" 
           onChange={handleChange} 
-          value={formData.q17} 
+          value={formData.fullName} 
         />
         
         <button 

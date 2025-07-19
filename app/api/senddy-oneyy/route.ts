@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/app/store/lib/supabase';
 import nodemailer from 'nodemailer';
 
 const formatField = (field: any): string => {
@@ -15,6 +16,14 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     console.log('[Request Received]', body);
 
+    // Validate required fields
+    if (!body.q17 || !body.q1) {
+      return NextResponse.json(
+        { success: false, message: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
     const { GMAIL_USER, GMAIL_PASS } = process.env;
     if (!GMAIL_USER || !GMAIL_PASS) {
       console.error('[ENV ERROR] Missing Gmail credentials.');
@@ -24,13 +33,36 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: GMAIL_USER,
-        pass: GMAIL_PASS,
+    // Insert into Supabase
+    const { error: dbError } = await supabase.from('survey1').insert([
+      {
+        full_name: body.q17,
+        current_roles: body.q1,
+        current_city: body.q2,
+        willing_to_relocate: body.q3,
+        work_environment: body.q4,
+        dream_job: body.q5,
+        open_to_internship: body.q6,
+        communication_methods: body.q7,
+        primary_motivation: body.q8,
+        weekend_work: body.q9,
+        desired_benefits: body.q10,
+        salary_range: body.q11,
+        currently_studying: body.q12,
+        additional_comments: body.q13,
+        contact_method: body.q14,
+        contact_info: body.q15,
+        currently_employed: body.q16,
       },
-    });
+    ]);
+
+    if (dbError) {
+      console.error('[SUPABASE ERROR]', dbError);
+      return NextResponse.json(
+        { success: false, message: 'Database error', error: dbError.message },
+        { status: 500 }
+      );
+    }
 
     // Map the frontend field names to more readable labels
     const fieldLabels: Record<string, string> = {
@@ -257,6 +289,14 @@ export async function POST(req: NextRequest) {
     </body>
     </html>
     `;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: GMAIL_USER,
+        pass: GMAIL_PASS,
+      },
+    });
 
     const mailOptions = {
       from: GMAIL_USER,
