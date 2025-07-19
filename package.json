@@ -17,7 +17,7 @@
     "@supabase/supabase-js": "^2.52.0",
     "emailjs": "^4.0.3",
     "framer-motion": "^12.19.1",
-    "next": "^15.3.5",
+    "next": "^15.4.2",
     "nodemailer": "^7.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
