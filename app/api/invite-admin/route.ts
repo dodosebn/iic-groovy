@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   const protocol = host?.includes('localhost') ? 'http://' : 'https://';
   const baseUrl = `${protocol}${host}`;
 
-  const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;s
+  const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;
 
   try {
     const { data, error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
