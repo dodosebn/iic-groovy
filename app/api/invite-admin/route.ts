@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
   const protocol = req.headers.get('x-forwarded-proto') || 'https';
 const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
-const baseUrl = `${protocol}://${host}`;
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
 
 
   const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;
