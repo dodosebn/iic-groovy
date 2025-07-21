@@ -13,9 +13,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Email is required' }, { status: 400 });
   }
 
-  const host = req.headers.get('host');
-  const protocol = host?.includes('localhost') ? 'http://' : 'https://';
-  const baseUrl = `${protocol}${host}`;
+  const protocol = req.headers.get('x-forwarded-proto') || 'https';
+const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
+const baseUrl = `${protocol}://${host}`;
+
 
   const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;
 
