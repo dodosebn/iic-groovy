@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { supabase } from '@/app/store/lib/supabase';
 import SurveyResponses from '../surveyResponse'
 
 const Page = () => {
@@ -13,9 +14,16 @@ const Page = () => {
     }
   }, [])
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn')
-    router.push('/admin')
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+    } catch (err) {
+      console.error('Logout error:', err)
+    } finally {
+      localStorage.removeItem('isLoggedIn')
+      router.push('/admin')
+    }
   }
 
   return (

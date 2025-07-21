@@ -1,10 +1,12 @@
 'use client'
+
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { supabase } from '@/app/store/lib/supabase'
 
 const Page = () => {
   const router = useRouter()
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -14,15 +16,23 @@ const Page = () => {
     setError('')
     setIsLoading(true)
 
-    setTimeout(() => {
-      if (username === 'ideaiscap001' && password === 'survsurvey_10-10') {
-        localStorage.setItem('isLoggedIn', 'true')
-        router.push('/admin/dashboard')
-      } else {
-        setError('Invalid credentials')
-        setIsLoading(false)
-      }
-    }, 1000) // Simulate a short delay
+    // Check users table manually
+    const { data, error: fetchError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .eq('password', password)
+      .single()
+
+    if (fetchError || !data) {
+      setError('Invalid credentials or user not found.')
+      setIsLoading(false)
+      return
+    }
+
+    // Save login status and navigate
+    localStorage.setItem('isLoggedIn', 'true')
+    router.push('/admin/dashboard')
   }
 
   return (
@@ -37,12 +47,13 @@ const Page = () => {
         {isLoading && <p className="text-blue-500 mb-2 text-center">Logging in...</p>}
 
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full px-3 py-2 border rounded mb-4"
           disabled={isLoading}
+          required
         />
         <input
           type="password"
@@ -51,6 +62,7 @@ const Page = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full px-3 py-2 border rounded mb-4"
           disabled={isLoading}
+          required
         />
         <button
           type="submit"
