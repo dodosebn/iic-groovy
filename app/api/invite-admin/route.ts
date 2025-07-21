@@ -13,12 +13,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Email is required' }, { status: 400 });
   }
 
-  const protocol = req.headers.get('x-forwarded-proto') || 'https';
-const host = req.headers.get('x-forwarded-host') || req.headers.get('host');
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
+  const host = req.headers.get('host');
+  const protocol = host?.includes('localhost') ? 'http://' : 'https://';
+  const baseUrl = `${protocol}${host}`;
 
-
-  const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;
+  const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;s
 
   try {
     const { data, error } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
