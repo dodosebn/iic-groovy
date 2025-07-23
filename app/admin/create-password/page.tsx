@@ -66,7 +66,7 @@ export default function CreatePassword() {
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-20 p-4 border rounded">
+    <div className="max-w-sm bg-white mx-auto mb-6 p-4">
       <h2 className="text-xl font-bold mb-4 text-center">Create a Password</h2>
       <form onSubmit={handleSetPassword} className="space-y-4">
         <input
@@ -88,7 +88,7 @@ export default function CreatePassword() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded"
+          className="w-full bg-[#54cbca]  text-white py-2 rounded"
         >
           {loading ? 'Saving...' : 'Save Password'}
         </button>
