@@ -46,7 +46,7 @@ const noreply = 'noreply@survey.com';
         <p>Hello,</p>
         <p>You’ve been invited to be an admin. Click below to set your password:</p>
         <a href="${redirectTo}">Set Your Password</a>
-        <p>Best regards,<br/>IdeaIsCapital </p>
+        <p>Best regards,<br/>IdeaIsCapital</p>s
       `,
     });
 

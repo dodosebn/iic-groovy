@@ -1,51 +1,127 @@
 // app/admin/invite/page.tsx
 'use client'
-import { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
-const InviteAdmin = () => {
+/* ------------------------------------------------------------------
+ * InviteAdmin
+ * ------------------------------------------------------------------
+ * UX goals:
+ * 1. Give immediate feedback: “Sending invitation…”
+ * 2. Once API responds OK: “Invitation is on the way…”
+ * 3. After a short delay (default 5s, configurable), switch to a
+ *    friendlier confirmation: “Invitation sent to <email>. Check your
+ *    inbox (and spam folder).”
+ * 4. Handle & display API errors clearly.
+ * 5. Keep language simple & clear.
+ * 6. Accessible live region so screen readers announce status changes.
+ * ------------------------------------------------------------------ */
+
+// Optional: adjust this if you want a longer / shorter delay before
+// showing the “delivered” style message.
+const DELIVERY_FEEDBACK_MS = 5000
+
+type Status = 'idle' | 'sending' | 'in_flight' | 'delivered' | 'error'
+
+const InviteAdmin: React.FC = () => {
   const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+
+  // Track mounted state to avoid state updates on unmounted component
+  const isMounted = useRef(true)
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
+
+  const resetMessages = () => {
+    setMessage('')
+    setErrorMsg('')
+  }
 
   const handleInvite = async () => {
-    setLoading(true)
-    setMessage('')
-
-    const res = await fetch('/api/invite-admin', {
-      method: 'POST',
-      body: JSON.stringify({ email }),
-    })
-
-    const data = await res.json()
-    if (res.ok) {
-      setMessage(`Invitation sent to ${email}`)
-    } else {
-      setMessage(data.error || 'Something went wrong')
+    if (!email.trim()) {
+      setStatus('error')
+      setErrorMsg('Please enter an email.')
+      return
     }
 
-    setLoading(false)
+    resetMessages()
+    setStatus('sending')
+    setMessage('Sending invitation…')
+
+    try {
+      const res = await fetch('/api/invite-admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+
+      if (!isMounted.current) return
+
+      if (res.ok) {
+        setStatus('in_flight')
+        setMessage('Invitation is on the way…')
+
+        window.setTimeout(() => {
+          if (!isMounted.current) return
+          setStatus('delivered')
+          setMessage(`Invitation sent to ${email.trim()}. Check your inbox (and spam folder).`)
+        }, DELIVERY_FEEDBACK_MS)
+      } else {
+        setStatus('error')
+        setErrorMsg(data?.error || 'Something went wrong. Please try again.')
+      }
+    } catch (err: any) {
+      if (!isMounted.current) return
+      setStatus('error')
+      setErrorMsg(err?.message || 'Network error. Please try again.')
+    }
   }
+
+  const isLoading = status === 'sending'
 
   return (
     <div className="p-6 max-w-sm mx-auto">
       <h2 className="text-xl font-bold mb-4">Invite Admin</h2>
+
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Admin email"
         className="w-full border px-3 py-2 rounded mb-4"
+        disabled={isLoading}
       />
+
       <button
         onClick={handleInvite}
-        disabled={loading}
-        className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+        disabled={isLoading}
+        className="bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded w-full"
       >
-        {loading ? 'Inviting...' : 'Send Invite'}
+        {isLoading ? 'Inviting…' : 'Send Invite'}
       </button>
-      {message && <p className="mt-4 text-center text-sm text-gray-600">{message}</p>}
+
+      <div
+        className="mt-4 text-center text-sm"
+        role="status"
+        aria-live="polite"
+      >
+        {message && (
+          <p className="text-gray-700">{message}</p>
+        )}
+        {errorMsg && (
+          <p className="text-red-600 mt-2">{errorMsg}</p>
+        )}
+      </div>
     </div>
   )
 }
 
-export default InviteAdmin;
+export default InviteAdmin
