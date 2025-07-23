@@ -2,22 +2,6 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
 
-/* ------------------------------------------------------------------
- * InviteAdmin
- * ------------------------------------------------------------------
- * UX goals:
- * 1. Give immediate feedback: “Sending invitation…”
- * 2. Once API responds OK: “Invitation is on the way…”
- * 3. After a short delay (default 5s, configurable), switch to a
- *    friendlier confirmation: “Invitation sent to <email>. Check your
- *    inbox (and spam folder).”
- * 4. Handle & display API errors clearly.
- * 5. Keep language simple & clear.
- * 6. Accessible live region so screen readers announce status changes.
- * ------------------------------------------------------------------ */
-
-// Optional: adjust this if you want a longer / shorter delay before
-// showing the “delivered” style message.
 const DELIVERY_FEEDBACK_MS = 5000
 
 type Status = 'idle' | 'sending' | 'in_flight' | 'delivered' | 'error'
@@ -28,7 +12,6 @@ const InviteAdmin: React.FC = () => {
   const [message, setMessage] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
 
-  // Track mounted state to avoid state updates on unmounted component
   const isMounted = useRef(true)
   useEffect(() => {
     return () => {
