@@ -71,7 +71,7 @@ const InviteAdmin: React.FC = () => {
   const isLoading = status === 'sending'
 
   return (
-    <div className="p-6 max-w-sm mx-auto">
+    <div className="p-6 max-w-sm mx-auto bg-white">
       <h2 className="text-xl font-bold mb-4">Invite Admin</h2>
 
       <input
@@ -86,7 +86,7 @@ const InviteAdmin: React.FC = () => {
       <button
         onClick={handleInvite}
         disabled={isLoading}
-        className="bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded w-full"
+        className="bg-[#54cbca] disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded w-full"
       >
         {isLoading ? 'Inviting…' : 'Send Invite'}
       </button>
