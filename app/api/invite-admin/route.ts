@@ -20,7 +20,6 @@ export async function POST(req: Request) {
   const redirectTo = `${baseUrl}/admin/create-password?email=${encodeURIComponent(email)}`;
 
   try {
-    // Create user in Supabase (without sending Supabase email)
     const { data, error } = await supabaseAdmin.auth.admin.createUser({
       email,
       email_confirm: false,
@@ -29,7 +28,6 @@ export async function POST(req: Request) {
 
     if (error) throw error;
 
-    // Send your own custom email using Nodemailer
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

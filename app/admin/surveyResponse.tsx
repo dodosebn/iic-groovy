@@ -1,8 +1,8 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { FaRegEdit } from "react-icons/fa";
-import { CiTrash } from "react-icons/ci";
-import { CiSquareCheck } from "react-icons/ci";
+import { CiTrash, CiSquareCheck } from "react-icons/ci";
 import { MdCancelPresentation } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,6 +35,8 @@ const SurveyResponses = () => {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Partial<SurveyResponse>>({});
   const [searchTerm, setSearchTerm] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  const [updatingId, setUpdatingId] = useState<number | null>(null); // NEW
 
   useEffect(() => {
     const fetchSurveyResponses = async () => {
@@ -65,32 +67,31 @@ const SurveyResponses = () => {
   };
 
   const handleSaveEdit = async (id: number) => {
+    setUpdatingId(id); // NEW: start update state
     try {
       const res = await fetch(`/api/send-survey-feedback/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm),
       });
 
       if (!res.ok) throw new Error('Failed to update response');
 
-      setResponses(responses.map(res => 
-        res.id === id ? { ...res, ...editForm } : res
-      ));
+      setResponses(responses.map(res => res.id === id ? { ...res, ...editForm } : res));
       setEditingId(null);
       setEditForm({});
       toast.success('Response updated successfully');
     } catch (err) {
       console.error('Error updating survey response:', err);
       toast.error('Failed to update response');
+    } finally {
+      setUpdatingId(null); // NEW: reset update state
     }
   };
 
   const handleDelete = async (id: number) => {
     if (!confirm('Are you sure you want to delete this response?')) return;
-    
+
     try {
       const res = await fetch(`/api/send-survey-feedback/${id}`, {
         method: 'DELETE',
@@ -109,18 +110,30 @@ const SurveyResponses = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
-    
-    setEditForm({
-      ...editForm,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+    setEditForm({ ...editForm, [name]: type === 'checkbox' ? checked : value });
   };
 
-  const filteredResponses = responses.filter(response =>
-    response.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    response.current_role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    response.location_city.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredResponses = responses.filter(response => {
+    const matchesSearch =
+      response.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      response.current_role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      response.location_city.toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (!dateFilter) return matchesSearch;
+
+    const createdAt = new Date(response.created_at);
+    const now = new Date();
+    let daysAgo = 0;
+
+    if (dateFilter === '2daysago') daysAgo = 2;
+    else if (dateFilter === '3daysago') daysAgo = 3;
+    else if (dateFilter === '1weekago') daysAgo = 7;
+
+    const thresholdDate = new Date();
+    thresholdDate.setDate(now.getDate() - daysAgo);
+
+    return matchesSearch && createdAt >= thresholdDate;
+  });
 
   if (loading) return (
     <div className="flex justify-center items-center h-64">
@@ -138,33 +151,44 @@ const SurveyResponses = () => {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <ToastContainer position="top-right" autoClose={3000} />
-      
-      <div className="flex justify-between items-center mb-6">
+
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <h1 className="text-2xl font-bold">Survey Responses</h1>
-        <div className="relative w-64">
-          <input
-            type="text"
-            placeholder="Search responses..."
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm('')}
-              className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
-            >
-              <MdCancelPresentation className="h-5 w-5" />
-            </button>
-          )}
+        <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+          <div className="relative w-full md:w-64">
+            <input
+              type="text"
+              placeholder="Search responses..."
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+              >
+                <MdCancelPresentation className="h-5 w-5" />
+              </button>
+            )}
+          </div>
+
+          <select
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Dates</option>
+            <option value="2daysago">Last 2 Days</option>
+            <option value="3daysago">Last 3 Days</option>
+            <option value="1weekago">Last 7 Days</option>
+          </select>
         </div>
       </div>
 
       <div className="space-y-4">
         {filteredResponses.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">
-            No matching responses found
-          </div>
+          <div className="p-4 text-center text-gray-500">No matching responses found</div>
         ) : (
           filteredResponses.map((res) => (
             <div key={res.id} className="border rounded-lg shadow bg-white overflow-hidden">
@@ -180,33 +204,26 @@ const SurveyResponses = () => {
                     <>
                       <button
                         onClick={() => handleSaveEdit(res.id)}
-                        className="p-1 text-green-600 hover:text-green-800"
+                        disabled={updatingId === res.id}
+                        className="p-1 text-green-600 hover:text-green-800 flex items-center space-x-1"
                         title="Save"
                       >
-                        <CiSquareCheck className="h-5 w-5" />
+                        {updatingId === res.id ? (
+                          <span className="text-xs animate-pulse">Updating...</span>
+                        ) : (
+                          <CiSquareCheck className="h-5 w-5" />
+                        )}
                       </button>
-                      <button
-                        onClick={handleCancelEdit}
-                        className="p-1 text-red-600 hover:text-red-800"
-                        title="Cancel"
-                      >
+                      <button onClick={handleCancelEdit} className="p-1 text-red-600 hover:text-red-800" title="Cancel">
                         <MdCancelPresentation className="h-5 w-5" />
                       </button>
                     </>
                   ) : (
                     <>
-                      <button
-                        onClick={() => handleEdit(res)}
-                        className="p-1 text-blue-600 hover:text-blue-800"
-                        title="Edit"
-                      >
+                      <button onClick={() => handleEdit(res)} className="p-1 text-blue-600 hover:text-blue-800" title="Edit">
                         <FaRegEdit className="h-5 w-5" />
                       </button>
-                      <button
-                        onClick={() => handleDelete(res.id)}
-                        className="p-1 text-red-600 hover:text-red-800"
-                        title="Delete"
-                      >
+                      <button onClick={() => handleDelete(res.id)} className="p-1 text-red-600 hover:text-red-800" title="Delete">
                         <CiTrash className="h-5 w-5" />
                       </button>
                     </>
@@ -219,83 +236,35 @@ const SurveyResponses = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                      <input
-                        type="text"
-                        name="full_name"
-                        value={editForm.full_name || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                      />
+                      <input type="text" name="full_name" value={editForm.full_name || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Current Role</label>
-                      <input
-                        type="text"
-                        name="current_role"
-                        value={editForm.current_role || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                      />
+                      <input type="text" name="current_role" value={editForm.current_role || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                      <input
-                        type="text"
-                        name="location_city"
-                        value={editForm.location_city || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                      />
+                      <input type="text" name="location_city" value={editForm.location_city || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
                     </div>
                     <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        name="willing_to_relocate"
-                        checked={editForm.willing_to_relocate || false}
-                        onChange={handleInputChange}
-                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      />
+                      <input type="checkbox" name="willing_to_relocate" checked={editForm.willing_to_relocate || false} onChange={handleInputChange} className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
                       <label className="ml-2 block text-sm text-gray-700">Willing to Relocate</label>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Work Environment</label>
-                      <input
-                        type="text"
-                        name="work_environment"
-                        value={editForm.work_environment || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                      />
+                      <input type="text" name="work_environment" value={editForm.work_environment || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Communication</label>
-                      <input
-                        type="text"
-                        name="communication"
-                        value={editForm.communication || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                      />
+                      <input type="text" name="communication" value={editForm.communication || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Dream Job</label>
-                      <textarea
-                        name="dream_job"
-                        value={editForm.dream_job || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                        rows={2}
-                      />
+                      <textarea name="dream_job" value={editForm.dream_job || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" rows={2} />
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Additional Comments</label>
-                      <textarea
-                        name="additional_comments"
-                        value={editForm.additional_comments || ''}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border rounded-md"
-                        rows={2}
-                      />
+                      <textarea name="additional_comments" value={editForm.additional_comments || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" rows={2} />
                     </div>
                   </div>
                 ) : (
