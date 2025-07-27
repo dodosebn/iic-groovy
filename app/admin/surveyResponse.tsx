@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { CiTrash, CiSquareCheck } from "react-icons/ci";
 import { MdCancelPresentation } from "react-icons/md";
@@ -36,7 +36,7 @@ const SurveyResponses = () => {
   const [editForm, setEditForm] = useState<Partial<SurveyResponse>>({});
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFilter, setDateFilter] = useState('');
-  const [updatingId, setUpdatingId] = useState<number | null>(null); // NEW
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchSurveyResponses = async () => {
@@ -67,7 +67,7 @@ const SurveyResponses = () => {
   };
 
   const handleSaveEdit = async (id: number) => {
-    setUpdatingId(id); // NEW: start update state
+    setUpdatingId(id);
     try {
       const res = await fetch(`/api/send-survey-feedback/${id}`, {
         method: 'PUT',
@@ -85,7 +85,7 @@ const SurveyResponses = () => {
       console.error('Error updating survey response:', err);
       toast.error('Failed to update response');
     } finally {
-      setUpdatingId(null); // NEW: reset update state
+      setUpdatingId(null);
     }
   };
 
@@ -113,27 +113,79 @@ const SurveyResponses = () => {
     setEditForm({ ...editForm, [name]: type === 'checkbox' ? checked : value });
   };
 
-  const filteredResponses = responses.filter(response => {
-    const matchesSearch =
-      response.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      response.current_role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      response.location_city.toLowerCase().includes(searchTerm.toLowerCase());
+  const getFilterRangeText = () => {
+    switch (dateFilter) {
+      case '2daysago': return 'last 2 days';
+      case '3daysago': return 'last 3 days';
+      case '1weekago': return 'last week';
+      case '1monthago': return 'last month';
+      default: return '';
+    }
+  };
 
-    if (!dateFilter) return matchesSearch;
+  const normalizeDate = (dateString: string) => {
+    // Parse the Supabase timestamp (e.g., "2025-07-27 10:31:41.998438+00")
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  };
 
-    const createdAt = new Date(response.created_at);
+  const { filteredResponses, filterMessage } = useMemo(() => {
+    let message = '';
+    const lowerSearch = searchTerm.toLowerCase().trim();
+    
     const now = new Date();
-    let daysAgo = 0;
+    now.setHours(0, 0, 0, 0);
+    let startDate = new Date(0);
 
-    if (dateFilter === '2daysago') daysAgo = 2;
-    else if (dateFilter === '3daysago') daysAgo = 3;
-    else if (dateFilter === '1weekago') daysAgo = 7;
+    switch (dateFilter) {
+      case '2daysago':
+        startDate = new Date(now);
+        startDate.setDate(now.getDate() - 2);
+        break;
+      case '3daysago':
+        startDate = new Date(now);
+        startDate.setDate(now.getDate() - 3);
+        break;
+      case '1weekago':
+        startDate = new Date(now);
+        startDate.setDate(now.getDate() - 7);
+        break;
+      case '1monthago':
+        startDate = new Date(now);
+        startDate.setDate(now.getDate() - 30);
+        break;
+    }
 
-    const thresholdDate = new Date();
-    thresholdDate.setDate(now.getDate() - daysAgo);
+    const filtered = responses.filter((response) => {
+      const matchesSearch =
+        response.full_name.toLowerCase().includes(lowerSearch) ||
+        response.current_role.toLowerCase().includes(lowerSearch) ||
+        response.location_city.toLowerCase().includes(lowerSearch);
 
-    return matchesSearch && createdAt >= thresholdDate;
-  });
+      const createdAt = normalizeDate(response.created_at);
+      const isInDateRange = dateFilter ? createdAt >= startDate : true;
+
+      return matchesSearch && isInDateRange;
+    });
+
+    if (filtered.length === 0) {
+      if (dateFilter && searchTerm) {
+        message = `No responses found for ${getFilterRangeText()} matching "${searchTerm}"`;
+      } else if (dateFilter) {
+        message = `No responses found for ${getFilterRangeText()}`;
+      } else if (searchTerm) {
+        message = `No responses match "${searchTerm}"`;
+      }
+    }
+
+    return { filteredResponses: filtered, filterMessage: message };
+  }, [responses, searchTerm, dateFilter]);
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setDateFilter('');
+  };
 
   if (loading) return (
     <div className="flex justify-center items-center h-64">
@@ -182,13 +234,33 @@ const SurveyResponses = () => {
             <option value="2daysago">Last 2 Days</option>
             <option value="3daysago">Last 3 Days</option>
             <option value="1weekago">Last 7 Days</option>
+            <option value="1monthago">Last 30 Days</option>
           </select>
+
+          {(searchTerm || dateFilter) && (
+            <button
+              onClick={clearFilters}
+              className="px-4 py-2 text-sm text-blue-600 hover:text-blue-800 whitespace-nowrap"
+            >
+              Clear Filters
+            </button>
+          )}
         </div>
       </div>
 
       <div className="space-y-4">
         {filteredResponses.length === 0 ? (
-          <div className="p-4 text-center text-gray-500">No matching responses found</div>
+          <div className="p-4 text-center text-gray-500">
+            {filterMessage || 'No responses found'}
+            {(searchTerm || dateFilter) && (
+              <button
+                onClick={clearFilters}
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors block mx-auto"
+              >
+                Clear all filters
+              </button>
+            )}
+          </div>
         ) : (
           filteredResponses.map((res) => (
             <div key={res.id} className="border rounded-lg shadow bg-white overflow-hidden">
