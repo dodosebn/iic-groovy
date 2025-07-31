@@ -7,7 +7,7 @@ export async function PUT(req: NextRequest, { params }: { params: any }) {
   const updatedData = await req.json();
 
   const { error } = await supabase
-    .from('survey1')
+      .from('survey_responses')
     .update(updatedData)
     .eq('id', id);
 
@@ -23,7 +23,7 @@ export async function DELETE(req: NextRequest, { params }: { params: any }) {
   const id = params.id;
 
   const { error } = await supabase
-    .from('survey1')
+      .from('survey_responses')
     .delete()
     .eq('id', id);
 

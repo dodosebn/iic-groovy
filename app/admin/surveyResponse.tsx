@@ -8,57 +8,47 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface SurveyResponse {
-  id: number;
+  id: string;
+  survey_id: string;
+  answers: Record<string, string | string[]>;
   created_at: string;
-  full_name: string;
-  current_role: string;
-  location_city: string;
-  willing_to_relocate: boolean;
-  work_environment: string;
-  communication: string;
-  schedule: string;
-  dream_job: string;
-  motivation: string;
-  open_to_internship: boolean;
-  benefits: string;
-  salary_range: string;
-  education_status: string;
-  employment_status: string;
-  contact_method: string;
-  contact_details: string;
-  additional_comments: string;
 }
 
-const SurveyResponses = () => {
+export default function SurveyResponses() {
   const [responses, setResponses] = useState<SurveyResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editForm, setEditForm] = useState<Partial<SurveyResponse>>({});
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState<Record<string, string | string[]>>({});
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFilter, setDateFilter] = useState('');
-  const [updatingId, setUpdatingId] = useState<number | null>(null);
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchSurveyResponses = async () => {
+    const fetchResponses = async () => {
       try {
+        setLoading(true);
         const res = await fetch('/api/send-survey-feedback');
-        if (!res.ok) throw new Error('Failed to fetch responses');
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
         const data = await res.json();
         setResponses(data);
       } catch (err) {
-        console.error('Error fetching survey responses:', err);
-        toast.error('Failed to load survey responses');
+        console.error('Error fetching responses:', err);
+        toast.error('Failed to load responses');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchSurveyResponses();
+    fetchResponses();
   }, []);
 
   const handleEdit = (response: SurveyResponse) => {
     setEditingId(response.id);
-    setEditForm({ ...response });
+    setEditForm({ ...response.answers });
   };
 
   const handleCancelEdit = () => {
@@ -66,30 +56,31 @@ const SurveyResponses = () => {
     setEditForm({});
   };
 
-  const handleSaveEdit = async (id: number) => {
+  const handleSaveEdit = async (id: string) => {
     setUpdatingId(id);
     try {
       const res = await fetch(`/api/send-survey-feedback/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editForm),
+        body: JSON.stringify({ answers: editForm }),
       });
 
       if (!res.ok) throw new Error('Failed to update response');
 
-      setResponses(responses.map(res => res.id === id ? { ...res, ...editForm } : res));
+      setResponses(responses.map(res => 
+        res.id === id ? { ...res, answers: editForm } : res
+      ));
       setEditingId(null);
-      setEditForm({});
       toast.success('Response updated successfully');
     } catch (err) {
-      console.error('Error updating survey response:', err);
+      console.error('Error updating response:', err);
       toast.error('Failed to update response');
     } finally {
       setUpdatingId(null);
     }
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this response?')) return;
 
     try {
@@ -102,15 +93,14 @@ const SurveyResponses = () => {
       setResponses(responses.filter(res => res.id !== id));
       toast.success('Response deleted successfully');
     } catch (err) {
-      console.error('Error deleting survey response:', err);
+      console.error('Error deleting response:', err);
       toast.error('Failed to delete response');
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target;
-    const checked = (e.target as HTMLInputElement).checked;
-    setEditForm({ ...editForm, [name]: type === 'checkbox' ? checked : value });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setEditForm({ ...editForm, [name]: value });
   };
 
   const getFilterRangeText = () => {
@@ -124,7 +114,6 @@ const SurveyResponses = () => {
   };
 
   const normalizeDate = (dateString: string) => {
-    // Parse the Supabase timestamp (e.g., "2025-07-27 10:31:41.998438+00")
     const date = new Date(dateString);
     date.setHours(0, 0, 0, 0);
     return date;
@@ -158,10 +147,14 @@ const SurveyResponses = () => {
     }
 
     const filtered = responses.filter((response) => {
-      const matchesSearch =
-        response.full_name.toLowerCase().includes(lowerSearch) ||
-        response.current_role.toLowerCase().includes(lowerSearch) ||
-        response.location_city.toLowerCase().includes(lowerSearch);
+      // Search through all answer values
+      const answerValues = Object.values(response.answers).flatMap(answer => 
+        Array.isArray(answer) ? answer : [answer]
+      );
+      
+      const matchesSearch = answerValues.some(value => 
+        String(value).toLowerCase().includes(lowerSearch)
+      );
 
       const createdAt = normalizeDate(response.created_at);
       const isInDateRange = dateFilter ? createdAt >= startDate : true;
@@ -185,6 +178,13 @@ const SurveyResponses = () => {
   const clearFilters = () => {
     setSearchTerm('');
     setDateFilter('');
+  };
+
+  const formatAnswer = (answer: string | string[]) => {
+    if (Array.isArray(answer)) {
+      return answer.join(', ');
+    }
+    return answer || 'No answer provided';
   };
 
   if (loading) return (
@@ -262,25 +262,25 @@ const SurveyResponses = () => {
             )}
           </div>
         ) : (
-          filteredResponses.map((res) => (
-            <div key={res.id} className="border rounded-lg shadow bg-white overflow-hidden">
+          filteredResponses.map((response) => (
+            <div key={response.id} className="border rounded-lg shadow bg-white overflow-hidden">
               <div className="bg-gray-50 px-5 py-3 flex justify-between items-center border-b">
                 <div>
-                  <h3 className="font-medium text-gray-900">{res.full_name}</h3>
+                  <h3 className="font-medium text-gray-900">Survey ID: {response.survey_id}</h3>
                   <p className="text-xs text-gray-500">
-                    Submitted: {new Date(res.created_at).toLocaleString()} • {res.location_city}
+                    Submitted: {new Date(response.created_at).toLocaleString()}
                   </p>
                 </div>
                 <div className="flex space-x-2">
-                  {editingId === res.id ? (
+                  {editingId === response.id ? (
                     <>
                       <button
-                        onClick={() => handleSaveEdit(res.id)}
-                        disabled={updatingId === res.id}
+                        onClick={() => handleSaveEdit(response.id)}
+                        disabled={updatingId === response.id}
                         className="p-1 text-green-600 hover:text-green-800 flex items-center space-x-1"
                         title="Save"
                       >
-                        {updatingId === res.id ? (
+                        {updatingId === response.id ? (
                           <span className="text-xs animate-pulse">Updating...</span>
                         ) : (
                           <CiSquareCheck className="h-5 w-5" />
@@ -292,10 +292,10 @@ const SurveyResponses = () => {
                     </>
                   ) : (
                     <>
-                      <button onClick={() => handleEdit(res)} className="p-1 text-blue-600 hover:text-blue-800" title="Edit">
+                      <button onClick={() => handleEdit(response)} className="p-1 text-blue-600 hover:text-blue-800" title="Edit">
                         <FaRegEdit className="h-5 w-5" />
                       </button>
-                      <button onClick={() => handleDelete(res.id)} className="p-1 text-red-600 hover:text-red-800" title="Delete">
+                      <button onClick={() => handleDelete(response.id)} className="p-1 text-red-600 hover:text-red-800" title="Delete">
                         <CiTrash className="h-5 w-5" />
                       </button>
                     </>
@@ -304,62 +304,35 @@ const SurveyResponses = () => {
               </div>
 
               <div className="p-5">
-                {editingId === res.id ? (
+                {editingId === response.id ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                      <input type="text" name="full_name" value={editForm.full_name || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Current Role</label>
-                      <input type="text" name="current_role" value={editForm.current_role || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                      <input type="text" name="location_city" value={editForm.location_city || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
-                    </div>
-                    <div className="flex items-center">
-                      <input type="checkbox" name="willing_to_relocate" checked={editForm.willing_to_relocate || false} onChange={handleInputChange} className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-                      <label className="ml-2 block text-sm text-gray-700">Willing to Relocate</label>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Work Environment</label>
-                      <input type="text" name="work_environment" value={editForm.work_environment || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Communication</label>
-                      <input type="text" name="communication" value={editForm.communication || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Dream Job</label>
-                      <textarea name="dream_job" value={editForm.dream_job || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" rows={2} />
-                    </div>
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Additional Comments</label>
-                      <textarea name="additional_comments" value={editForm.additional_comments || ''} onChange={handleInputChange} className="w-full px-3 py-2 border rounded-md" rows={2} />
-                    </div>
+                    {Object.entries(response.answers).map(([questionKey, answer]) => (
+                      <div key={questionKey}>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          {questionKey}
+                        </label>
+                        <textarea
+                          name={questionKey}
+                          value={Array.isArray(editForm[questionKey]) 
+                            ? (editForm[questionKey] as string[]).join(', ')
+                            : (editForm[questionKey] as string) || ''}
+                          onChange={handleInputChange}
+                          className="w-full px-3 py-2 border rounded-md"
+                          rows={3}
+                        />
+                      </div>
+                    ))}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
-                    <div className="py-1"><strong className="text-gray-700">Current Role:</strong> {res.current_role}</div>
-                    <div className="py-1"><strong className="text-gray-700">City:</strong> {res.location_city}</div>
-                    <div className="py-1"><strong className="text-gray-700">Willing to Relocate:</strong> {res.willing_to_relocate ? 'Yes' : 'No'}</div>
-                    <div className="py-1"><strong className="text-gray-700">Work Environment:</strong> {res.work_environment}</div>
-                    <div className="py-1"><strong className="text-gray-700">Communication:</strong> {res.communication}</div>
-                    <div className="py-1"><strong className="text-gray-700">Schedule:</strong> {res.schedule}</div>
-                    <div className="py-1"><strong className="text-gray-700">Dream Job:</strong> {res.dream_job}</div>
-                    <div className="py-1"><strong className="text-gray-700">Motivation:</strong> {res.motivation}</div>
-                    <div className="py-1"><strong className="text-gray-700">Open to Internship:</strong> {res.open_to_internship ? 'Yes' : 'No'}</div>
-                    <div className="py-1"><strong className="text-gray-700">Expected Benefits:</strong> {res.benefits}</div>
-                    <div className="py-1"><strong className="text-gray-700">Salary Range:</strong> {res.salary_range}</div>
-                    <div className="py-1"><strong className="text-gray-700">Education Status:</strong> {res.education_status}</div>
-                    <div className="py-1"><strong className="text-gray-700">Employment Status:</strong> {res.employment_status}</div>
-                    <div className="py-1"><strong className="text-gray-700">Contact Method:</strong> {res.contact_method}</div>
-                    <div className="py-1"><strong className="text-gray-700">Contact Details:</strong> {res.contact_details}</div>
-                    <div className="md:col-span-2 py-1">
-                      <strong className="text-gray-700">Additional Comments:</strong>
-                      <p className="mt-1 text-gray-800">{res.additional_comments}</p>
-                    </div>
+                  <div className="space-y-3">
+                    {Object.entries(response.answers).map(([questionKey, answer], index) => (
+                      <div key={index} className="border-b pb-2 last:border-b-0">
+                        <p className="text-sm font-medium text-gray-700">{questionKey}</p>
+                        <p className="text-sm text-gray-900 whitespace-pre-wrap">
+                          {formatAnswer(answer)}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
@@ -369,6 +342,4 @@ const SurveyResponses = () => {
       </div>
     </div>
   );
-};
-
-export default SurveyResponses;
+}

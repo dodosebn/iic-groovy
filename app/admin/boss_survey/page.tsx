@@ -3,39 +3,65 @@
 import { useState } from 'react'
 
 const tagged = [
-  {
-    id: 1,
-    name: 'Getting Started'
-  },
-  {
-    id: 2,
-    name: 'Health'
-  },
-  {
-    id: 3,
-    name: 'Lifestyle'
-  }
+  { id: 1, name: 'Getting Started' },
+  { id: 2, name: 'Health' },
+  { id: 3, name: 'Lifestyle' }
 ]
 
 type Question = {
   label: string
-  type: string
+  type: 'text' | 'textarea' | 'rating' | 'checkbox' | 'radio'
+  options?: string[]
 }
 
 export default function CreateSurveyForm() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [tag, setTag] = useState('')
-  const [questions, setQuestions] = useState<Question[]>([{
-    label: '',
-    type: 'text'
-  }])
+  const [questions, setQuestions] = useState<Question[]>([
+    { label: '', type: 'text' }
+  ])
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleQuestionChange = (index: number, field: keyof Question, value: string) => {
+  const handleQuestionChange = (
+    index: number,
+    field: keyof Question,
+    value: string
+  ) => {
     const updated = [...questions]
-    updated[index][field] = value
+
+    if (field === 'options') {
+      updated[index].options = value.split(',').map(opt => opt.trim())
+    } else {
+      updated[index][field] = value as any
+
+      // Handle type change side effects
+      if (field === 'type') {
+        if (value === 'checkbox' || value === 'radio') {
+          updated[index].options = ['']
+        } else {
+          delete updated[index].options
+        }
+      }
+    }
+
     setQuestions(updated)
+  }
+
+  const handleOptionChange = (qIndex: number, oIndex: number, value: string) => {
+    const updated = [...questions]
+    if (updated[qIndex].options) {
+      updated[qIndex].options![oIndex] = value
+      setQuestions(updated)
+    }
+  }
+
+  const addOption = (qIndex: number) => {
+    const updated = [...questions]
+    if (updated[qIndex].options) {
+      updated[qIndex].options!.push('')
+      setQuestions(updated)
+    }
   }
 
   const addQuestion = () => {
@@ -126,6 +152,7 @@ export default function CreateSurveyForm() {
                 required
               />
             </div>
+
             <div className="mb-2">
               <label className="block text-sm">Type</label>
               <select
@@ -141,6 +168,31 @@ export default function CreateSurveyForm() {
                 <option value="radio">Radio</option>
               </select>
             </div>
+
+            {(q.type === 'checkbox' || q.type === 'radio') && (
+              <div className="mb-2 space-y-2">
+                <label className="block text-sm font-medium">Options</label>
+                {q.options?.map((opt, oIdx) => (
+                  <input
+                    key={oIdx}
+                    type="text"
+                    value={opt}
+                    placeholder={`Option ${oIdx + 1}`}
+                    onChange={(e) => handleOptionChange(idx, oIdx, e.target.value)}
+                    className="w-full p-2 border rounded"
+                    required
+                  />
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addOption(idx)}
+                  className="text-sm text-blue-500 hover:underline"
+                >
+                  + Add Option
+                </button>
+              </div>
+            )}
+
             {questions.length > 1 && (
               <button
                 type="button"
@@ -152,6 +204,7 @@ export default function CreateSurveyForm() {
             )}
           </div>
         ))}
+
         <button
           type="button"
           onClick={addQuestion}

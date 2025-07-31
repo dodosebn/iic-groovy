@@ -1,3 +1,4 @@
+// pages > building-your-audience > building.tsx
 'use client';
 import React from 'react';
 import tallHand from '@/public/images/tall-hand-holding-bulb.jpg';
