@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/app/store/lib/supabase';
 import SurveyResponses from '../surveyResponse'
+import Link from 'next/link';
 
 const Page = () => {
   const router = useRouter()
@@ -34,6 +35,12 @@ const Page = () => {
       >
         Logout
       </button>
+         <Link
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+        href={'/admin/boss_survey'}
+      >
+        create a survey
+      </Link>
       <SurveyResponses />
     </div>
   )

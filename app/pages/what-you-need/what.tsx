@@ -11,7 +11,7 @@ const What = () => {
   return (
      <CenteringPages>
           <FirstCard imgGen={cubofTea} title={'What you need to know about Ghost Editor'}
-      date={'March 16, 2021'} duration={'2 min read'} bg='#fff2be' tag={'Music'}  
+      date={'March 16, 2021'} duration={'2 min read'} bg='#fff2be' tag={'Lifestyle'}  
  />
          
     </CenteringPages>
