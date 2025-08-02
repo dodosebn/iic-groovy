@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState, useMemo } from 'react';
 import { FaRegEdit } from "react-icons/fa";
 import { CiTrash, CiSquareCheck } from "react-icons/ci";
@@ -10,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 interface SurveyResponse {
   id: string;
   survey_id: string;
+  surveyTitle: string;
   answers: Record<string, string | string[]>;
   created_at: string;
 }
@@ -28,11 +28,7 @@ export default function SurveyResponses() {
       try {
         setLoading(true);
         const res = await fetch('/api/send-survey-feedback');
-        
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setResponses(data);
       } catch (err) {
@@ -42,7 +38,6 @@ export default function SurveyResponses() {
         setLoading(false);
       }
     };
-
     fetchResponses();
   }, []);
 
@@ -64,10 +59,9 @@ export default function SurveyResponses() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers: editForm }),
       });
-
       if (!res.ok) throw new Error('Failed to update response');
 
-      setResponses(responses.map(res => 
+      setResponses(responses.map(res =>
         res.id === id ? { ...res, answers: editForm } : res
       ));
       setEditingId(null);
@@ -82,14 +76,11 @@ export default function SurveyResponses() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this response?')) return;
-
     try {
       const res = await fetch(`/api/send-survey-feedback/${id}`, {
         method: 'DELETE',
       });
-
       if (!res.ok) throw new Error('Failed to delete response');
-
       setResponses(responses.filter(res => res.id !== id));
       toast.success('Response deleted successfully');
     } catch (err) {
@@ -103,6 +94,12 @@ export default function SurveyResponses() {
     setEditForm({ ...editForm, [name]: value });
   };
 
+  const normalizeDate = (dateString: string) => {
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  };
+
   const getFilterRangeText = () => {
     switch (dateFilter) {
       case '2daysago': return 'last 2 days';
@@ -113,53 +110,29 @@ export default function SurveyResponses() {
     }
   };
 
-  const normalizeDate = (dateString: string) => {
-    const date = new Date(dateString);
-    date.setHours(0, 0, 0, 0);
-    return date;
-  };
-
   const { filteredResponses, filterMessage } = useMemo(() => {
     let message = '';
     const lowerSearch = searchTerm.toLowerCase().trim();
-    
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     let startDate = new Date(0);
 
     switch (dateFilter) {
-      case '2daysago':
-        startDate = new Date(now);
-        startDate.setDate(now.getDate() - 2);
-        break;
-      case '3daysago':
-        startDate = new Date(now);
-        startDate.setDate(now.getDate() - 3);
-        break;
-      case '1weekago':
-        startDate = new Date(now);
-        startDate.setDate(now.getDate() - 7);
-        break;
-      case '1monthago':
-        startDate = new Date(now);
-        startDate.setDate(now.getDate() - 30);
-        break;
+      case '2daysago': startDate.setDate(now.getDate() - 2); break;
+      case '3daysago': startDate.setDate(now.getDate() - 3); break;
+      case '1weekago': startDate.setDate(now.getDate() - 7); break;
+      case '1monthago': startDate.setDate(now.getDate() - 30); break;
     }
 
     const filtered = responses.filter((response) => {
-      // Search through all answer values
-      const answerValues = Object.values(response.answers).flatMap(answer => 
+      const answerValues = Object.values(response.answers).flatMap(answer =>
         Array.isArray(answer) ? answer : [answer]
       );
-      
-      const matchesSearch = answerValues.some(value => 
+      const matchesSearch = answerValues.some(value =>
         String(value).toLowerCase().includes(lowerSearch)
       );
-
       const createdAt = normalizeDate(response.created_at);
-      const isInDateRange = dateFilter ? createdAt >= startDate : true;
-
-      return matchesSearch && isInDateRange;
+      return matchesSearch && (dateFilter ? createdAt >= startDate : true);
     });
 
     if (filtered.length === 0) {
@@ -180,12 +153,8 @@ export default function SurveyResponses() {
     setDateFilter('');
   };
 
-  const formatAnswer = (answer: string | string[]) => {
-    if (Array.isArray(answer)) {
-      return answer.join(', ');
-    }
-    return answer || 'No answer provided';
-  };
+  const formatAnswer = (answer: string | string[]) =>
+    Array.isArray(answer) ? answer.join(', ') : (answer || 'No answer');
 
   if (loading) return (
     <div className="flex justify-center items-center h-64">
@@ -252,21 +221,13 @@ export default function SurveyResponses() {
         {filteredResponses.length === 0 ? (
           <div className="p-4 text-center text-gray-500">
             {filterMessage || 'No responses found'}
-            {(searchTerm || dateFilter) && (
-              <button
-                onClick={clearFilters}
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors block mx-auto"
-              >
-                Clear all filters
-              </button>
-            )}
           </div>
         ) : (
           filteredResponses.map((response) => (
             <div key={response.id} className="border rounded-lg shadow bg-white overflow-hidden">
               <div className="bg-gray-50 px-5 py-3 flex justify-between items-center border-b">
                 <div>
-                  <h3 className="font-medium text-gray-900">Survey ID: {response.survey_id}</h3>
+                  <h3 className="font-medium text-gray-900">{response.surveyTitle || 'Untitled Survey'}</h3>
                   <p className="text-xs text-gray-500">
                     Submitted: {new Date(response.created_at).toLocaleString()}
                   </p>
@@ -277,7 +238,7 @@ export default function SurveyResponses() {
                       <button
                         onClick={() => handleSaveEdit(response.id)}
                         disabled={updatingId === response.id}
-                        className="p-1 text-green-600 hover:text-green-800 flex items-center space-x-1"
+                        className="p-1 text-green-600 hover:text-green-800"
                         title="Save"
                       >
                         {updatingId === response.id ? (
@@ -303,38 +264,29 @@ export default function SurveyResponses() {
                 </div>
               </div>
 
-              <div className="p-5">
-                {editingId === response.id ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {Object.entries(response.answers).map(([questionKey, answer]) => (
-                      <div key={questionKey}>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          {questionKey}
-                        </label>
-                        <textarea
-                          name={questionKey}
-                          value={Array.isArray(editForm[questionKey]) 
-                            ? (editForm[questionKey] as string[]).join(', ')
-                            : (editForm[questionKey] as string) || ''}
-                          onChange={handleInputChange}
-                          className="w-full px-3 py-2 border rounded-md"
-                          rows={3}
-                        />
-                      </div>
-                    ))}
+              <div className="p-5 space-y-4">
+                {Object.entries(response.answers).map(([question, answer], index) => (
+                  <div key={`${response.id}-${index}`}>
+                    <p className="text-sm font-medium text-gray-700">{question}</p>
+                    {editingId === response.id ? (
+                      <textarea
+                        name={question}
+                        value={
+                          Array.isArray(editForm[question])
+                            ? (editForm[question] as string[]).join(', ')
+                            : (editForm[question] as string) || ''
+                        }
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border rounded-md mt-1"
+                        rows={2}
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-900 whitespace-pre-wrap">
+                        {formatAnswer(answer)}
+                      </p>
+                    )}
                   </div>
-                ) : (
-                  <div className="space-y-3">
-                    {Object.entries(response.answers).map(([questionKey, answer], index) => (
-                      <div key={index} className="border-b pb-2 last:border-b-0">
-                        <p className="text-sm font-medium text-gray-700">{questionKey}</p>
-                        <p className="text-sm text-gray-900 whitespace-pre-wrap">
-                          {formatAnswer(answer)}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                ))}
               </div>
             </div>
           ))

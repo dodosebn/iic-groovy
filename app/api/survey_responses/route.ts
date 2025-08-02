@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/app/store/lib/supabase-admin'; // update this path if needed
+
+    import { NextResponse } from 'next/server'; 
+import { supabaseAdmin } from '@/app/store/lib/supabase-admin';
 
 export async function POST(req: Request) {
   try {
@@ -12,7 +13,7 @@ export async function POST(req: Request) {
 
     const { data, error } = await supabaseAdmin
       .from('survey_responses')
-      .insert([{ survey_id: surveyId, answers }]);
+      .insert([{ survey_id: surveyId,  answers }]); 
 
     if (error) throw error;
 
