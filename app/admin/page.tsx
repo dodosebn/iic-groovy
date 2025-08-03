@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/app/store/lib/supabase'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const Page = () => {
   const router = useRouter()
@@ -11,13 +12,13 @@ const Page = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
-    // Check users table manually
     const { data, error: fetchError } = await supabase
       .from('users')
       .select('*')
@@ -31,7 +32,6 @@ const Page = () => {
       return
     }
 
-    // Save login status and navigate
     localStorage.setItem('isLoggedIn', 'true')
     router.push('/admin/dashboard')
   }
@@ -40,7 +40,7 @@ const Page = () => {
     <div className="min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-6  w-full max-w-sm"
+        className="bg-white p-6 w-full max-w-sm"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
 
@@ -56,15 +56,24 @@ const Page = () => {
           disabled={isLoading}
           required
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-3 py-2 border rounded mb-2"
-          disabled={isLoading}
-          required
-        />
+
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-3 py-2 border rounded mb-2 pr-10"
+            disabled={isLoading}
+            required
+          />
+          <div
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </div>
 
         <div className="text-right mb-4">
           <Link href="/admin/forgot-password" className="text-sm text-[#000] hover:underline">

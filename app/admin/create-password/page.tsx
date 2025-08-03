@@ -3,16 +3,19 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/app/store/lib/supabase'
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 export default function CreatePassword() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const email = searchParams.get('email') // Email passed in URL
+  const email = searchParams.get('email')
 
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
 
   useEffect(() => {
     if (!email) {
@@ -36,7 +39,6 @@ export default function CreatePassword() {
 
     setLoading(true)
 
-    // 1. Fetch user ID from custom users table using the email
     const { data: user, error: fetchError } = await supabase
       .from('users')
       .select('id')
@@ -49,7 +51,6 @@ export default function CreatePassword() {
       return
     }
 
-    // 2. Update password in your custom users table
     const { error: updateError } = await supabase
       .from('users')
       .update({ password })
@@ -61,7 +62,6 @@ export default function CreatePassword() {
       return
     }
 
-    // 3. Redirect to dashboard
     router.push('/admin/dashboard')
   }
 
@@ -69,29 +69,50 @@ export default function CreatePassword() {
     <div className="max-w-sm bg-white mx-auto mb-6 p-4">
       <h2 className="text-xl font-bold mb-4 text-center">Create a Password</h2>
       <form onSubmit={handleSetPassword} className="space-y-4">
-        <input
-          type="password"
-          placeholder="Enter new password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-3 py-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Confirm password"
-          required
-          value={confirm}
-          onChange={(e) => setConfirm(e.target.value)}
-          className="w-full px-3 py-2 border rounded"
-        />
+        {/* Password */}
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Enter new password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-3 py-2 border rounded pr-10"
+          />
+          <span
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+          </span>
+        </div>
+
+        {/* Confirm Password */}
+        <div className="relative">
+          <input
+            type={showConfirm ? 'text' : 'password'}
+            placeholder="Confirm password"
+            required
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+            className="w-full px-3 py-2 border rounded pr-10"
+          />
+          <span
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            onClick={() => setShowConfirm((prev) => !prev)}
+          >
+            {showConfirm ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+          </span>
+        </div>
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#54cbca]  text-white py-2 rounded"
+          className="w-full bg-[#54cbca] text-white py-2 rounded"
         >
           {loading ? 'Saving...' : 'Save Password'}
         </button>
+
         {error && <p className="text-red-500 text-center">{error}</p>}
       </form>
     </div>
