@@ -5,7 +5,9 @@ import { useState } from 'react'
 const tagged = [
   { id: 1, name: 'Getting Started' },
   { id: 2, name: 'Health' },
-  { id: 3, name: 'Lifestyle' }
+  { id: 3, name: 'Lifestyle' },
+    // { id: 4, name: 'All' }
+
 ]
 
 type Question = {
