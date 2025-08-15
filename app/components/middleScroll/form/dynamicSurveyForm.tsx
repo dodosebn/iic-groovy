@@ -175,87 +175,122 @@ export function DynamicSurveyForm({ survey }: { survey: Survey }) {
     <>
       <ToastContainer position="top-center" theme="colored" />
 
-      <div className="w-full max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col gap-6">
+      <div className="w-full max-w-2xl mx-auto py-8 flex flex-col gap-6">
         <h2 className="text-3xl font-bold text-gray-900 text-center">{survey.title}</h2>
         <p className="text-lg text-gray-600 text-center">{survey.description}</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           {survey.questions.map((q, idx) => (
             <div key={idx} className="flex flex-col gap-3">
-              <label className="text-lg font-medium text-gray-700">
-                {q.label}
+              <label className="text-xl font-bold text-gray-900">
+                {idx + 1}. {q.label}
                 {q.required && <span className="text-red-500 ml-1">*</span>}
               </label>
-
+<div className='ml-2'>
               {q.type === 'text' && (
+                <div className='ml-2'>
+
                 <input
                   type="text"
                   name={`question-${idx}`}
-                  className="border border-gray-300 rounded-md py-2 px-3 w-full focus:border-transparent text-gray-700"
+                  className="border border-gray-500 rounded-md py-2 px-3 w-full focus:border-transparent text-gray-700"
                   onChange={handleChange}
                   value={formData[`question-${idx}`] || ''}
                 />
-              )}
+                </div>
 
+              )}
+</div>
               {q.type === 'textarea' && (
+                                <div className='ml-2'>
+
                 <textarea
                   name={`question-${idx}`}
-                  className="border border-gray-300 rounded-md py-2 px-3 w-full focus:border-transparent
-                   text-gray-700"
+                  className="border border-gray-500 rounded-md py-2 px-3 w-full focus:border-transparent text-gray-700"
                   rows={4}
                   onChange={handleChange}
                   value={formData[`question-${idx}`] || ''}
                 />
+                </div>
               )}
 
               {q.type === 'rating' && (
+                                <div className='ml-2'>
                 <input
                   type="number"
                   name={`question-${idx}`}
                   min={1}
                   max={5}
-                  className="border border-gray-300 rounded-md py-2 px-3 w-full  focus:border-transparent text-gray-700"
+                  className="border border-gray-300 rounded-md py-2 px-3 w-full focus:border-transparent text-gray-700"
                   onChange={handleChange}
                   value={formData[`question-${idx}`] || ''}
                 />
+                </div>
               )}
 
-              {(q.type === 'checkbox' || q.type === 'radio') && (
-                <div className="space-y-2">
+              {q.type === 'checkbox' && (
+                                                    <div className='ml-2'>
+
+                <div className="flex flex-row flex-wrap gap-7">
                   {q.options?.map((option, i) => (
-                    <label key={i} className="flex items-center gap-3 text-gray-700">
+
+                    <label key={i} className="flex items-center gap-2 text-gray-700">
                       <input
-                        type={q.type}
+                        type="checkbox"
                         name={`question-${idx}`}
                         value={option}
                         onChange={handleChange}
-                        checked={
-                          q.type === 'checkbox'
-                            ? formData[`question-${idx}`]?.includes(option) || false
-                            : formData[`question-${idx}`] === option
-                        }
+                        checked={formData[`question-${idx}`]?.includes(option) || false}
                         className="w-5 h-5 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
                       />
-                      <span className="text-base">{option}</span>
+                    <span className="text-md capitalize text-gray-800">{option}</span>
                     </label>
                   ))}
+                                      </div>
+
+                </div>
+              )}
+
+              {q.type === 'radio' && (
+                                                    <div className='ml-2'>
+
+                <div className="flex flex-row flex-wrap gap-7">
+                  
+                  {q.options?.map((option, i) => (
+
+                    <label key={i} className="flex items-center gap-2 text-gray-700">
+                      <input
+                        type="radio"
+                        name={`question-${idx}`}
+                        value={option}
+                        onChange={handleChange}
+                        checked={formData[`question-${idx}`] === option}
+                        className="w-5 h-5  text-pink-600 focus:ring-pink-500 border-gray-300"
+                      />
+                    <span className="text-md capitalize text-gray-800">{option}</span>
+                    </label>
+                  ))}
+</div>
                 </div>
               )}
 
               {q.type === 'select' && (
+                                <div className='ml-2'>
+
                 <select
                   name={`question-${idx}`}
-                  className="border border-gray-300 rounded-md py-2 px-3 w-full  focus:border-transparent text-gray-700"
+                  className="border border-gray-300 rounded-md py-2 px-3 w-full focus:border-transparent text-gray-700"
                   onChange={handleChange}
                   value={formData[`question-${idx}`] || ''}
                 >
                   <option value="">Select an option</option>
                   {q.options?.map((option, i) => (
-                    <option key={i} value={option}>
+                    <option key={i} value={option} className="text-md capitalize text-gray-800">
                       {option}
                     </option>
                   ))}
                 </select>
+                </div>
               )}
 
               {errors[`question-${idx}`] && (
@@ -268,7 +303,8 @@ export function DynamicSurveyForm({ survey }: { survey: Survey }) {
 
           <button
             type="submit"
-            className="mt-6 bg-pink-600 text-white font-bold py-3 px-6 rounded-md hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-colors text-lg"
+            className="mt-6 bg-pink-600 text-white font-bold py-3 px-6 rounded-4xl hover:bg-pink-700 
+            focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-colors text-lg"
           >
             Submit Survey
           </button>
