@@ -90,7 +90,6 @@ const FirstCard: React.FC<cardProps> = ({ imgGen, title, date, duration, bg, tag
             } else {
               return <FormSurvey3 key={survey.id} survey={survey} />;
             }
-            // Or use: <DynamicSurveyForm key={survey.id} survey={survey} />
           })}
         </div>
 

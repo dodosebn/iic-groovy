@@ -267,7 +267,7 @@ export default function SurveyResponses() {
               <div className="p-5 space-y-4">
                 {Object.entries(response.answers).map(([question, answer], index) => (
                   <div key={`${response.id}-${index}`}>
-                    <p className="text-sm font-medium text-gray-700">{question}</p>
+                    <p className="text-lg font-bold capitalize text-gray-800">{question}?</p>
                     {editingId === response.id ? (
                       <textarea
                         name={question}
@@ -281,8 +281,8 @@ export default function SurveyResponses() {
                         rows={2}
                       />
                     ) : (
-                      <p className="text-sm text-gray-900 whitespace-pre-wrap">
-                        {formatAnswer(answer)}
+                      <p className="text-md capitalize text-gray-800 whitespace-pre-wrap">
+                      <span className='text-blue-600 font-semibold'>Answer:</span>  {formatAnswer(answer)}
                       </p>
                     )}
                   </div>
