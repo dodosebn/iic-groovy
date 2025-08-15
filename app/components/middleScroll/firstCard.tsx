@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import Button from '@/utils/button';
 
-import FormSurvey from './form/formSurvey';
-import FormSurvey2 from './form/formSurvey2';
-import FormSurvey3 from './form/formSurvey3';
+import {FormSurvey} from './form/formSurvey'
+import {FormSurvey2} from './form/formSurvey2';
+import {FormSurvey3} from './form/formSurvey3';
 import ShareAndCopy from './form/shareandcopy';
 import socioloji from '@/public/images/socioloji.webp';
 import { useSurveyStore } from '@/app/store/useSurveyStore';
-import { DynamicSurveyForm } from './form/dynamicSurveyForm'; // ✅ Named import
+// import { DynamicSurveyForm } from './form/dynamicSurveyForm'; 
 
 interface cardProps {
   imgGen: string | StaticImageData;
@@ -82,9 +82,16 @@ const FirstCard: React.FC<cardProps> = ({ imgGen, title, date, duration, bg, tag
         </section>
 
         <div className="flex flex-col justify-center md:p-5 py-3">
-          {matchingSurveys.map((survey) => (
-            <DynamicSurveyForm key={survey.id} survey={survey} />
-          ))}
+          {matchingSurveys.map((survey) => {
+            if (survey.tag.toLowerCase() === 'health') {
+              return <FormSurvey key={survey.id} survey={survey} />;
+            } else if (survey.tag.toLowerCase()  === 'getting started') {
+              return <FormSurvey2 key={survey.id} survey={survey} />;
+            } else {
+              return <FormSurvey3 key={survey.id} survey={survey} />;
+            }
+            // Or use: <DynamicSurveyForm key={survey.id} survey={survey} />
+          })}
         </div>
 
         <div className="hidden md:block">
