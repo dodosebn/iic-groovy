@@ -6,8 +6,7 @@ const tagged = [
   { id: 1, name: 'Getting Started' },
   { id: 2, name: 'Health' },
   { id: 3, name: 'Lifestyle' },
-    // { id: 4, name: 'All' }
-
+  // { id: 4, name: 'All' }
 ]
 
 type Question = {
@@ -66,6 +65,14 @@ export default function CreateSurveyForm() {
     }
   }
 
+  const removeOption = (qIndex: number, optIndex: number) => {
+    const updated = [...questions]
+    if (updated[qIndex].options) {
+      updated[qIndex].options!.splice(optIndex, 1)
+      setQuestions(updated)
+    }
+  }
+
   const addQuestion = () => {
     setQuestions([...questions, { label: '', type: 'text' }])
   }
@@ -104,7 +111,10 @@ export default function CreateSurveyForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-6 bg-white shadow rounded space-y-6">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-3xl mx-auto p-6 bg-white shadow rounded space-y-6"
+    >
       <h2 className="text-xl font-bold">Create New Survey</h2>
 
       <div>
@@ -136,7 +146,9 @@ export default function CreateSurveyForm() {
         >
           <option value="">Select a tag</option>
           {tagged.map((item) => (
-            <option key={item.id} value={item.name}>{item.name}</option>
+            <option key={item.id} value={item.name}>
+              {item.name}
+            </option>
           ))}
         </select>
       </div>
@@ -149,7 +161,9 @@ export default function CreateSurveyForm() {
               <label className="block text-sm">Label</label>
               <input
                 value={q.label}
-                onChange={(e) => handleQuestionChange(idx, 'label', e.target.value)}
+                onChange={(e) =>
+                  handleQuestionChange(idx, 'label', e.target.value)
+                }
                 className="w-full p-2 border rounded"
                 required
               />
@@ -159,7 +173,9 @@ export default function CreateSurveyForm() {
               <label className="block text-sm">Type</label>
               <select
                 value={q.type}
-                onChange={(e) => handleQuestionChange(idx, 'type', e.target.value)}
+                onChange={(e) =>
+                  handleQuestionChange(idx, 'type', e.target.value)
+                }
                 className="w-full p-2 border rounded"
                 required
               >
@@ -174,17 +190,31 @@ export default function CreateSurveyForm() {
             {(q.type === 'checkbox' || q.type === 'radio') && (
               <div className="mb-2 space-y-2">
                 <label className="block text-sm font-medium">Options</label>
+
                 {q.options?.map((opt, oIdx) => (
-                  <input
-                    key={oIdx}
-                    type="text"
-                    value={opt}
-                    placeholder={`Option ${oIdx + 1}`}
-                    onChange={(e) => handleOptionChange(idx, oIdx, e.target.value)}
-                    className="w-full p-2 border rounded"
-                    required
-                  />
+                  <div key={oIdx} className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={opt}
+                      placeholder={`Option ${oIdx + 1}`}
+                      onChange={(e) =>
+                        handleOptionChange(idx, oIdx, e.target.value)
+                      }
+                      className="w-full p-2 border rounded"
+                      required
+                    />
+                    {q.options!.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeOption(idx, oIdx)}
+                        className="text-sm text-red-500 hover:underline"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
                 ))}
+
                 <button
                   type="button"
                   onClick={() => addOption(idx)}
